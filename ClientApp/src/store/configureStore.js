@@ -10,15 +10,16 @@ export default function configureStore(history, initialState) {
     weatherForecasts: WeatherForecasts.reducer
   };
 
-  const middleware = [
-    thunk,
-    routerMiddleware(history)
-  ];
+  const middleware = [thunk, routerMiddleware(history)];
 
   // In development, use the browser's Redux dev tools extension if installed
   const enhancers = [];
   const isDevelopment = process.env.NODE_ENV === 'development';
-  if (isDevelopment && typeof window !== 'undefined' && window.devToolsExtension) {
+  if (
+    isDevelopment &&
+    typeof window !== 'undefined' &&
+    window.devToolsExtension
+  ) {
     enhancers.push(window.devToolsExtension());
   }
 
@@ -30,6 +31,9 @@ export default function configureStore(history, initialState) {
   return createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(...middleware), ...enhancers)
+    compose(
+      applyMiddleware(...middleware),
+      ...enhancers
+    )
   );
 }
