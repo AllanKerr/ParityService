@@ -1,0 +1,101 @@
+.layout-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.card {
+  width: 100%;
+  max-width: 544px;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  padding: 2.5em;
+}
+
+button {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #827ffe;
+  border-style: none;
+  border-radius: 0.25em;
+  color: white;
+  padding: 0.75em 1em;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.form-submit-button {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.form-row {
+  padding: 0.65em;
+}
+
+.form-row-multi {
+  display: flex;
+  justify-content: space-between;
+}
+
+button:hover {
+  background-color: #403866;
+  transition: background-color 0.4s;
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ddd;
+  color: #000;
+  font-size: 1.25em;
+  border-radius: 0.25em;
+  padding: 0.75em 1em;
+}
+
+input[type='text']:focus,
+input[type='password']:focus {
+  border-color: #514efd;
+  outline: none;
+}
+
+label {
+  color: #666666;
+}
+
+.link {
+  color: #514efd;
+}
+
+.link:hover {
+  color: #403866;
+}
+
+@media screen and (min-width: 550px) {
+  .card {
+    width: 75%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .card {
+    width: 40%;
+  }
+}
