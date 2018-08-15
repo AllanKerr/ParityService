@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
+import { actionCreators } from '../store/Login';
 
 class LoginForm extends Component {
-  state = {
-    errors: {}
-  };
-
   logIn = event => {
     event.preventDefault();
 
@@ -18,15 +15,7 @@ class LoginForm extends Component {
       password: target.Password.value,
       rememberMe: target.RememberMe.checked
     };
-    axios
-      .post('account/login', data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error.response.data);
-        this.setState({ errors: error.response.data });
-      });
+    this.props.login(data);
   };
 
   render() {
@@ -38,13 +27,13 @@ class LoginForm extends Component {
             type="email"
             name="Email"
             placeholder="Email address"
-            errors={this.state.errors}
+            errors={this.props.errors}
           />
           <FormInput
             type="password"
             name="Password"
             placeholder="Password"
-            errors={this.state.errors}
+            errors={this.props.errors}
           />
           <div className="form-row form-row-multi">
             <label htmlFor="remember-me">
@@ -55,7 +44,7 @@ class LoginForm extends Component {
               Forgot password?
             </Link>
           </div>
-          <FormSubmitButton text="Login" errors={this.state.errors} />
+          <FormSubmitButton text="Login" errors={this.props.errors} />
         </form>
         <Link className="link" to="/register">
           Create an account
@@ -65,4 +54,7 @@ class LoginForm extends Component {
   }
 }
 
-export default connect()(LoginForm);
+export default connect(
+  state => state.login,
+  dispatch => bindActionCreators(actionCreators, dispatch)
+)(LoginForm);
