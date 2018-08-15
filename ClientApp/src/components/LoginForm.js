@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { FormInput, FormSubmitButton } from './FormInput';
+import { FormInput, FormSubmitButton } from './forms/FormComponents';
 
 class LoginForm extends Component {
   state = {
@@ -12,10 +12,11 @@ class LoginForm extends Component {
   logIn = event => {
     event.preventDefault();
 
+    const target = event.target;
     const data = {
-      email: event.target.email.value,
-      password: event.target.password.value,
-      rememberMe: event.target.rememberMe.checked
+      email: target.Email.value,
+      password: target.Password.value,
+      rememberMe: target.RememberMe.checked
     };
     axios
       .post('account/login', data)
@@ -47,7 +48,7 @@ class LoginForm extends Component {
           />
           <div className="form-row form-row-multi">
             <label htmlFor="remember-me">
-              <input type="checkbox" name="rememberMe" id="remember-me" />
+              <input type="checkbox" name="RememberMe" id="remember-me" />
               Remember me
             </label>
             <Link className="link" to="/counter">

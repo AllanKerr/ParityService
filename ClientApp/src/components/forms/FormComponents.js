@@ -1,12 +1,12 @@
 import React from 'react';
 import FormError from './FormError';
-import './Style.css';
+import '../Style.css';
 
 const FormInput = props => (
   <div className="form-row">
     <input
       type={props.type}
-      name={props.name.toLowerCase()}
+      name={props.name}
       placeholder={props.placeholder}
       required
     />

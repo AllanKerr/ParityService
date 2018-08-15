@@ -2,55 +2,57 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FormInput, FormSubmitButton } from './forms/FormComponents';
 
 class RegisterForm extends Component {
-  logIn(event) {
+  state = {
+    errors: {}
+  };
+
+  register = event => {
     event.preventDefault();
 
+    const target = event.target;
     const data = {
-      email: event.target.email.value,
-      password: event.target.password.value
+      email: target.Email.value,
+      password: target.Password.value,
+      confirmPassword: target.ConfirmPassword.value
     };
     axios
-      .post('account/login', data)
+      .post('account/register', data)
       .then(response => {
         console.log(response);
       })
       .catch(error => {
-        console.log(error);
+        this.setState({ errors: error.response.data });
       });
-  }
+  };
 
   render() {
     return (
       <div>
         <h1>Create an account.</h1>
-        <form type="submit" onSubmit={this.logIn}>
-          <div className="form-row">
-            <input
-              type="text"
-              name="email"
-              placeholder="Email address"
-              required
-            />
-          </div>
-          <div className="form-row">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div className="form-row">
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              required
-            />
-          </div>
-          <button className="form-submit-button">Sign up</button>
+        <form type="submit" onSubmit={this.register}>
+          <FormInput
+            type="email"
+            name="Email"
+            placeholder="Email address"
+            errors={this.state.errors}
+          />
+          <FormInput
+            type="password"
+            name="Password"
+            placeholder="Password"
+            errors={this.state.errors}
+          />
+          <FormInput
+            type="password"
+            name="ConfirmPassword"
+            placeholder="Confirm Password"
+            errors={this.state.errors}
+          />
+
+          <FormSubmitButton text="Sign Up" errors={this.state.errors} />
         </form>
         <Link className="link" to="/">
           Already have an account?

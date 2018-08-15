@@ -1,5 +1,5 @@
 import React from 'react';
-import './Style.css';
+import '../Style.css';
 
 const FormError = props => {
   const name = props.name !== undefined ? props.name : '';
