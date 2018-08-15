@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
 import { actionCreators } from '../store/Login';
+import { Redirect } from 'react-router-dom';
 
 class LoginForm extends Component {
   logIn = event => {
@@ -19,6 +20,10 @@ class LoginForm extends Component {
   };
 
   render() {
+    if (this.props.user != null) {
+      return <Redirect to="/counter" />;
+    }
+    console.log(this.props);
     return (
       <div>
         <h1>Sign into Parity</h1>
@@ -55,6 +60,6 @@ class LoginForm extends Component {
 }
 
 export default connect(
-  state => state.login,
+  state => ({ ...state.user, ...state.login }),
   dispatch => bindActionCreators(actionCreators, dispatch)
 )(LoginForm);

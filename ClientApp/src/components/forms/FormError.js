@@ -3,8 +3,13 @@ import '../Style.css';
 
 const FormError = props => {
   const name = props.name !== undefined ? props.name : '';
-  let errors = props.errors[name];
-  const hasErrors = errors !== undefined && errors.length > 0;
+
+  var errors;
+  var hasErrors = false;
+  if (props.errors != null) {
+    errors = props.errors[name];
+    hasErrors = errors !== undefined && errors.length > 0;
+  }
   if (!hasErrors) {
     errors = [];
   }

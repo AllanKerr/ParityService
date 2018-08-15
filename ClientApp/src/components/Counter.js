@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Counter';
+import Authorization from './auth/Authorization';
 
 const Counter = props => (
   <div>
@@ -20,4 +21,4 @@ const Counter = props => (
 export default connect(
   state => state.counter,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(Counter);
+)(Authorization(['manager', 'admin'])(Counter));
