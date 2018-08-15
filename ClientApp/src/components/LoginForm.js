@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FormInput, FormSubmitButton } from './FormInput';
 
 class LoginForm extends Component {
-  logIn(event) {
+  state = {
+    errors: {}
+  };
+
+  logIn = event => {
     event.preventDefault();
 
     const data = {
@@ -18,43 +23,40 @@ class LoginForm extends Component {
         console.log(response);
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response.data);
+        this.setState({ errors: error.response.data });
       });
-  }
+  };
 
   render() {
     return (
       <div>
         <h1>Sign into Parity</h1>
         <form type="submit" onSubmit={this.logIn}>
-          <div className="form-row">
-            <input
-              type="text"
-              name="email"
-              placeholder="Email address"
-              required
-            />
-          </div>
-          <div className="form-row">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-          </div>
+          <FormInput
+            type="email"
+            name="Email"
+            placeholder="Email address"
+            errors={this.state.errors}
+          />
+          <FormInput
+            type="password"
+            name="Password"
+            placeholder="Password"
+            errors={this.state.errors}
+          />
           <div className="form-row form-row-multi">
             <label htmlFor="remember-me">
               <input type="checkbox" name="rememberMe" id="remember-me" />
-              Remember Me
+              Remember me
             </label>
             <Link className="link" to="/counter">
               Forgot password?
             </Link>
           </div>
-          <button className="form-submit-button">Login</button>
+          <FormSubmitButton text="Login" errors={this.state.errors} />
         </form>
-        <Link className="link" to="/counter">
+        <Link className="link" to="/register">
           Create an account
         </Link>
       </div>

@@ -40,8 +40,8 @@ button {
 }
 
 .form-submit-button {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .form-row {
@@ -58,6 +58,7 @@ button:hover {
   transition: background-color 0.4s;
 }
 
+input[type='email'],
 input[type='text'],
 input[type='password'] {
   width: 100%;
@@ -70,9 +71,10 @@ input[type='password'] {
   padding: 0.75em 1em;
 }
 
+input[type='email']:focus,
 input[type='text']:focus,
 input[type='password']:focus {
-  border-color: #514efd;
+  border-color: #6967d4;
   outline: none;
 }
 
@@ -81,11 +83,28 @@ label {
 }
 
 .link {
-  color: #514efd;
+  color: #6967d4;
 }
 
 .link:hover {
   color: #403866;
+}
+
+.form-error-container {
+  display: none;
+  list-style: none;
+  width: 100%;
+  border-radius: 0.25em;
+  padding: 0.75em 1em;
+  background-color: #ff9480;
+  color: #404040;
+}
+
+.form-error-container[has-errors='true'] {
+  display: block;
+}
+
+.form-error {
 }
 
 @media screen and (min-width: 550px) {
