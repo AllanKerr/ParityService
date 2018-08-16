@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ParityUI.Data;
 using Microsoft.EntityFrameworkCore;
 using ParityUI.Models;
+using Microsoft.AspNetCore.Antiforgery;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace ParityUI
 {
@@ -38,7 +41,7 @@ namespace ParityUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IAntiforgery antiforgery)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +52,18 @@ namespace ParityUI
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.Use(next => context => {
+                string path = context.Request.Path.Value;
+                if (
+                    string.Equals(path, "/") ||
+                    string.Equals(path, "/index.html", StringComparison.OrdinalIgnoreCase)) {
+                    var token = antiforgery.GetAndStoreTokens(context).RequestToken;
+                    context.Response.Cookies.Append("XSRF-TOKEN", token, new CookieOptions { HttpOnly = false });
+                }
+
+                return next(context);
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

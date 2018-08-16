@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
+import { withCookies, Cookies } from 'react-cookie';
 
 class RegisterForm extends Component {
   state = {
@@ -18,8 +19,19 @@ class RegisterForm extends Component {
       password: target.Password.value,
       confirmPassword: target.ConfirmPassword.value
     };
+
+    const token = this.props.cookies.get('XSRF-TOKEN');
+
+    const config = {
+      headers: {
+        RequestVerificationToken: token
+      }
+    };
+
+    console.log(config);
+
     axios
-      .post('account/register', data)
+      .post('account/register', data, config)
       .then(response => {
         console.log(response);
       })
@@ -62,4 +74,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect()(RegisterForm);
+export default connect()(withCookies(RegisterForm));

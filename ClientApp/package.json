@@ -9,6 +9,7 @@
     "lint-staged": "^7.2.0",
     "prettier": "^1.14.2",
     "react": "^16.0.0",
+    "react-cookie": "^2.2.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",

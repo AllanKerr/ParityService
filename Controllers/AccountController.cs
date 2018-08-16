@@ -27,18 +27,11 @@ namespace ParityUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model) {
             if (!ModelState.IsValid) {
-                foreach (var state in ModelState.Values) {
-                    foreach(var error in state.Errors) {
-                        m_logger.LogCritical($"Error Model state: {error.ErrorMessage}");
-                    }
-                }
-
                 return BadRequest(ModelState);
             }
-            m_logger.LogCritical($"email: {model.Email} password: {model.Password} rememberMe: {model.RememberMe}");
-
             var result = await m_signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded) {
                 return Ok();
@@ -46,16 +39,15 @@ namespace ParityUI.Controllers
             if (result.IsLockedOut) {
                 return Forbid();
             }
-            m_logger.LogCritical($"result: {result}");
-
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return BadRequest(ModelState);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model) {
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }                 
@@ -73,7 +65,7 @@ namespace ParityUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout() {
             await m_signInManager.SignOutAsync();
             return Ok();
