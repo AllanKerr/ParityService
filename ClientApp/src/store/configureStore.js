@@ -4,6 +4,7 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Login from './Login';
+import * as Register from './Register';
 import * as User from './User';
 
 export default function configureStore(history, initialState) {
@@ -11,10 +12,11 @@ export default function configureStore(history, initialState) {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     login: Login.reducer,
-    user: User.reducer
+    register: Register.reducer,
+    account: User.reducer
   };
 
-  const middleware = [thunk, routerMiddleware(history)];
+  const middleware = [thunk, routerMiddleware(history), User.middleware];
 
   // In development, use the browser's Redux dev tools extension if installed
   const enhancers = [];

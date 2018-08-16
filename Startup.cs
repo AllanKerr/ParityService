@@ -54,14 +54,8 @@ namespace ParityUI
             }
 
             app.Use(next => context => {
-                string path = context.Request.Path.Value;
-                if (
-                    string.Equals(path, "/") ||
-                    string.Equals(path, "/index.html", StringComparison.OrdinalIgnoreCase)) {
-                    var token = antiforgery.GetAndStoreTokens(context).RequestToken;
-                    context.Response.Cookies.Append("XSRF-TOKEN", token, new CookieOptions { HttpOnly = false });
-                }
-
+                var token = antiforgery.GetAndStoreTokens(context).RequestToken;
+                context.Response.Cookies.Append("XSRF-TOKEN", token, new CookieOptions { HttpOnly = false });
                 return next(context);
             });
 

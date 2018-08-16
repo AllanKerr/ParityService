@@ -17,3 +17,11 @@ export const reducer = (state, action) => {
 
   return state;
 };
+
+export const middleware = store => next => action => {
+  const result = next(action);
+  if (action.type === SET_USER) {
+    localStorage.setItem('user', JSON.stringify(result.user));
+  }
+  return result;
+};

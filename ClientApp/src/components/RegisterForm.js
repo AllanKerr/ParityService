@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
-import { withCookies, Cookies } from 'react-cookie';
+import { actionCreators } from '../store/Register';
+import XsrfProtection from './security/XsrfProtection';
+import { bindActionCreators } from 'redux';
 
 class RegisterForm extends Component {
-  state = {
-    errors: {}
-  };
-
   register = event => {
     event.preventDefault();
 
@@ -19,25 +17,7 @@ class RegisterForm extends Component {
       password: target.Password.value,
       confirmPassword: target.ConfirmPassword.value
     };
-
-    const token = this.props.cookies.get('XSRF-TOKEN');
-
-    const config = {
-      headers: {
-        RequestVerificationToken: token
-      }
-    };
-
-    console.log(config);
-
-    axios
-      .post('account/register', data, config)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        this.setState({ errors: error.response.data });
-      });
+    this.props.register(this.props.xsrfToken, data);
   };
 
   render() {
@@ -49,22 +29,22 @@ class RegisterForm extends Component {
             type="email"
             name="Email"
             placeholder="Email address"
-            errors={this.state.errors}
+            errors={this.props.errors}
           />
           <FormInput
             type="password"
             name="Password"
             placeholder="Password"
-            errors={this.state.errors}
+            errors={this.props.errors}
           />
           <FormInput
             type="password"
             name="ConfirmPassword"
             placeholder="Confirm Password"
-            errors={this.state.errors}
+            errors={this.props.errors}
           />
 
-          <FormSubmitButton text="Sign Up" errors={this.state.errors} />
+          <FormSubmitButton text="Sign Up" errors={this.props.errors} />
         </form>
         <Link className="link" to="/">
           Already have an account?
@@ -74,4 +54,7 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect()(withCookies(RegisterForm));
+export default connect(
+  state => state.register,
+  dispatch => bindActionCreators(actionCreators, dispatch)
+)(XsrfProtection(RegisterForm));

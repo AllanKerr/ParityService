@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
 import { actionCreators } from '../store/Login';
 import { Redirect } from 'react-router-dom';
+import XsrfProtection from './security/XsrfProtection';
 
 class LoginForm extends Component {
   logIn = event => {
@@ -16,7 +17,7 @@ class LoginForm extends Component {
       password: target.Password.value,
       rememberMe: target.RememberMe.checked
     };
-    this.props.login(data);
+    this.props.login(this.props.xsrfToken, data);
   };
 
   render() {
@@ -60,6 +61,6 @@ class LoginForm extends Component {
 }
 
 export default connect(
-  state => ({ ...state.user, ...state.login }),
+  state => ({ ...state.account, ...state.login }),
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(LoginForm);
+)(XsrfProtection(LoginForm));

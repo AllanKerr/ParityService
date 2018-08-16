@@ -10,15 +10,11 @@ const Authorization = allowedRoles => WrappedComponent => {
     if (props.user == null) {
       return loginRedirect;
     }
-    const { role } = props.user;
-    if (!allowedRoles.includes(role)) {
-      return loginRedirect;
-    }
     return <WrappedComponent {...props} />;
   };
 
   return connect(
-    state => state.user,
+    state => state.account,
     dispatch => bindActionCreators(actionCreators, dispatch)
   )(WithAuthorization);
 };

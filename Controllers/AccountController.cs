@@ -33,7 +33,9 @@ namespace ParityUI.Controllers
                 return BadRequest(ModelState);
             }
             var result = await m_signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
             if (result.Succeeded) {
+                var user = await m_userManager.FindByEmailAsync(model.Email);
                 return Ok();
             }
             if (result.IsLockedOut) {
@@ -53,7 +55,7 @@ namespace ParityUI.Controllers
             }                 
             var user = new AppUser {
                 UserName = model.Email,
-                Email = model.Email,
+                Email = model.Email
             };
             IdentityResult result = await m_userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded) {               
@@ -61,7 +63,14 @@ namespace ParityUI.Controllers
                 return BadRequest(ModelState);
             }
             await m_signInManager.SignInAsync(user, isPersistent: false);
-            return Ok();
+            return CreatedAtRoute("User", new AppUserViewModel(user));
+        }
+
+        [HttpGet(Name = "User")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GetUser() {
+            AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
+            return Ok(new AppUserViewModel(user));
         }
 
         [HttpPost]
