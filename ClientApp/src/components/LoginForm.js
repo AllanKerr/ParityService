@@ -27,7 +27,7 @@ class LoginForm extends Component {
     console.log(this.props);
     return (
       <div>
-        <h1>Sign into Parity</h1>
+        <h1>Log in to Parity.</h1>
         <form type="submit" onSubmit={this.logIn}>
           <FormInput
             type="email"
@@ -50,7 +50,7 @@ class LoginForm extends Component {
               Forgot password?
             </Link>
           </div>
-          <FormSubmitButton text="Login" errors={this.props.errors} />
+          <FormSubmitButton text="Log In" errors={this.props.errors} />
         </form>
         <Link className="link" to="/register">
           Create an account
