@@ -15,9 +15,7 @@ export const actionCreators = {
     axios
       .post('account/login', data, config)
       .then(response => {
-        dispatch(
-          userActionCreators.setUser({ name: 'John Doe', role: 'admin' })
-        );
+        dispatch(userActionCreators.setUser(response.data));
       })
       .catch(error => {
         console.log(error);
