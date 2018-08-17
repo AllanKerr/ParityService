@@ -22,7 +22,7 @@ class LoginForm extends Component {
 
   render() {
     if (this.props.user != null) {
-      return <Redirect to="/counter" />;
+      return <Redirect to="/home" />;
     }
     console.log(this.props);
     return (
@@ -46,7 +46,7 @@ class LoginForm extends Component {
               <input type="checkbox" name="RememberMe" id="remember-me" />
               Remember me
             </label>
-            <Link className="link" to="/counter">
+            <Link className="link" to="/">
               Forgot password?
             </Link>
           </div>
