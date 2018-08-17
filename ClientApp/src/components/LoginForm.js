@@ -4,31 +4,18 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { FormInput, FormSubmitButton } from './forms/FormComponents';
 import { actionCreators } from '../store/Login';
-import { Redirect } from 'react-router-dom';
-import XsrfProtection from './security/XsrfProtection';
 
 class LoginForm extends Component {
-  logIn = event => {
+  onSubmit = event => {
     event.preventDefault();
-
-    const target = event.target;
-    const data = {
-      email: target.Email.value,
-      password: target.Password.value,
-      rememberMe: target.RememberMe.checked
-    };
-    this.props.login(this.props.xsrfToken, data);
+    this.props.onSubmit(event);
   };
 
   render() {
-    if (this.props.user != null) {
-      return <Redirect to="/home" />;
-    }
-    console.log(this.props);
     return (
       <div>
         <h1>Log in to Parity.</h1>
-        <form type="submit" onSubmit={this.logIn}>
+        <form type="submit" onSubmit={this.onSubmit}>
           <FormInput
             type="email"
             name="Email"
@@ -61,6 +48,6 @@ class LoginForm extends Component {
 }
 
 export default connect(
-  state => ({ ...state.account, ...state.login }),
+  state => state.login,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(XsrfProtection(LoginForm));
+)(LoginForm);
