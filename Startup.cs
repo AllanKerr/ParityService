@@ -10,6 +10,7 @@ using ParityUI.Models;
 using Microsoft.AspNetCore.Antiforgery;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ParityUI
 {
@@ -31,7 +32,10 @@ namespace ParityUI
 
             services.AddEntityFrameworkInMemoryDatabase().AddDbContext<AppDbContext>(opts => opts.UseInMemoryDatabase("db name"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(AntiforgeryCookieResultFilter));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -53,17 +57,22 @@ namespace ParityUI
                 app.UseHsts();
             }
 
-            app.Use(next => context => {
-                var token = antiforgery.GetAndStoreTokens(context).RequestToken;
-                context.Response.Cookies.Append("XSRF-TOKEN", token, new CookieOptions { HttpOnly = false });
-                return next(context);
-            });
+            app.UseAuthentication();
+            app.Use(next => context =>
+                {
+                    if (!context.Request.Cookies.ContainsKey("XSRF-TOKEN"))
+                    {
+                        var tokens = antiforgery.GetAndStoreTokens(context);
+                        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken,
+                            new CookieOptions() { HttpOnly = false });
+                    }
+
+                    return next(context);
+                });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
