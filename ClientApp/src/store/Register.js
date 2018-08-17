@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { actionCreators as userActionCreators } from './User';
 
-const receiveRegisterResponseType = 'RECEIVE_REGISTER_RESPONSE';
+const setRegisterErrorsType = 'SET_REGISTER_ERRORS';
 const initialState = { errors: [] };
 
 export const actionCreators = {
@@ -20,17 +20,18 @@ export const actionCreators = {
       .catch(error => {
         console.log(error);
         dispatch({
-          type: receiveRegisterResponseType,
+          type: setRegisterErrorsType,
           errors: error.response.data
         });
       });
-  }
+  },
+  clearErrors: () => ({ type: setRegisterErrorsType, errors: [] })
 };
 
 export const reducer = (state, action) => {
   state = state || initialState;
 
-  if (action.type === receiveRegisterResponseType) {
+  if (action.type === setRegisterErrorsType) {
     return {
       ...state,
       errors: action.errors

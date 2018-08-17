@@ -11,6 +11,10 @@ class RegisterForm extends Component {
     this.props.onSubmit(event);
   };
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   render() {
     return (
       <div>
