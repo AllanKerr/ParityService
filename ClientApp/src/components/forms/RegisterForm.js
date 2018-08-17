@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FormInput, FormSubmitButton } from './forms/FormComponents';
-import { actionCreators } from '../store/Register';
+import { FormInput, FormSubmitButton } from './FormComponents';
+import { actionCreators } from '../../store/Register';
 import { bindActionCreators } from 'redux';
 
 class RegisterForm extends Component {

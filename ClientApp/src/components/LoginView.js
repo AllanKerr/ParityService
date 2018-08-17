@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoginForm from './LoginForm';
+import LoginForm from './forms/LoginForm';
 import FormCard from './FormCard';
 import XsrfProtection from './security/XsrfProtection';
 import { actionCreators } from '../store/Login';

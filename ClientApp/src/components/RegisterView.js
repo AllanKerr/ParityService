@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RegisterForm from './RegisterForm';
+import RegisterForm from './forms/RegisterForm';
 import FormCard from './FormCard';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { FormInput, FormSubmitButton } from './forms/FormComponents';
-import { actionCreators } from '../store/Login';
+import { FormInput, FormSubmitButton } from './FormComponents';
+import { actionCreators } from '../../store/Login';
 
 class LoginForm extends Component {
   onSubmit = event => {
