@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import RegisterForm from './RegisterForm';
+import LoginForm from './LoginForm';
 import FormCard from './FormCard';
 
-class RegisterPage extends Component {
+class LoginView extends Component {
   render() {
     return (
       <FormCard>
-        <RegisterForm />
+        <LoginForm />
       </FormCard>
     );
   }
 }
 
-export default RegisterPage;
+export default LoginView;
