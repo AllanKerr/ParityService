@@ -21,4 +21,4 @@ const Counter = props => (
 export default connect(
   state => state.counter,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(Authorization(['manager', 'admin'])(Counter));
+)(Authorization(Counter));

@@ -45,7 +45,7 @@ class RegisterForm extends Component {
 
           <FormSubmitButton text="Sign Up" errors={this.props.errors} />
         </form>
-        <Link className="link" to="/">
+        <Link className="link" to="/login">
           Already have an account?
         </Link>
       </div>

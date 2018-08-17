@@ -16,8 +16,8 @@ class NavMenu extends Component {
     var userAction;
     if (this.props.user == null) {
       userAction = (
-        <div className="user-action-container">
-          <Link to="/" className="button primary medium">
+        <div>
+          <Link to="/login" className="button primary medium">
             Log In
           </Link>
           <Link to="/register" className="button secondary medium">

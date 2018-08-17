@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../../store/User';
 import { Redirect } from 'react-router-dom';
 
-const Authorization = allowedRoles => WrappedComponent => {
+const Authorization = WrappedComponent => {
   const WithAuthorization = props => {
-    const loginRedirect = <Redirect to="/" />;
     if (props.user == null) {
-      return loginRedirect;
+      return <Redirect to="/login" />;
     }
     return <WrappedComponent {...props} />;
   };
