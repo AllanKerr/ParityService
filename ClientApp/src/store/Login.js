@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { actionCreators as userActionCreators } from './User';
 
-const receiveLoginResponseType = 'RECEIVE_LOGIN_RESPONSE';
+const setLoginErrorsType = 'SET_LOGIN_ERRORS';
 const initialState = { errors: [] };
 
 export const actionCreators = {
@@ -20,17 +20,24 @@ export const actionCreators = {
       .catch(error => {
         console.log(error);
         dispatch({
-          type: receiveLoginResponseType,
+          type: setLoginErrorsType,
           errors: error.response.data
         });
       });
+  },
+
+  clearErrors: () => {
+    return {
+      type: setLoginErrorsType,
+      errors: []
+    };
   }
 };
 
 export const reducer = (state, action) => {
   state = state || initialState;
 
-  if (action.type === receiveLoginResponseType) {
+  if (action.type === setLoginErrorsType) {
     return {
       ...state,
       errors: action.errors
