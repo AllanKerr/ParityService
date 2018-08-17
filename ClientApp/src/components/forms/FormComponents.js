@@ -16,7 +16,9 @@ const FormInput = props => (
 
 const FormSubmitButton = props => (
   <div className="form-row">
-    <button className="form-submit-button">{props.text}</button>
+    <button className="button primary large form-submit-button">
+      {props.text}
+    </button>
     <FormError errors={props.errors} />
   </div>
 );
