@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './HomeView.css';
 import AssetItem from './AssetItem';
 import AssetItemTotal from './AssetItemTotal';
+import SearchBar from './SearchBar';
 
 class AssetPicker extends Component {
   constructor(props) {
@@ -12,7 +13,35 @@ class AssetPicker extends Component {
     };
   }
 
+  onSearch = searchText => {
+    const assets = this.state.assets;
+    const symbol = searchText.toUpperCase();
+    if (assets.hasOwnProperty(symbol)) {
+      return;
+    }
+    if (assets === {}) {
+      assets[symbol] = 100;
+    } else {
+      assets[symbol] = 0;
+    }
+    this.setState({
+      assets: assets,
+      isModified: true
+    });
+  };
+
+  save = event => {
+    this.setState({
+      ...this.state,
+      isModified: false
+    });
+    const nextAssets = this.copyAssets(this.state.assets);
+    this.props.onSave(nextAssets);
+    console.log(this.props.assets);
+  };
+
   reset = event => {
+    console.log(this.props.assets);
     const nextAssets = this.copyAssets(this.props.assets);
     this.setState({
       assets: nextAssets,
@@ -69,6 +98,7 @@ class AssetPicker extends Component {
     const total = this.getTotal();
     return (
       <div>
+        <SearchBar onSearch={this.onSearch} />
         <div className="asset-item-container">
           {this.getAssets().map(asset => (
             <AssetItem
@@ -82,6 +112,7 @@ class AssetPicker extends Component {
         </div>
         <div className="asset-item-actions">
           <button
+            onClick={this.save}
             disabled={!this.state.isModified || total !== 100}
             className="button primary medium"
           >
