@@ -7,13 +7,41 @@ class AssetPicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      assets: props.assets
+      assets: this.copyAssets(props.assets),
+      isModified: false
     };
   }
 
-  changeTarget = (oldValue, newValue) => {
-    const newTotal = this.state.total - oldValue + newValue;
-    this.setState({ total: newTotal });
+  reset = event => {
+    const nextAssets = this.copyAssets(this.props.assets);
+    this.setState({
+      assets: nextAssets,
+      isModified: false
+    });
+  };
+
+  changeAllocation = (symbol, nextAllocation) => {
+    const nextState = this.state;
+    nextState.assets[symbol] = nextAllocation;
+    nextState.isModified = true;
+    this.setState(nextState);
+  };
+
+  removeAsset = symbol => {
+    const nextState = this.state;
+    delete nextState.assets[symbol];
+    nextState.isModified = true;
+    this.setState(nextState);
+  };
+
+  copyAssets = assets => {
+    const copy = {};
+    for (const symbol in assets) {
+      if (assets.hasOwnProperty(symbol)) {
+        copy[symbol] = assets[symbol];
+      }
+    }
+    return copy;
   };
 
   getAssets = () => {
@@ -27,8 +55,18 @@ class AssetPicker extends Component {
     return assets;
   };
 
+  getTotal = () => {
+    let total = 0;
+    for (const symbol in this.state.assets) {
+      if (this.state.assets.hasOwnProperty(symbol)) {
+        total += this.state.assets[symbol];
+      }
+    }
+    return total;
+  };
+
   render() {
-    console.log('render?');
+    const total = this.getTotal();
     return (
       <div>
         <div className="asset-item-container">
@@ -36,14 +74,26 @@ class AssetPicker extends Component {
             <AssetItem
               key={asset.symbol}
               {...asset}
-              onChange={this.changeTarget}
+              onChange={this.changeAllocation}
+              onRemove={this.removeAsset}
             />
           ))}
-          <AssetItemTotal total={this.state.total} />
+          <AssetItemTotal total={this.getTotal()} />
         </div>
         <div className="asset-item-actions">
-          <button className="button primary medium">Save</button>
-          <button className="button secondary medium">Reset</button>
+          <button
+            disabled={!this.state.isModified || total !== 100}
+            className="button primary medium"
+          >
+            Save
+          </button>
+          <button
+            disabled={!this.state.isModified}
+            onClick={this.reset}
+            className="button secondary medium"
+          >
+            Reset
+          </button>
         </div>
       </div>
     );

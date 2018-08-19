@@ -15,16 +15,10 @@ const COLORS = [
 
 class AssetItem extends Component {
   state = {
-    allocation: 0,
     barColor: COLORS[Math.floor(Math.random() * COLORS.length)]
   };
 
-  constructor(props) {
-    super(props);
-    this.state.allocation = props.allocation;
-  }
-
-  changeTarget = event => {
+  changeAllocation = event => {
     var targetValue = event.target.value;
     if (targetValue > 100) {
       targetValue = 100;
@@ -33,13 +27,16 @@ class AssetItem extends Component {
     } else {
       targetValue = Number(targetValue);
     }
-    this.props.onChange(this.state.allocation, targetValue);
-    this.setState({ allocation: targetValue });
+    this.props.onChange(this.props.symbol, targetValue);
+  };
+
+  remove = event => {
+    this.props.onRemove(this.props.symbol);
   };
 
   render() {
     const style = {
-      width: `${this.state.allocation}%`,
+      width: `${this.props.allocation}%`,
       backgroundColor: this.state.barColor
     };
 
@@ -60,10 +57,10 @@ class AssetItem extends Component {
       >
         <span className="accessory percent">
           <input
-            value={this.state.value}
+            value={this.props.allocation}
             id={`${this.props.symbol}-input`}
             placeholder={0}
-            onChange={this.changeTarget}
+            onChange={this.changeAllocation}
             min={0}
             max={100}
             type="number"
@@ -73,6 +70,7 @@ class AssetItem extends Component {
       <button
         key={`${this.props.symbol}-button`}
         className="button destructive medium"
+        onClick={this.remove}
       >
         Remove
       </button>

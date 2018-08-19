@@ -46,6 +46,10 @@
   transition: background-color 0.2s;
 }
 
+.button.primary[disabled] {
+  background-color: #c5c4ea;
+}
+
 .button.secondary {
   background-color: white;
   border-color: currentColor;
@@ -55,6 +59,10 @@
 .button.secondary:hover {
   color: #403866;
   transition: color 0.2s;
+}
+
+.button.secondary[disabled] {
+  color: #c5c4ea;
 }
 
 .button.destructive {
@@ -166,19 +174,23 @@ label {
   margin-right: auto;
 }
 
-.card.form {
+.card {
   width: 100%;
-  max-width: 544px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0;
 }
 
 @media screen and (min-width: 550px) {
+  .card {
+    width: 90%;
+    border-radius: 0.5em;
+  }
+
   .card.form {
-    width: 75%;
+    max-width: 544px;
   }
 }
 
 @media screen and (min-width: 900px) {
-  .card.form {
-    width: 40%;
-  }
 }

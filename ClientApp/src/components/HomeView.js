@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Authorization from './auth/Authorization';
 import './HomeView.css';
 import AssetPicker from './AssetPicker';
