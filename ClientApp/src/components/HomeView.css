@@ -1,0 +1,78 @@
+.bar {
+  height: 100%;
+  background-color: #e44823;
+  transition: width 0.2s;
+}
+
+.bar-container {
+  flex-grow: 1;
+  background-color: white;
+  border-radius: 0.25em;
+  overflow: hidden;
+  border-color: #ddd;
+  border-style: solid;
+  border-width: 0.055em;
+}
+
+input[type='number'] {
+  border-style: solid;
+  border-width: 0.055em;
+  border-color: #ddd;
+  color: #000;
+  font-size: inherit;
+  border-radius: 0.25em;
+  width: 5em;
+  text-align: right;
+  height: 100%;
+  padding-right: 1.5em;
+}
+
+.container.accessory-input {
+  position: relative;
+  font-size: 1em;
+}
+
+.accessory.percent:after {
+  content: '%';
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  line-height: 0;
+}
+
+.asset-item-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-auto-rows: 3em;
+  grid-gap: 0.5em;
+  align-items: center;
+
+  background-color: #f2f2f2;
+  border-color: #ccc;
+  border-width: 0.055em;
+  border-radius: 0.25em;
+  border-style: solid;
+
+  padding: 1em 1em 0.5em 1em;
+}
+
+.asset-item-container > :not(.label) {
+  height: 100%;
+}
+
+.asset-item-container > * {
+  font-size: 1em;
+}
+
+.asset-item-total {
+  grid-column: 3;
+}
+
+.asset-item-actions {
+  text-align: right;
+  margin: 0.5em 0 0.5em 0;
+}
+
+.asset-item-actions > button + button {
+  margin-left: 0.5em;
+}

@@ -18,20 +18,19 @@
 }
 
 .card {
-  width: 100%;
-  max-width: 544px;
-  text-align: center;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  text-align: center;
   padding: 2.5em;
+  margin: 2.5em;
 }
 
 .button {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 0.25em;
-  border-width: 2px;
+  border-width: 0.055em;
   border-style: solid;
   text-decoration: none;
 }
@@ -44,28 +43,60 @@
 
 .button.primary:hover {
   background-color: #403866;
-  transition: background-color 0.4s;
+  transition: background-color 0.2s;
 }
 
 .button.secondary {
-  background-color: transparent;
+  background-color: white;
   border-color: currentColor;
   color: #827ffe;
 }
 
 .button.secondary:hover {
   color: #403866;
-  transition: color 0.4s;
+  transition: color 0.2s;
+}
+
+.button.destructive {
+  background-color: white;
+  border-color: currentColor;
+  color: #e4715c;
+  font-weight: normal;
+}
+
+.button.destructive:hover {
+  color: #585858;
+  transition: color 0.2s;
 }
 
 .button.medium {
   font-size: 1em;
-  padding: 0.45em 1.1em;
+  padding: 0.65em 1.25em;
 }
 
 .button.large {
   font-size: 1.25em;
   padding: 0.65em 1.25em;
+}
+
+.label {
+  color: black;
+}
+
+.label.primary {
+  font-weight: bold;
+}
+
+.label.error {
+  color: #e4715c;
+}
+
+.label.medium {
+  font-size: 1em;
+}
+
+.label.large {
+  font-size: 1.25em;
 }
 
 .form-submit-button {
@@ -129,17 +160,25 @@ label {
   display: block;
 }
 
-.form-error {
+.document-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card.form {
+  width: 100%;
+  max-width: 544px;
 }
 
 @media screen and (min-width: 550px) {
-  .card {
+  .card.form {
     width: 75%;
   }
 }
 
 @media screen and (min-width: 900px) {
-  .card {
+  .card.form {
     width: 40%;
   }
 }
