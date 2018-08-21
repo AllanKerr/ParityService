@@ -5,13 +5,15 @@ import * as Login from './Login';
 import * as Logout from './Logout';
 import * as Register from './Register';
 import * as User from './User';
+import * as Allocations from './Allocations';
 
 export default function configureStore(history, initialState) {
   const reducers = {
     login: Login.reducer,
     logout: Logout.reducer,
     register: Register.reducer,
-    account: User.reducer
+    account: User.reducer,
+    allocations: Allocations.reducer
   };
 
   const middleware = [thunk, routerMiddleware(history), User.middleware];

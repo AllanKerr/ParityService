@@ -23,11 +23,17 @@ namespace ParityUI.Controllers
             m_logger = logger;
         }
 
-        [HttpPut(Name = "Allocations")]
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateAllocations([FromBody] AllocationsViewModel model)
+        public async Task<IActionResult> Update([FromBody] AllocationsViewModel model)
         {
-            m_logger.LogCritical(model.ToString());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            foreach(var t in model.Allocations) {
+                          m_logger.LogCritical($"{t.Key} : {t.Value}");
+            }
             return Ok();
         }
     }
