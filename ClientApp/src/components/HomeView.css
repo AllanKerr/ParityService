@@ -88,6 +88,13 @@ input[type='number'] {
   padding-right: 0;
 }
 
+.no-items-label {
+  display: block;
+  color: #666;
+  font-size: 1.25em;
+  margin: 2em auto 2em auto;
+}
+
 @media screen and (min-width: 550px) {
   .card {
     padding-left: 2.5em;

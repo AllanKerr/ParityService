@@ -18,13 +18,17 @@ class AssetPicker extends Component {
     };
   }
 
+  hasAssets = () => {
+    return Object.keys(this.state.assets).length !== 0;
+  };
+
   onSearch = searchText => {
     const assets = this.state.assets;
     const symbol = searchText.toUpperCase();
     if (assets.hasOwnProperty(symbol)) {
       return;
     }
-    if (Object.keys(assets).length === 0) {
+    if (!this.hasAssets()) {
       assets[symbol] = 100;
     } else {
       assets[symbol] = 0;
@@ -117,30 +121,44 @@ class AssetPicker extends Component {
 
   render() {
     const total = this.getTotal();
+
+    var content;
+    if (this.hasAssets()) {
+      content = (
+        <Loadable loading={this.props.loading}>
+          <div className="asset-item-container">
+            {this.getAssets().map(asset => (
+              <AssetItem
+                key={asset.symbol}
+                {...asset}
+                onChange={this.changeAllocation}
+                onRemove={this.removeAsset}
+              />
+            ))}
+            <AssetItemTotal total={this.getTotal()} />
+          </div>
+        </Loadable>
+      );
+    } else {
+      content = (
+        <strong className="no-items-label">
+          Use the search bar to add symbols.
+        </strong>
+      );
+    }
+
     return (
       <div>
         <SearchBar disabled={this.props.loading} onSearch={this.onSearch} />
-        <div className="loadable-allocation-item-container">
-          <Loadable loading={this.props.loading}>
-            <div className="asset-item-container">
-              {this.getAssets().map(asset => (
-                <AssetItem
-                  key={asset.symbol}
-                  {...asset}
-                  onChange={this.changeAllocation}
-                  onRemove={this.removeAsset}
-                />
-              ))}
-              <AssetItemTotal total={this.getTotal()} />
-            </div>
-          </Loadable>
-        </div>
+        <div className="loadable-allocation-item-container">{content}</div>
         <FormError errors={this.props.errors} />
         <div className="asset-item-actions">
           <button
             onClick={this.save}
             disabled={
-              this.props.loading || !this.state.isModified || total !== 100
+              this.props.loading ||
+              !this.state.isModified ||
+              (total !== 100 && this.hasAssets())
             }
             className="button primary medium"
           >
