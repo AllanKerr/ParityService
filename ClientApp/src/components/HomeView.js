@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import XsrfProtection from './security/XsrfProtection';
 import { actionCreators } from '../store/Allocations';
 import Authorization from './auth/Authorization';
+import DocumentPage from './DocumentPage';
 
 class HomeView extends Component {
   saveAssets = nextAssets => {
@@ -15,14 +16,9 @@ class HomeView extends Component {
 
   render() {
     return (
-      <div className="document-container">
-        <div className="card">
-          <AssetPicker
-            onSave={this.saveAssets}
-            assets={this.props.allocations}
-          />
-        </div>
-      </div>
+      <DocumentPage>
+        <AssetPicker onSave={this.saveAssets} assets={this.props.allocations} />
+      </DocumentPage>
     );
   }
 }
