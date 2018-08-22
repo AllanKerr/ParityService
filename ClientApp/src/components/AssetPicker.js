@@ -24,7 +24,7 @@ class AssetPicker extends Component {
     if (assets.hasOwnProperty(symbol)) {
       return;
     }
-    if (assets === {}) {
+    if (Object.keys(assets).length === 0) {
       assets[symbol] = 100;
     } else {
       assets[symbol] = 0;
