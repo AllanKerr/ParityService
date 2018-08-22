@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using ParityUI.Models;
 using ParityUI.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System;
 
 namespace ParityUI.Controllers
 {
@@ -31,8 +33,14 @@ namespace ParityUI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            foreach(var t in model.Allocations) {
-                          m_logger.LogCritical($"{t.Key} : {t.Value}");
+            decimal sum = Math.Round(model.Allocations.Values.Aggregate((a, b) => a + b));
+            if (Math.Round(sum) != 100) {
+              ModelState.AddModelError(string.Empty, $"The allocations must add up to 100%, received {sum}%.");
+              return BadRequest(ModelState);
+            }
+            foreach (var t in model.Allocations)
+            {
+                m_logger.LogCritical($"{t.Key} : {t.Value}");
             }
             return Ok();
         }
