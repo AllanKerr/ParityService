@@ -7,33 +7,29 @@ const DEFAULT_PLACEHOLDER_TEXT = 'Search for a symbol';
 const ENTER_KEY_CODE = 13;
 
 class SearchBar extends Component {
-  searchText = '';
-
   state = {
-    hasSearchText: false
+    searchText: ''
   };
 
   onKeyPress = event => {
     if (event.keyCode !== ENTER_KEY_CODE) {
       return;
     }
-    if (!this.state.hasSearchText) {
+    if (this.state.searchText === '') {
       return;
     }
-    this.props.onSearch(this.searchText);
+    this.props.onSearch(this.state.searchText);
+    this.setState({ searchText: '' });
   };
 
   onSearch = event => {
-    this.props.onSearch(this.searchText);
+    this.props.onSearch(this.state.searchText);
+    this.setState({ searchText: '' });
   };
 
   onSearchTextChange = event => {
-    this.searchText = event.target.value;
-    const hasSearchText = this.searchText.length !== 0;
-
-    if (hasSearchText !== this.state.hasSearchText) {
-      this.setState({ hasSearchText });
-    }
+    const searchText = event.target.value;
+    this.setState({ searchText });
   };
 
   render() {
@@ -54,9 +50,10 @@ class SearchBar extends Component {
           placeholder={placeHolderText}
           className="search-input"
           type="text"
+          value={this.state.searchText}
         />
         <button
-          disabled={this.props.disabled || !this.state.hasSearchText}
+          disabled={this.props.disabled || this.state.searchText === ''}
           onClick={this.onSearch}
           className="button primary medium search-button"
         >
