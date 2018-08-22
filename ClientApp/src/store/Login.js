@@ -18,7 +18,7 @@ export const actionCreators = {
         dispatch(userActionCreators.setUser(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
         dispatch({
           type: setLoginErrorsType,
           errors: error.response.data

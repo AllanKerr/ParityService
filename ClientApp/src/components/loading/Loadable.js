@@ -4,10 +4,10 @@ import LoadingIndicator from './LoadingIndicator';
 
 export default props => {
   var className;
-  if (props.hidden) {
-    className = 'overlay hidden';
-  } else {
+  if (props.loading) {
     className = 'overlay';
+  } else {
+    className = 'overlay hidden';
   }
 
   return (

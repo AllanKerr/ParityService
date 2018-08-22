@@ -1,10 +1,14 @@
 import axios from 'axios';
+import { actionCreators as allocationsPickerActionCreators } from './AllocationsPicker';
+import { getResponseErrors } from '../util/ResponseUtil';
 
 const updateAllocationsType = 'UPDATE_ALLOCATIONS';
 const initialState = { allocations: {} };
 
 export const actionCreators = {
   update: (xsrfToken, data) => async dispatch => {
+    dispatch(allocationsPickerActionCreators.startLoading());
+
     const config = {
       headers: {
         RequestVerificationToken: xsrfToken
@@ -18,9 +22,12 @@ export const actionCreators = {
           type: updateAllocationsType,
           allocations: data
         });
+        dispatch(allocationsPickerActionCreators.finishLoading({}));
       })
       .catch(error => {
-        console.log(error);
+        var errors = getResponseErrors(error.response);
+        console.log(errors);
+        dispatch(allocationsPickerActionCreators.finishLoading(errors));
       });
   }
 };

@@ -56,7 +56,7 @@ class SearchBar extends Component {
           type="text"
         />
         <button
-          disabled={!this.state.hasSearchText}
+          disabled={this.props.disabled || !this.state.hasSearchText}
           onClick={this.onSearch}
           className="button primary medium search-button"
         >
