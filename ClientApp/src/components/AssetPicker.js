@@ -3,6 +3,7 @@ import './HomeView.css';
 import AssetItem from './AssetItem';
 import AssetItemTotal from './AssetItemTotal';
 import SearchBar from './SearchBar';
+import Loadable from './loading/Loadable';
 
 class AssetPicker extends Component {
   constructor(props) {
@@ -99,16 +100,20 @@ class AssetPicker extends Component {
     return (
       <div>
         <SearchBar onSearch={this.onSearch} />
-        <div className="asset-item-container">
-          {this.getAssets().map(asset => (
-            <AssetItem
-              key={asset.symbol}
-              {...asset}
-              onChange={this.changeAllocation}
-              onRemove={this.removeAsset}
-            />
-          ))}
-          <AssetItemTotal total={this.getTotal()} />
+        <div className="loadable-allocation-item-container">
+          <Loadable>
+            <div className="asset-item-container">
+              {this.getAssets().map(asset => (
+                <AssetItem
+                  key={asset.symbol}
+                  {...asset}
+                  onChange={this.changeAllocation}
+                  onRemove={this.removeAsset}
+                />
+              ))}
+              <AssetItemTotal total={this.getTotal()} />
+            </div>
+          </Loadable>
         </div>
         <div className="asset-item-actions">
           <button

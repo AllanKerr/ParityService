@@ -40,20 +40,21 @@ input[type='number'] {
   line-height: 0;
 }
 
+.loadable-allocation-item-container {
+  background-color: #f2f2f2;
+  border-color: #ccc;
+  border-width: 0.055em;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  overflow: hidden;
+}
+
 .asset-item-container {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   grid-auto-rows: 3em;
   grid-gap: 0.5em;
   align-items: center;
-
-  background-color: #f2f2f2;
-  border-color: #ccc;
-  border-width: 0.055em;
-
-  border-top-style: solid;
-  border-bottom-style: solid;
-
   padding: 1em 1em 0.5em 1em;
 }
 
@@ -97,7 +98,7 @@ input[type='number'] {
     margin-right: 0;
   }
 
-  .asset-item-container {
+  .loadable-allocation-item-container {
     border-left-style: solid;
     border-right-style: solid;
     border-radius: 0.25em;
