@@ -83,7 +83,7 @@ input[type='number'] {
   margin-right: 1em;
 }
 
-.card {
+.card-content {
   padding-left: 0;
   padding-right: 0;
 }
@@ -96,7 +96,7 @@ input[type='number'] {
 }
 
 @media screen and (min-width: 550px) {
-  .card {
+  .card-content {
     padding-left: 2.5em;
     padding-right: 2.5em;
   }
