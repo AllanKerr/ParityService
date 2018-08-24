@@ -5,6 +5,7 @@ import RegisterView from './components/RegisterView';
 import LoginView from './components/LoginView';
 import LandingView from './components/LandingView';
 import HomeView from './components/HomeView';
+import AccountLinkView from './components/AccountLinkView';
 
 export default () => (
   <Layout>
@@ -12,5 +13,6 @@ export default () => (
     <Route path="/login" component={LoginView} />
     <Route path="/register" component={RegisterView} />
     <Route path="/home" component={HomeView} />
+    <Route path="/account/link" component={AccountLinkView} />
   </Layout>
 );

@@ -1,0 +1,11 @@
+.inline-form {
+  display: flex;
+}
+
+.inline-form > * + * {
+  margin-left: 0.5em;
+}
+
+.card-fill {
+  margin: -2.5em;
+}
