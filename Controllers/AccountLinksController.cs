@@ -8,6 +8,7 @@ using ParityUI.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace ParityUI.Controllers
 {
@@ -33,7 +34,63 @@ namespace ParityUI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok();
+
+            var margin = new AccountViewModel();
+            margin.AccountNumber = "35055923";
+            margin.AccountType = AccountType.Margin;
+            margin.HasContributionLimit = false;
+
+            var tfsa = new AccountViewModel();
+            tfsa.AccountNumber = "63480923";
+            tfsa.AccountType = AccountType.TFSA;
+            tfsa.HasContributionLimit = true;
+
+            var rrsp = new AccountViewModel();
+            rrsp.AccountNumber = "43987234";
+            rrsp.AccountType = AccountType.RRSP;
+            rrsp.HasContributionLimit = true;
+
+            var accountLink = new AccountLinkViewModel();
+            accountLink.CreationTime = DateTime.UtcNow;
+            accountLink.IsPractice = model.IsPractice;
+            accountLink.IsAuthenticated = true;
+            accountLink.Accounts = new List<AccountViewModel>() {
+                margin,
+                tfsa,
+                rrsp
+            };
+
+            return CreatedAtRoute("AccountLink", accountLink);
+        }
+
+        [HttpGet(Name = "AccountLink")]
+        public async Task<IActionResult> GetAccountLink()
+        {
+            var margin = new AccountViewModel();
+            margin.AccountNumber = "35055923";
+            margin.AccountType = AccountType.Margin;
+            margin.HasContributionLimit = false;
+
+            var tfsa = new AccountViewModel();
+            tfsa.AccountNumber = "63480923";
+            tfsa.AccountType = AccountType.TFSA;
+            tfsa.HasContributionLimit = true;
+
+            var rrsp = new AccountViewModel();
+            rrsp.AccountNumber = "43987234";
+            rrsp.AccountType = AccountType.RRSP;
+            rrsp.HasContributionLimit = true;
+
+            var accountLink = new AccountLinkViewModel();
+            accountLink.CreationTime = DateTime.UtcNow;
+            accountLink.IsPractice = true;
+            accountLink.IsAuthenticated = true;
+            accountLink.Accounts = new List<AccountViewModel>() {
+                margin,
+                tfsa,
+                rrsp
+            };
+            return Ok(accountLink);
         }
     }
 }
