@@ -58,7 +58,6 @@
 
 .modal-container > header {
   padding: 0.5em 0.5em 0.5em 0.5em;
-  background-color: transparent;
   width: 100%;
   border-bottom-style: solid;
   border-bottom-color: lightgray;
@@ -66,10 +65,22 @@
   position: relative;
 }
 
+.modal-container > footer {
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  width: 100%;
+  border-top-style: solid;
+  border-top-color: lightgray;
+  border-top-width: 1px;
+}
+
 .modal-container > header > h1 {
   margin: 0;
   color: #5a5a5a;
   font-weight: lighter;
+}
+
+.modal-container > footer * + * {
+  margin-left: 0.5em;
 }
 
 @media screen and (min-width: 600px) {

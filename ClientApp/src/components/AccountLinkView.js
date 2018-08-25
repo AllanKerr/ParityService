@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import XsrfProtection from './security/XsrfProtection';
 import { actionCreators } from '../store/AccountLinks';
-import Modal from './Modal';
+import { MultiActionModal } from './Modal';
 
 class AccountLinkView extends Component {
   state = {
@@ -40,7 +40,7 @@ class AccountLinkView extends Component {
             />
           </label>
         </InlineForm>
-        <Modal />
+        <MultiActionModal />
       </DocumentPage>
     );
   }
