@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import XsrfProtection from './security/XsrfProtection';
 import { actionCreators } from '../store/AccountLinks';
-import { MultiActionModal } from './Modal';
+import AccountLinkItem from './AccountLinkItem';
 
 class AccountLinkView extends Component {
   state = {
@@ -18,7 +18,6 @@ class AccountLinkView extends Component {
       refreshToken: target.Input.value,
       isPractice: target.IsPractice.checked
     };
-    this.setState({ loading: true });
     this.props.addAccountLink(this.props.xsrfToken, data);
   };
 
@@ -40,6 +39,12 @@ class AccountLinkView extends Component {
             />
           </label>
         </InlineForm>
+
+        <ul>
+          {this.props.accountLinks.map(accountLink => (
+            <AccountLinkItem accountLink={accountLink} />
+          ))}
+        </ul>
       </DocumentPage>
     );
   }
