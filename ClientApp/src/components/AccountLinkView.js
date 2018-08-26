@@ -40,13 +40,12 @@ class AccountLinkView extends Component {
             />
           </label>
         </InlineForm>
-        <MultiActionModal />
       </DocumentPage>
     );
   }
 }
 
 export default connect(
-  _ => ({}),
+  state => state.accountLinks,
   dispatch => bindActionCreators(actionCreators, dispatch)
 )(XsrfProtection(AccountLinkView));

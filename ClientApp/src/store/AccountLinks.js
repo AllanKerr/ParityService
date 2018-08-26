@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { actionCreators as allocationsPickerActionCreators } from './AllocationsPicker';
+
+const ADD_ACCOUNT_LINK = 'ADD_ACCOUNT_LINK';
+const initialState = { accountLinks: [] };
 
 export const actionCreators = {
   addAccountLink: (xsrfToken, data) => async dispatch => {
@@ -12,10 +14,26 @@ export const actionCreators = {
     axios
       .post('accountlinks/add', data, config)
       .then(response => {
-        console.log(response);
+        console.log(response.data);
+        dispatch({ type: ADD_ACCOUNT_LINK, accountLink: response.data });
       })
       .catch(error => {
-        console.log(error.response.data);
+        console.log(error);
       });
   }
+};
+
+export const reducer = (state, action) => {
+  state = state || initialState;
+
+  if (action.type === ADD_ACCOUNT_LINK) {
+    console.log(action.accountLink);
+
+    return {
+      ...state,
+      accountLinks: [...state.accountLinks, action.accountLink]
+    };
+  }
+
+  return state;
 };
