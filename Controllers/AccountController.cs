@@ -16,16 +16,13 @@ namespace ParityUI.Controllers
         private readonly UserManager<AppUser> m_userManager;
         private readonly SignInManager<AppUser> m_signInManager;
         private readonly IEmailSender m_emailSender;
-        private readonly ILogger<AccountController> m_logger;
-
         private readonly IUserClaimsPrincipalFactory<AppUser> m_principleFactory;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender, ILogger<AccountController> logger, IUserClaimsPrincipalFactory<AppUser> principleFactory)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender, IUserClaimsPrincipalFactory<AppUser> principleFactory)
         {
             m_userManager = userManager;
             m_signInManager = signInManager;
             m_emailSender = emailSender;
-            m_logger = logger;
             m_principleFactory = principleFactory;
         }
 
@@ -95,15 +92,6 @@ namespace ParityUI.Controllers
         {
             await m_signInManager.SignOutAsync();
             HttpContext.User = null;
-            return Ok();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
-        {
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             return Ok();
         }
     }
