@@ -17,14 +17,14 @@ using ParityService.Managers;
 namespace ParityUI.Controllers
 {
     [Authorize]
-    public sealed class AccountLinksController : Controller
+    public sealed class LinkedAccountsController : Controller
     {
         private readonly UserManager<AppUser> m_userManager;
-        private readonly ILogger<AccountLinksController> m_logger;
+        private readonly ILogger<LinkedAccountsController> m_logger;
         private readonly ISignInService m_signInService;
         private readonly CredentialsManager m_credentialsManager;
 
-        public AccountLinksController(UserManager<AppUser> userManager, ISignInService signInService, CredentialsManager credentialsManager, ILogger<AccountLinksController> logger)
+        public LinkedAccountsController(UserManager<AppUser> userManager, ISignInService signInService, CredentialsManager credentialsManager, ILogger<LinkedAccountsController> logger)
         {
             m_userManager = userManager;
             m_logger = logger;
@@ -49,7 +49,7 @@ namespace ParityUI.Controllers
             }
             string userId = m_userManager.GetUserId(HttpContext.User);
             AccountLink link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
-            return CreatedAtRoute("GetLinkedAccount", new { id = link.Id }, new AccountLinkViewModel(link));
+            return CreatedAtRoute("GetLinkedAccount", new { id = link.Id }, new LinkedAccountViewModel(link));
         }
 
         [HttpGet("[controller]/{id}", Name = "GetLinkedAccount")]
@@ -60,7 +60,7 @@ namespace ParityUI.Controllers
             if (link == null) {
                 return NotFound();
             }
-            return Ok(new AccountLinkViewModel(link));
+            return Ok(new LinkedAccountViewModel(link));
         }
     }
 }
