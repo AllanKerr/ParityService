@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ParityService.Questrade;
 
 namespace ParityUI
 {
@@ -32,7 +33,7 @@ namespace ParityUI
       services.AddDefaultIdentity<AppUser>()
               .AddEntityFrameworkStores<AppDbContext>();
 
-      services.AddEntityFrameworkInMemoryDatabase().AddDbContext<AppDbContext>(opts => opts.UseInMemoryDatabase("db name"));
+      services.AddQuestrade();
 
       services.AddMvc(options =>
       {
