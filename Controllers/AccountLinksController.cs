@@ -10,6 +10,9 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using ParityUI.Models;
+using ParityService.Questrade;
+using ParityService.Questrade.Models;
+using ParityService.Managers;
 
 namespace ParityUI.Controllers
 {
@@ -19,12 +22,15 @@ namespace ParityUI.Controllers
     {
         private readonly UserManager<AppUser> m_userManager;
         private readonly ILogger<AccountLinksController> m_logger;
+        private readonly ISignInService m_signInService;
+        private readonly CredentialsManager m_credentialsManager;
 
-
-        public AccountLinksController(UserManager<AppUser> userManager, ILogger<AccountLinksController> logger)
+        public AccountLinksController(UserManager<AppUser> userManager, ISignInService signInService, CredentialsManager credentialsManager, ILogger<AccountLinksController> logger)
         {
             m_userManager = userManager;
             m_logger = logger;
+            m_signInService = signInService;
+            m_credentialsManager = credentialsManager;
         }
 
         [HttpPost]
@@ -34,12 +40,17 @@ namespace ParityUI.Controllers
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-
-            
-
-            
-
-            return CreatedAtRoute("AccountLink", null);
+            AuthToken token;
+            try {
+                token = await m_signInService.SignIn(model.RefreshToken, model.IsPractice);
+            } catch(Exception ex) {
+                m_logger.LogWarning($"Failed to link Questrade account: {ex}");
+                ModelState.AddModelError(string.Empty, "Invalid refresh token.");
+                return BadRequest(ModelState);
+            }
+            string userId = m_userManager.GetUserId(HttpContext.User);
+            AccountLink link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
+            return CreatedAtRoute("AccountLink", new AccountLinkViewModel(link));
         }
 
         [HttpGet(Name = "AccountLink")]

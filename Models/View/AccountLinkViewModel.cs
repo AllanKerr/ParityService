@@ -7,12 +7,22 @@ namespace ParityUI.Models.View
   public sealed class AccountLinkViewModel
   {
     [Required]
-    public DateTime CreationTime { get; set; }
+    public string Id { get; private set; }
 
     [Required]
-    public bool IsPractice { get; set; }
+    public bool IsPractice { get; private set; }
 
     [Required]
-    public bool IsAuthenticated { get; set; }
+    public DateTime CreatedAt { get; private set; }
+
+    [Required]
+    public bool IsAuthenticated { get; private set; }
+
+    public AccountLinkViewModel( AccountLink link) {
+      Id = link.Id;
+      IsPractice = link.IsPractice;
+      CreatedAt = link.CreatedAt;
+      IsAuthenticated = link.Credentials != null;
+    }
   }
 }
