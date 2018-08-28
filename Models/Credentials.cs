@@ -8,11 +8,11 @@ namespace ParityUI.Models
 {
   public sealed class Credentials
   {
-    public string AccountLinkId { get; private set; }
+    public int LinkedAccountId { get; private set; }
 
     public string AppUserId { get; private set; }
 
-    public AccountLink AccountLink { get; private set; }
+    public LinkedAccount LinkedAccount { get; private set; }
 
     public string RefreshToken { get; private set; }
 
@@ -24,9 +24,9 @@ namespace ParityUI.Models
 
     public DateTime AccessTokenExpiresAt { get; private set; }
 
-    public Credentials(AccountLink link, Questrade.AuthToken token)
+    public Credentials(LinkedAccount link, Questrade.AuthToken token)
     {
-      AccountLinkId = link.Id;
+      LinkedAccountId = link.Id;
       AppUserId = link.AppUserId;
 
       RefreshToken = token.RefreshToken;

@@ -7,7 +7,7 @@ namespace ParityUI.Models.View
   public sealed class LinkedAccountViewModel
   {
     [Required]
-    public string Id { get; private set; }
+    public int Id { get; private set; }
 
     [Required]
     public bool IsPractice { get; private set; }
@@ -18,7 +18,7 @@ namespace ParityUI.Models.View
     [Required]
     public bool IsAuthenticated { get; private set; }
 
-    public LinkedAccountViewModel( AccountLink link) {
+    public LinkedAccountViewModel( LinkedAccount link) {
       Id = link.Id;
       IsPractice = link.IsPractice;
       CreatedAt = link.CreatedAt;

@@ -26,10 +26,10 @@ namespace ParityService.Managers
       m_logger = logger;
     }
 
-    public AccountLink CreateLink(string userId, bool isPractice, AuthToken token)
+    public LinkedAccount CreateLink(string userId, bool isPractice, AuthToken token)
     {
 
-      AccountLink link = new AccountLink(userId, isPractice);
+      LinkedAccount link = new LinkedAccount(userId, isPractice);
 
       using (IDbContextTransaction transaction = m_context.Database.BeginTransaction())
       {
@@ -45,7 +45,7 @@ namespace ParityService.Managers
       return link;
     }
 
-    public AccountLink GetLink(string userId, string id) {
+    public LinkedAccount GetLink(string userId, int id) {
 
         return m_context.LinkedAccounts.Find(id, userId);
     }

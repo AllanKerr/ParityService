@@ -48,15 +48,15 @@ namespace ParityUI.Controllers
                 return BadRequest(ModelState);
             }
             string userId = m_userManager.GetUserId(HttpContext.User);
-            AccountLink link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
+            LinkedAccount link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
             return CreatedAtRoute("GetLinkedAccount", new { id = link.Id }, new LinkedAccountViewModel(link));
         }
 
         [HttpGet("[controller]/{id}", Name = "GetLinkedAccount")]
-        public IActionResult GetLinkedAccount(string id)
+        public IActionResult GetLinkedAccount(int id)
         {
             string userId = m_userManager.GetUserId(HttpContext.User);
-            AccountLink link = m_credentialsManager.GetLink(userId, id);
+            LinkedAccount link = m_credentialsManager.GetLink(userId, id);
             if (link == null) {
                 return NotFound();
             }

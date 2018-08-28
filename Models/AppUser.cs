@@ -6,6 +6,6 @@ namespace ParityUI.Models
 {
     public sealed class AppUser : IdentityUser
     {
-        public List<AccountLink> LinkedAccounts { get; private set; }
+        public List<LinkedAccount> LinkedAccounts { get; private set; }
     }
 }

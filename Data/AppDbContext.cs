@@ -7,7 +7,7 @@ namespace ParityUI.Data
 {
   public class AppDbContext : IdentityDbContext<AppUser>
   {
-    public DbSet<AccountLink> LinkedAccounts { get; set; }
+    public DbSet<LinkedAccount> LinkedAccounts { get; set; }
 
     public DbSet<Credentials> Credentials { get; set; }
 
@@ -20,15 +20,15 @@ namespace ParityUI.Data
     {
       base.OnModelCreating(builder);
 
-      builder.Entity<AccountLink>().HasKey(link => new { link.Id, link.AppUserId });
-      builder.Entity<AccountLink>().Property(link => link.Id).ValueGeneratedOnAdd();
+      builder.Entity<LinkedAccount>().HasKey(link => new { link.Id, link.AppUserId });
+      builder.Entity<LinkedAccount>().Property(link => link.Id).ValueGeneratedOnAdd();
 
-      builder.Entity<Credentials>().HasKey(credentials => new { credentials.AccountLinkId, credentials.AppUserId });
+      builder.Entity<Credentials>().HasKey(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
 
-      builder.Entity<AccountLink>()
+      builder.Entity<LinkedAccount>()
         .HasOne(link => link.Credentials)
-        .WithOne(creds => creds.AccountLink)
-        .HasForeignKey<Credentials>(credentials => new { credentials.AccountLinkId, credentials.AppUserId });
+        .WithOne(creds => creds.LinkedAccount)
+        .HasForeignKey<Credentials>(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
     }
   }
 }
