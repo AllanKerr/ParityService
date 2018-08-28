@@ -26,7 +26,9 @@ namespace ParityUI
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<AppDbContext>(opts => opts.UseInMemoryDatabase("default"));
+      string connectionString = Configuration.GetConnectionString("PostgresConnection");
+      services.AddEntityFrameworkNpgsql()
+              .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connectionString));
       services.AddDefaultIdentity<AppUser>()
               .AddEntityFrameworkStores<AppDbContext>();
 
