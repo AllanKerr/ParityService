@@ -62,5 +62,13 @@ namespace ParityUI.Controllers
             }
             return Ok(new LinkedAccountViewModel(link));
         }
+
+        [HttpGet("[controller]", Name = "LinkedAccounts")]
+        public async Task<IActionResult> GetLinkedAccounts() {
+
+            AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
+            IEnumerable<LinkedAccountViewModel> linkedAccounts = user.LinkedAccounts.Select(link => new LinkedAccountViewModel(link));
+            return Ok(linkedAccounts);
+        }
     }
 }
