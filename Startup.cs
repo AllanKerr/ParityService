@@ -12,6 +12,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ParityService.Questrade;
+using ParityService.Managers;
 
 namespace ParityUI
 {
@@ -34,6 +35,7 @@ namespace ParityUI
               .AddEntityFrameworkStores<AppDbContext>();
 
       services.AddQuestrade();
+      services.AddManagers();
 
       services.AddMvc(options =>
       {
