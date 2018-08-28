@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ParityUI.Models
+namespace ParityUI.Models.View
 {
     public sealed class LoginViewModel
     {
@@ -12,7 +12,6 @@ namespace ParityUI.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
 }

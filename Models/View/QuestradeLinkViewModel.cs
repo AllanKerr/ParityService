@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParityUI.Models
+namespace ParityUI.Models.View
 {
-    public sealed class RefreshTokenViewModel
+    public sealed class QuestradeLinkViewModel
     {
         [Required]
         public string RefreshToken { get; set; }

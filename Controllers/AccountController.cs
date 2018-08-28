@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using ParityUI.Models.View;
 using ParityUI.Models;
 using ParityUI.Extensions;
 using Microsoft.Extensions.Logging;

@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using ParityUI.Models;
+using ParityUI.Models.View;
 using ParityUI.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using ParityUI.Models;
 
 namespace ParityUI.Controllers
 {
@@ -28,69 +29,24 @@ namespace ParityUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([FromBody] RefreshTokenViewModel model)
+        public async Task<IActionResult> Add([FromBody] QuestradeLinkViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            var margin = new AccountViewModel();
-            margin.AccountNumber = "35055923";
-            margin.AccountType = AccountType.Margin;
-            margin.HasContributionLimit = false;
+            
 
-            var tfsa = new AccountViewModel();
-            tfsa.AccountNumber = "63480923";
-            tfsa.AccountType = AccountType.TFSA;
-            tfsa.HasContributionLimit = true;
+            
 
-            var rrsp = new AccountViewModel();
-            rrsp.AccountNumber = "43987234";
-            rrsp.AccountType = AccountType.RRSP;
-            rrsp.HasContributionLimit = true;
-
-            var accountLink = new AccountLinkViewModel();
-            accountLink.CreationTime = DateTime.UtcNow;
-            accountLink.IsPractice = model.IsPractice;
-            accountLink.IsAuthenticated = true;
-            accountLink.Accounts = new List<AccountViewModel>() {
-                margin,
-                tfsa,
-                rrsp
-            };
-
-            return CreatedAtRoute("AccountLink", accountLink);
+            return CreatedAtRoute("AccountLink", null);
         }
 
         [HttpGet(Name = "AccountLink")]
         public async Task<IActionResult> GetAccountLink()
         {
-            var margin = new AccountViewModel();
-            margin.AccountNumber = "35055923";
-            margin.AccountType = AccountType.Margin;
-            margin.HasContributionLimit = false;
-
-            var tfsa = new AccountViewModel();
-            tfsa.AccountNumber = "63480923";
-            tfsa.AccountType = AccountType.TFSA;
-            tfsa.HasContributionLimit = true;
-
-            var rrsp = new AccountViewModel();
-            rrsp.AccountNumber = "43987234";
-            rrsp.AccountType = AccountType.RRSP;
-            rrsp.HasContributionLimit = true;
-
-            var accountLink = new AccountLinkViewModel();
-            accountLink.CreationTime = DateTime.UtcNow;
-            accountLink.IsPractice = true;
-            accountLink.IsAuthenticated = true;
-            accountLink.Accounts = new List<AccountViewModel>() {
-                margin,
-                tfsa,
-                rrsp
-            };
-            return Ok(accountLink);
+            
+            return Ok(null);
         }
     }
 }
