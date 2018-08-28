@@ -130,24 +130,6 @@ namespace ParityService.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ParityUI.Models.AccountLink", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<bool>("IsPractice");
-
-                    b.HasKey("Id", "AppUserId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("LinkedAccounts");
-                });
-
             modelBuilder.Entity("ParityUI.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -198,27 +180,6 @@ namespace ParityService.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("ParityUI.Models.Credentials", b =>
-                {
-                    b.Property<string>("AccountLinkId");
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<string>("AccessToken");
-
-                    b.Property<DateTime>("AccessTokenExpiresAt");
-
-                    b.Property<string>("AccessTokenType");
-
-                    b.Property<string>("ApiServer");
-
-                    b.Property<string>("RefreshToken");
-
-                    b.HasKey("AccountLinkId", "AppUserId");
-
-                    b.ToTable("Credentials");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -261,22 +222,6 @@ namespace ParityService.Migrations
                     b.HasOne("ParityUI.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ParityUI.Models.AccountLink", b =>
-                {
-                    b.HasOne("ParityUI.Models.AppUser")
-                        .WithMany("LinkedAccounts")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ParityUI.Models.Credentials", b =>
-                {
-                    b.HasOne("ParityUI.Models.AccountLink", "AccountLink")
-                        .WithOne("Credentials")
-                        .HasForeignKey("ParityUI.Models.Credentials", "AccountLinkId", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
