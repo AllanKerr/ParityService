@@ -23,7 +23,7 @@ namespace ParityUI.Models
 
     public Credentials Credentials
     {
-      get => m_lazyLoader?.Load(this, ref m_credentials);
+      get => m_credentials != null ? m_credentials : m_lazyLoader?.Load(this, ref m_credentials);
       private set { m_credentials = value; }
     }
 
