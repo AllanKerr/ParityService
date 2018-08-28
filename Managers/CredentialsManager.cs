@@ -44,5 +44,10 @@ namespace ParityService.Managers
       }
       return link;
     }
+
+    public AccountLink GetLink(string userId, string id) {
+
+        return m_context.LinkedAccounts.Find(id, userId);
+    }
   }
 }

@@ -17,7 +17,6 @@ using ParityService.Managers;
 namespace ParityUI.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
     public sealed class AccountLinksController : Controller
     {
         private readonly UserManager<AppUser> m_userManager;
@@ -33,8 +32,8 @@ namespace ParityUI.Controllers
             m_credentialsManager = credentialsManager;
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost("[controller]/[action]", Name = "LinkAccount")]
         public async Task<IActionResult> Add([FromBody] QuestradeLinkViewModel model)
         {
             if (!ModelState.IsValid) {
@@ -50,14 +49,18 @@ namespace ParityUI.Controllers
             }
             string userId = m_userManager.GetUserId(HttpContext.User);
             AccountLink link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
-            return CreatedAtRoute("AccountLink", new AccountLinkViewModel(link));
+            return CreatedAtRoute("GetLinkedAccount", new { id = link.Id }, new AccountLinkViewModel(link));
         }
 
-        [HttpGet(Name = "AccountLink")]
-        public async Task<IActionResult> GetAccountLink()
+        [HttpGet("[controller]/{id}", Name = "GetLinkedAccount")]
+        public IActionResult GetLinkedAccount(string id)
         {
-            
-            return Ok(null);
+            string userId = m_userManager.GetUserId(HttpContext.User);
+            AccountLink link = m_credentialsManager.GetLink(userId, id);
+            if (link == null) {
+                return NotFound();
+            }
+            return Ok(new AccountLinkViewModel(link));
         }
     }
 }
