@@ -14,13 +14,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ParityService.Managers
 {
-  public sealed class CredentialsManager
+  public sealed class LinkedAccountsManager
   {
     private readonly AppDbContext m_context;
 
-    private readonly ILogger<CredentialsManager> m_logger;
+    private readonly ILogger<LinkedAccountsManager> m_logger;
 
-    public CredentialsManager(AppDbContext context, ILogger<CredentialsManager> logger)
+    public LinkedAccountsManager(AppDbContext context, ILogger<LinkedAccountsManager> logger)
     {
       m_context = context;
       m_logger = logger;
