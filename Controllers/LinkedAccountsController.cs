@@ -22,14 +22,14 @@ namespace ParityUI.Controllers
         private readonly UserManager<AppUser> m_userManager;
         private readonly ILogger<LinkedAccountsController> m_logger;
         private readonly ISignInService m_signInService;
-        private readonly CredentialsManager m_credentialsManager;
+        private readonly LinkedAccountsManager m_linkedAccountsManager;
 
-        public LinkedAccountsController(UserManager<AppUser> userManager, ISignInService signInService, CredentialsManager credentialsManager, ILogger<LinkedAccountsController> logger)
+        public LinkedAccountsController(UserManager<AppUser> userManager, ISignInService signInService, LinkedAccountsManager linkedAccountsManager, ILogger<LinkedAccountsController> logger)
         {
             m_userManager = userManager;
             m_logger = logger;
             m_signInService = signInService;
-            m_credentialsManager = credentialsManager;
+            m_linkedAccountsManager = linkedAccountsManager;
         }
 
         [ValidateAntiForgeryToken]
@@ -48,7 +48,7 @@ namespace ParityUI.Controllers
                 return BadRequest(ModelState);
             }
             string userId = m_userManager.GetUserId(HttpContext.User);
-            LinkedAccount link = m_credentialsManager.CreateLink(userId, model.IsPractice, token);
+            LinkedAccount link = m_linkedAccountsManager.CreateLink(userId, model.IsPractice, token);
             return CreatedAtRoute("GetLinkedAccount", new { id = link.Id }, new LinkedAccountViewModel(link));
         }
 
@@ -56,7 +56,7 @@ namespace ParityUI.Controllers
         public IActionResult GetLinkedAccount(int id)
         {
             string userId = m_userManager.GetUserId(HttpContext.User);
-            LinkedAccount link = m_credentialsManager.GetLink(userId, id);
+            LinkedAccount link = m_linkedAccountsManager.GetLink(userId, id);
             if (link == null) {
                 return NotFound();
             }

@@ -62,11 +62,7 @@ namespace ParityUI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var user = new AppUser
-            {
-                UserName = model.Email,
-                Email = model.Email
-            };
+            var user = new AppUser(model.Email, model.Email);
             IdentityResult result = await m_userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {

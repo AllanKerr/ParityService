@@ -8,6 +8,7 @@ namespace ParityService.Managers
         public static void AddManagers(this IServiceCollection services)
         {
             services.AddScoped<LinkedAccountsManager>();
+            services.AddScoped<CredentialsManager>();
         }
     }
 }

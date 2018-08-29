@@ -17,16 +17,17 @@ namespace ParityUI.Models
       private set { m_linkedAccounts = value; }
     }
 
-    private AppUser() { }
-
     private AppUser(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    public AppUser(string username, string email) {
-        UserName = username;
-        Email = email;
+    public AppUser(string username, string email)
+    {
+      UserName = username;
+      Email = email;
     }
+
+    private AppUser() { }
   }
 }

@@ -1,19 +1,27 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using ParityService.Questrade.Models;
 using Questrade = ParityService.Questrade.Models;
 
 namespace ParityUI.Models
 {
-  public sealed class Credentials
+  public sealed class Credentials : ICredentials
   {
+    private readonly ILazyLoader m_lazyLoader;
+
+    private LinkedAccount m_linkedAccount;
+
     public int LinkedAccountId { get; private set; }
 
     public string AppUserId { get; private set; }
 
-    public LinkedAccount LinkedAccount { get; private set; }
-
+    public LinkedAccount LinkedAccount
+    {
+      get => m_linkedAccount != null ? m_linkedAccount : m_lazyLoader?.Load(this, ref m_linkedAccount);
+      private set { m_linkedAccount = value; }
+    }
     public string RefreshToken { get; private set; }
 
     public string ApiServer { get; private set; }
@@ -24,11 +32,13 @@ namespace ParityUI.Models
 
     public DateTime AccessTokenExpiresAt { get; private set; }
 
-    public Credentials(LinkedAccount link, Questrade.AuthToken token)
+    public bool IsExpired(int expirationBuffer = 0)
     {
-      LinkedAccountId = link.Id;
-      AppUserId = link.AppUserId;
+      return AccessTokenExpiresAt.AddSeconds(-expirationBuffer) <= DateTime.UtcNow;
+    }
 
+    public void Update(Questrade.AuthToken token)
+    {
       RefreshToken = token.RefreshToken;
       ApiServer = token.ApiServer;
       AccessToken = token.AccessToken;
@@ -36,6 +46,19 @@ namespace ParityUI.Models
       AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(token.ExpiresIn);
     }
 
-    private Credentials() {}
+    public Credentials(LinkedAccount link, Questrade.AuthToken token)
+    {
+      LinkedAccountId = link.Id;
+      AppUserId = link.AppUserId;
+
+      Update(token);
+    }
+
+    private Credentials(ILazyLoader lazyLoader)
+    {
+      m_lazyLoader = lazyLoader;
+    }
+
+    private Credentials() { }
   }
 }
