@@ -65,10 +65,10 @@ namespace ParityUI.Controllers
         }
 
         [HttpGet("[controller]", Name = "LinkedAccounts")]
-        public async Task<IActionResult> GetLinkedAccounts() {
+        public IActionResult GetLinkedAccounts() {
 
-            AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
-            IEnumerable<LinkedAccountViewModel> linkedAccounts = user.LinkedAccounts.Select(link => new LinkedAccountViewModel(link));
+            string userId = m_userManager.GetUserId(HttpContext.User);
+            IEnumerable<LinkedAccountViewModel> linkedAccounts = m_linkedAccountsManager.GetLinks(userId).Select(link => new LinkedAccountViewModel(link));
             return Ok(linkedAccounts);
         }
 
