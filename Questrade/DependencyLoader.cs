@@ -15,6 +15,7 @@ namespace ParityService.Questrade
                 client.BaseAddress = new Uri("https://login.questrade.com/");
             });
 
+            services.AddScoped<QuestradeClientFactory>();
             services.AddSingleton<ISignInService, SignInService>();
         }
     }
