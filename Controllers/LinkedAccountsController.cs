@@ -13,6 +13,7 @@ using ParityUI.Models;
 using ParityService.Questrade;
 using ParityService.Questrade.Models;
 using ParityService.Managers;
+using ParityService.Models.View;
 
 namespace ParityUI.Controllers
 {
@@ -69,6 +70,17 @@ namespace ParityUI.Controllers
             AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
             IEnumerable<LinkedAccountViewModel> linkedAccounts = user.LinkedAccounts.Select(link => new LinkedAccountViewModel(link));
             return Ok(linkedAccounts);
+        }
+
+        [HttpGet("[controller]/{id}/accounts", Name = "GetAccounts")]
+        public async Task<IActionResult> GetAccounts(int id)
+        {
+            string userId = m_userManager.GetUserId(HttpContext.User);
+            IEnumerable<AccountViewModel> accounts = await m_linkedAccountsManager.GetAccounts(userId, id);
+            if (accounts == null) {
+                return NotFound();
+            }
+            return Ok(accounts);
         }
     }
 }

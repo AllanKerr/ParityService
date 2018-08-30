@@ -7,7 +7,7 @@ namespace ParityService.Questrade.Models.Entities
   public class Account
   {
     [JsonProperty("type")]
-    public string Type { get; set; }
+    public AccountType Type { get; set; }
 
     [JsonProperty("number")]
     public string Number { get; set; }
