@@ -9,6 +9,7 @@ namespace ParityService.Managers
         {
             services.AddScoped<ServiceLinkManager>();
             services.AddScoped<CredentialsManager>();
+            services.AddScoped<AccountsManager>();
         }
     }
 }

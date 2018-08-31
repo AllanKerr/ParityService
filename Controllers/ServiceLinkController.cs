@@ -70,16 +70,5 @@ namespace ParityService.Controllers
             IEnumerable<ServiceLinkViewModel> ServiceLinks = m_serviceLinkManager.GetLinks(userId).Select(link => new ServiceLinkViewModel(link));
             return Ok(ServiceLinks);
         }
-
-        [HttpGet("[controller]/{id}/accounts", Name = "GetAccounts")]
-        public async Task<IActionResult> GetAccounts(int id)
-        {
-            string userId = m_userManager.GetUserId(HttpContext.User);
-            IEnumerable<AccountViewModel> accounts = await m_serviceLinkManager.GetAccounts(userId, id);
-            if (accounts == null) {
-                return NotFound();
-            }
-            return Ok(accounts);
-        }
     }
 }
