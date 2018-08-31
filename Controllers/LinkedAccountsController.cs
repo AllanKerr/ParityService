@@ -3,19 +3,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using ParityUI.Models.View;
-using ParityUI.Extensions;
+using ParityService.Models.View;
+using ParityService.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using ParityUI.Models;
+using ParityService.Models;
 using ParityService.Questrade;
 using ParityService.Questrade.Models;
 using ParityService.Managers;
-using ParityService.Models.View;
 
-namespace ParityUI.Controllers
+namespace ParityService.Controllers
 {
     [Authorize]
     public sealed class LinkedAccountsController : Controller

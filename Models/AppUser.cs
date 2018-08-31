@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace ParityUI.Models
+namespace ParityService.Models
 {
   public sealed class AppUser : IdentityUser
   {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ParityService.Managers;
 using ParityService.Questrade.Models.Entities;
 using ParityService.Questrade.Models.Responses;
-using ParityUI.Models;
+using ParityService.Models;
 
 namespace ParityService.Questrade
 {

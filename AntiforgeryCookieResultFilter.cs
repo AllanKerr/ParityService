@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ParityUI
+namespace ParityService
 {
     internal sealed class AntiforgeryCookieResultFilter : ResultFilterAttribute
     {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Questrade = ParityService.Questrade.Models;
 
-namespace ParityUI.Models
+namespace ParityService.Models
 {
   public sealed class LinkedAccount
   {

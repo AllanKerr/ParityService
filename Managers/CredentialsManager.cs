@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ParityService.Questrade;
 using ParityService.Questrade.Models;
-using ParityUI.Data;
-using ParityUI.Models;
+using ParityService.Data;
+using ParityService.Models;
 
 namespace ParityService.Managers
 {

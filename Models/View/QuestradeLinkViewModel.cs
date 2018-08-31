@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParityUI.Models.View
+namespace ParityService.Models.View
 {
     public sealed class QuestradeLinkViewModel
     {

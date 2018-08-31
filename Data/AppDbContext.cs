@@ -1,9 +1,9 @@
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ParityUI.Models;
+using ParityService.Models;
 
-namespace ParityUI.Data
+namespace ParityService.Data
 {
   public class AppDbContext : IdentityDbContext<AppUser>
   {

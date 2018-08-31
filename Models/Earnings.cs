@@ -3,7 +3,7 @@
 using System.ComponentModel.DataAnnotations;
 using ParityService.Models.Enums;
 
-namespace ParityUI.Models
+namespace ParityService.Models
 {
   public sealed class Earnings
   {

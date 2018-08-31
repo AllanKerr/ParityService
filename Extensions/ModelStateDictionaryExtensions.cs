@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace ParityUI.Extensions
+namespace ParityService.Extensions
 {
     public static class ModelStateDictionaryExtensions
     {

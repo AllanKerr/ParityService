@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using ParityUI.Models.View;
-using ParityUI.Models;
-using ParityUI.Extensions;
+using ParityService.Models.View;
+using ParityService.Models;
+using ParityService.Extensions;
 using Microsoft.Extensions.Logging;
 
-namespace ParityUI.Controllers
+namespace ParityService.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]

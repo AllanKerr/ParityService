@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using ParityService.Questrade.Models;
-using Questrade = ParityService.Questrade.Models;
+using QuestradeAuthToken = ParityService.Questrade.Models.AuthToken;
 
-namespace ParityUI.Models
+namespace ParityService.Models
 {
   public sealed class Credentials : ICredentials
   {
@@ -37,7 +37,7 @@ namespace ParityUI.Models
       return AccessTokenExpiresAt.AddSeconds(-expirationBuffer) <= DateTime.UtcNow;
     }
 
-    public void Update(Questrade.AuthToken token)
+    public void Update(QuestradeAuthToken token)
     {
       RefreshToken = token.RefreshToken;
       ApiServer = token.ApiServer;
@@ -46,7 +46,7 @@ namespace ParityUI.Models
       AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(token.ExpiresIn);
     }
 
-    public Credentials(LinkedAccount link, Questrade.AuthToken token)
+    public Credentials(LinkedAccount link, QuestradeAuthToken token)
     {
       LinkedAccountId = link.Id;
       AppUserId = link.AppUserId;
