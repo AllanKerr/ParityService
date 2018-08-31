@@ -2,10 +2,10 @@ using System;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using ParityService.Questrade;
 using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using ParityService.Data;
 using ParityService.Models.Entities;
+using ParityService.Questrade.Authentication;
 
 namespace ParityService.Managers
 {

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using ParityService.Models.View;
 using Microsoft.Extensions.Logging;
 using ParityService.Models.Entities;
-using ParityService.Questrade;
 using ParityService.Data;
 
 namespace ParityService.Controllers
@@ -14,14 +13,12 @@ namespace ParityService.Controllers
   {
     private readonly UserManager<User> m_userManager;
     private readonly ILogger<ServiceLinkController> m_logger;
-    private readonly ISignInService m_signInService;
     private readonly AppDbContext m_context;
 
-    public EarningsController(UserManager<User> userManager, ISignInService signInService, AppDbContext context, ILogger<ServiceLinkController> logger)
+    public EarningsController(UserManager<User> userManager, AppDbContext context, ILogger<ServiceLinkController> logger)
     {
       m_userManager = userManager;
       m_logger = logger;
-      m_signInService = signInService;
       m_context = context;
     }
 

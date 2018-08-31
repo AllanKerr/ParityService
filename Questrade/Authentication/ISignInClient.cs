@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ParityService.Questrade.Models.Entities;
 
-namespace ParityService.Questrade
+namespace ParityService.Questrade.Authentication
 {
   internal interface ISignInClient
   {

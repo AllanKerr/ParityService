@@ -6,7 +6,6 @@ using ParityService.Models.View;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
-using ParityService.Questrade;
 using ParityService.Managers;
 
 namespace ParityService.Controllers
@@ -16,14 +15,12 @@ namespace ParityService.Controllers
   {
     private readonly UserManager<User> m_userManager;
     private readonly ILogger<ServiceLinkController> m_logger;
-    private readonly ISignInService m_signInService;
     private readonly AccountsManager m_accountsManager;
 
-    public AccountsController(UserManager<User> userManager, ISignInService signInService, AccountsManager accountsManager, ILogger<ServiceLinkController> logger)
+    public AccountsController(UserManager<User> userManager, AccountsManager accountsManager, ILogger<ServiceLinkController> logger)
     {
       m_userManager = userManager;
       m_logger = logger;
-      m_signInService = signInService;
       m_accountsManager = accountsManager;
     }
 

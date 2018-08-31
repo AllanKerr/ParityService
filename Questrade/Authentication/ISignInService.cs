@@ -2,7 +2,7 @@
 using ParityService.Questrade;
 using ParityService.Questrade.Models.Entities;
 
-namespace ParityService.Questrade
+namespace ParityService.Questrade.Authentication
 {
   public interface ISignInService
   {

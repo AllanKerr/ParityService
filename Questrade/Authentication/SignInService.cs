@@ -1,7 +1,7 @@
 ﻿using ParityService.Questrade.Models.Entities;
 using System.Threading.Tasks;
 
-namespace ParityService.Questrade
+namespace ParityService.Questrade.Authentication
 {
   internal sealed class SignInService : ISignInService
   {

@@ -8,9 +8,9 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
-using ParityService.Questrade;
 using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using ParityService.Managers;
+using ParityService.Questrade.Authentication;
 
 namespace ParityService.Controllers
 {
@@ -19,8 +19,8 @@ namespace ParityService.Controllers
   {
     private readonly UserManager<User> m_userManager;
     private readonly ILogger<ServiceLinkController> m_logger;
-    private readonly ISignInService m_signInService;
     private readonly ServiceLinkManager m_serviceLinkManager;
+    private readonly ISignInService m_signInService;
 
     public ServiceLinkController(UserManager<User> userManager, ISignInService signInService, ServiceLinkManager serviceLinksManager, ILogger<ServiceLinkController> logger)
     {

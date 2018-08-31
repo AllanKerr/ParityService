@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ParityService.Questrade
+namespace ParityService.Questrade.Authentication
 {
   internal class SignInClient : ILiveSignInClient, IPracticeSignInClient
   {
