@@ -11,16 +11,16 @@ namespace ParityService.Models
   {
     private readonly ILazyLoader m_lazyLoader;
 
-    private LinkedAccount m_linkedAccount;
+    private ServiceLink m_ServiceLink;
 
-    public int LinkedAccountId { get; private set; }
+    public int ServiceLinkId { get; private set; }
 
     public string UserId { get; private set; }
 
-    public LinkedAccount LinkedAccount
+    public ServiceLink ServiceLink
     {
-      get => m_linkedAccount != null ? m_linkedAccount : m_lazyLoader?.Load(this, ref m_linkedAccount);
-      private set { m_linkedAccount = value; }
+      get => m_ServiceLink != null ? m_ServiceLink : m_lazyLoader?.Load(this, ref m_ServiceLink);
+      private set { m_ServiceLink = value; }
     }
     public string RefreshToken { get; private set; }
 
@@ -46,9 +46,9 @@ namespace ParityService.Models
       AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(token.ExpiresIn);
     }
 
-    public Credentials(LinkedAccount link, QuestradeAuthToken token)
+    public Credentials(ServiceLink link, QuestradeAuthToken token)
     {
-      LinkedAccountId = link.Id;
+      ServiceLinkId = link.Id;
       UserId = link.UserId;
 
       Update(token);

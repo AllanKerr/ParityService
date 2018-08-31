@@ -18,27 +18,25 @@ using System.Linq;
 
 namespace ParityService.Managers
 {
-  public sealed class LinkedAccountsManager
+  public sealed class ServiceLinkManager
   {
     private readonly AppDbContext m_context;
-    private readonly ILogger<LinkedAccountsManager> m_logger;
     private readonly QuestradeClientFactory m_clientFactory;
 
-    public LinkedAccountsManager(AppDbContext context, ILogger<LinkedAccountsManager> logger,  QuestradeClientFactory clientFactory)
+    public ServiceLinkManager(AppDbContext context, QuestradeClientFactory clientFactory)
     {
       m_context = context;
-      m_logger = logger;
       m_clientFactory = clientFactory;
     }
 
-    public LinkedAccount CreateLink(string userId, bool isPractice, AuthToken token)
+    public ServiceLink CreateLink(string userId, bool isPractice, AuthToken token)
     {
 
-      LinkedAccount link = new LinkedAccount(userId, isPractice);
+      ServiceLink link = new ServiceLink(userId, isPractice);
 
       using (IDbContextTransaction transaction = m_context.Database.BeginTransaction())
       {
-        m_context.LinkedAccounts.Add(link);
+        m_context.ServiceLinks.Add(link);
         m_context.SaveChanges();
 
         Credentials credentials = new Credentials(link, token);
@@ -50,22 +48,22 @@ namespace ParityService.Managers
       return link;
     }
 
-    public LinkedAccount GetLink(string userId, int id) {
+    public ServiceLink GetLink(string userId, int id) {
 
-        return m_context.LinkedAccounts.Find(id, userId);
+        return m_context.ServiceLinks.Find(id, userId);
     }
 
-    public IEnumerable<LinkedAccount> GetLinks(string userId) {
-      return m_context.LinkedAccounts.Where(linkedAccount => linkedAccount.UserId == userId);
+    public IEnumerable<ServiceLink> GetLinks(string userId) {
+      return m_context.ServiceLinks.Where(ServiceLink => ServiceLink.UserId == userId);
     }
 
-    public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int linkedAccountId) {
+    public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int ServiceLinkId) {
 
-      LinkedAccount linkedAccount = GetLink(userId, linkedAccountId);
-      if (linkedAccount == null) {
+      ServiceLink ServiceLink = GetLink(userId, ServiceLinkId);
+      if (ServiceLink == null) {
         return null;
       }
-      QuestradeClient client = m_clientFactory.CreateClient(userId, linkedAccountId);
+      QuestradeClient client = m_clientFactory.CreateClient(userId, ServiceLinkId);
       AccountsResponse response = await client.FetchAccounts();
       return response.Accounts.Select(account => new AccountViewModel(account));
     }

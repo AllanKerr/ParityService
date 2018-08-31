@@ -7,7 +7,7 @@ using Questrade = ParityService.Questrade.Models;
 
 namespace ParityService.Models
 {
-  public sealed class LinkedAccount
+  public sealed class ServiceLink
   {
     private readonly ILazyLoader m_lazyLoader;
 
@@ -27,14 +27,14 @@ namespace ParityService.Models
       private set { m_credentials = value; }
     }
 
-    private LinkedAccount() { }
+    private ServiceLink() { }
 
-    private LinkedAccount(ILazyLoader lazyLoader)
+    private ServiceLink(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    public LinkedAccount(string userId, bool isPractice)
+    public ServiceLink(string userId, bool isPractice)
     {
       UserId = userId;
       IsPractice = isPractice;

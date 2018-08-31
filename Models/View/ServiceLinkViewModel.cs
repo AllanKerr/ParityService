@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParityService.Models.View
 {
-  public sealed class LinkedAccountViewModel
+  public sealed class ServiceLinkViewModel
   {
     [Required]
     public int Id { get; private set; }
@@ -18,7 +18,7 @@ namespace ParityService.Models.View
     [Required]
     public bool IsAuthenticated { get; private set; }
 
-    public LinkedAccountViewModel( LinkedAccount link) {
+    public ServiceLinkViewModel(ServiceLink link) {
       Id = link.Id;
       IsPractice = link.IsPractice;
       CreatedAt = link.CreatedAt;

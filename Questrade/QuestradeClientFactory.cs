@@ -15,8 +15,8 @@ namespace ParityService.Questrade
       m_clientFactory = clientFactory;
     }
 
-    public QuestradeClient CreateClient(string userId, int linkedAccountId) {
-      return new QuestradeClient(m_credentialsManager, m_clientFactory, userId, linkedAccountId);
+    public QuestradeClient CreateClient(string userId, int ServiceLinkId) {
+      return new QuestradeClient(m_credentialsManager, m_clientFactory, userId, ServiceLinkId);
     }
   }
 }

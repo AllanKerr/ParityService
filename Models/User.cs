@@ -17,12 +17,12 @@ namespace ParityService.Models
       private set { m_earnings = value; }
     }
 
-    private List<LinkedAccount> m_linkedAccounts;
+    private List<ServiceLink> m_serviceLinks;
 
-    public List<LinkedAccount> LinkedAccounts
+    public List<ServiceLink> ServiceLinks
     {
-      get => m_linkedAccounts != null ? m_linkedAccounts : m_lazyLoader?.Load(this, ref m_linkedAccounts);
-      private set { m_linkedAccounts = value; }
+      get => m_serviceLinks != null ? m_serviceLinks : m_lazyLoader?.Load(this, ref m_serviceLinks);
+      private set { m_serviceLinks = value; }
     }
 
     private User(ILazyLoader lazyLoader)

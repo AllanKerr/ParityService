@@ -27,19 +27,19 @@ namespace ParityService.Managers
       m_signInService = signInService;
     }
 
-    public async Task<ICredentials> GetCredentials(string userId, int linkedAccountId) {
+    public async Task<ICredentials> GetCredentials(string userId, int ServiceLinkId) {
 
-      Credentials creds = m_context.Credentials.Find(linkedAccountId, userId);
+      Credentials creds = m_context.Credentials.Find(ServiceLinkId, userId);
       if (creds == null) {
-        m_logger.LogWarning($"No credentials found for {{{userId}, {linkedAccountId}}}");
+        m_logger.LogWarning($"No credentials found for {{{userId}, {ServiceLinkId}}}");
         throw new InvalidCredentialException("No credentials found for linked account.");
       }
       if (!creds.IsExpired(ExpirationBuffer)) {
-        m_logger.LogDebug($"Valid credentials found for {{{userId}, {linkedAccountId}}}");
+        m_logger.LogDebug($"Valid credentials found for {{{userId}, {ServiceLinkId}}}");
         return creds;
       }
       AuthToken token;
-      bool isPractice = creds.LinkedAccount.IsPractice;
+      bool isPractice = creds.ServiceLink.IsPractice;
       try {
         token = await m_signInService.SignIn(creds.RefreshToken, isPractice);
       } catch (Exception ex) {
@@ -49,7 +49,7 @@ namespace ParityService.Managers
       creds.Update(token);
       m_context.SaveChanges();
 
-      m_logger.LogDebug($"Expired credentials found for {{{userId}, {linkedAccountId}}}");
+      m_logger.LogDebug($"Expired credentials found for {{{userId}, {ServiceLinkId}}}");
 
       return creds;
     }

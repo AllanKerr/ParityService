@@ -21,11 +21,11 @@ namespace ParityService.Controllers
     public sealed class EarningsController : Controller
     {
         private readonly UserManager<User> m_userManager;
-        private readonly ILogger<LinkedAccountsController> m_logger;
+        private readonly ILogger<ServiceLinkController> m_logger;
         private readonly ISignInService m_signInService;
         private readonly AppDbContext m_context;
 
-        public EarningsController(UserManager<User> userManager, ISignInService signInService, AppDbContext context, ILogger<LinkedAccountsController> logger)
+        public EarningsController(UserManager<User> userManager, ISignInService signInService, AppDbContext context, ILogger<ServiceLinkController> logger)
         {
             m_userManager = userManager;
             m_logger = logger;
