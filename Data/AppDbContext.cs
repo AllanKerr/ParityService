@@ -9,6 +9,7 @@ namespace ParityUI.Data
   {
     public DbSet<LinkedAccount> LinkedAccounts { get; set; }
 
+    public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)

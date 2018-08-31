@@ -33,7 +33,7 @@ namespace ParityUI.Controllers
             m_linkedAccountsManager = linkedAccountsManager;
         }
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost("[controller]/[action]", Name = "LinkAccount")]
         public async Task<IActionResult> Add([FromBody] QuestradeLinkViewModel model)
         {

@@ -9,6 +9,14 @@ namespace ParityUI.Models
   {
     private readonly ILazyLoader m_lazyLoader;
 
+    private Earnings m_earnings;
+
+    public Earnings Earnings
+    {
+      get => m_earnings != null ? m_earnings : m_lazyLoader?.Load(this, ref m_earnings);
+      private set { m_earnings = value; }
+    }
+
     private List<LinkedAccount> m_linkedAccounts;
 
     public List<LinkedAccount> LinkedAccounts

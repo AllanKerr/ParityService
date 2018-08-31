@@ -29,7 +29,7 @@ namespace ParityUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -54,7 +54,7 @@ namespace ParityUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
 
@@ -76,7 +76,7 @@ namespace ParityUI.Controllers
         }
 
         [HttpGet(Name = "User")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> GetUser()
         {
             AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
@@ -84,7 +84,7 @@ namespace ParityUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await m_signInManager.SignOutAsync();
