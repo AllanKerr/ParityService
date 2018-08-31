@@ -31,7 +31,7 @@ namespace ParityService
       string connectionString = Configuration.GetConnectionString("PostgresConnection");
       services.AddEntityFrameworkNpgsql()
               .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connectionString));
-      services.AddDefaultIdentity<AppUser>()
+      services.AddDefaultIdentity<User>()
               .AddEntityFrameworkStores<AppDbContext>();
 
       services.AddQuestrade();

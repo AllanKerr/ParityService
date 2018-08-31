@@ -8,14 +8,14 @@ namespace ParityService.Models
   public sealed class Earnings
   {
     [Key]
-    public string AppUserId { get; private set; }
+    public string UserId { get; private set; }
 
     public decimal AnnualIncome { get; private set; }
 
     public Region Region { get; private set; }
     
     public Earnings(string userId) {
-      AppUserId = userId;
+      UserId = userId;
     }
 
     private Earnings() { }

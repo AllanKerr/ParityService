@@ -14,12 +14,12 @@ namespace ParityService.Controllers
     [Route("[controller]/[action]")]
     public sealed class AccountController : Controller
     {
-        private readonly UserManager<AppUser> m_userManager;
-        private readonly SignInManager<AppUser> m_signInManager;
+        private readonly UserManager<User> m_userManager;
+        private readonly SignInManager<User> m_signInManager;
         private readonly IEmailSender m_emailSender;
-        private readonly IUserClaimsPrincipalFactory<AppUser> m_principleFactory;
+        private readonly IUserClaimsPrincipalFactory<User> m_principleFactory;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailSender emailSender, IUserClaimsPrincipalFactory<AppUser> principleFactory)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IUserClaimsPrincipalFactory<User> principleFactory)
         {
             m_userManager = userManager;
             m_signInManager = signInManager;
@@ -62,7 +62,7 @@ namespace ParityService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var user = new AppUser(model.Email, model.Email);
+            var user = new User(model.Email, model.Email);
             IdentityResult result = await m_userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
@@ -72,15 +72,15 @@ namespace ParityService.Controllers
             await m_signInManager.SignInAsync(user, isPersistent: false);
             HttpContext.User = await m_principleFactory.CreateAsync(user);
 
-            return CreatedAtRoute("User", new AppUserViewModel(user));
+            return CreatedAtRoute("User", new UserViewModel(user));
         }
 
         [HttpGet(Name = "User")]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> GetUser()
         {
-            AppUser user = await m_userManager.GetUserAsync(HttpContext.User);
-            return Ok(new AppUserViewModel(user));
+            User user = await m_userManager.GetUserAsync(HttpContext.User);
+            return Ok(new UserViewModel(user));
         }
 
         [HttpPost]

@@ -15,7 +15,7 @@ namespace ParityService.Models
 
     public int LinkedAccountId { get; private set; }
 
-    public string AppUserId { get; private set; }
+    public string UserId { get; private set; }
 
     public LinkedAccount LinkedAccount
     {
@@ -49,7 +49,7 @@ namespace ParityService.Models
     public Credentials(LinkedAccount link, QuestradeAuthToken token)
     {
       LinkedAccountId = link.Id;
-      AppUserId = link.AppUserId;
+      UserId = link.UserId;
 
       Update(token);
     }

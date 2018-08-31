@@ -19,12 +19,12 @@ namespace ParityService.Controllers
     [Authorize]
     public sealed class LinkedAccountsController : Controller
     {
-        private readonly UserManager<AppUser> m_userManager;
+        private readonly UserManager<User> m_userManager;
         private readonly ILogger<LinkedAccountsController> m_logger;
         private readonly ISignInService m_signInService;
         private readonly LinkedAccountsManager m_linkedAccountsManager;
 
-        public LinkedAccountsController(UserManager<AppUser> userManager, ISignInService signInService, LinkedAccountsManager linkedAccountsManager, ILogger<LinkedAccountsController> logger)
+        public LinkedAccountsController(UserManager<User> userManager, ISignInService signInService, LinkedAccountsManager linkedAccountsManager, ILogger<LinkedAccountsController> logger)
         {
             m_userManager = userManager;
             m_logger = logger;

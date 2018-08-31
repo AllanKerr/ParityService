@@ -15,7 +15,7 @@ namespace ParityService.Models
 
     public int Id { get; private set; }
 
-    public string AppUserId { get; private set; }
+    public string UserId { get; private set; }
 
     public bool IsPractice { get; private set; }
 
@@ -36,7 +36,7 @@ namespace ParityService.Models
 
     public LinkedAccount(string userId, bool isPractice)
     {
-      AppUserId = userId;
+      UserId = userId;
       IsPractice = isPractice;
       CreatedAt = DateTime.UtcNow;
     }

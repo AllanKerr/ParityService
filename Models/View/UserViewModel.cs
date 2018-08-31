@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParityService.Models.View
 {
-    public sealed class AppUserViewModel
+    public sealed class UserViewModel
     {
         [Required]
         [EmailAddress]
@@ -15,7 +15,7 @@ namespace ParityService.Models.View
         [Required]
         public bool EmailConfirmed { get; }
 
-        public AppUserViewModel(AppUser user) {
+        public UserViewModel(User user) {
             Email = user.Email;
             Id = user.Id;
             EmailConfirmed = user.EmailConfirmed;

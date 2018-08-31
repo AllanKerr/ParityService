@@ -56,7 +56,7 @@ namespace ParityService.Managers
     }
 
     public IEnumerable<LinkedAccount> GetLinks(string userId) {
-      return m_context.LinkedAccounts.Where(linkedAccount => linkedAccount.AppUserId == userId);
+      return m_context.LinkedAccounts.Where(linkedAccount => linkedAccount.UserId == userId);
     }
 
     public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int linkedAccountId) {

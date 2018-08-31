@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ParityService.Models
 {
-  public sealed class AppUser : IdentityUser
+  public sealed class User : IdentityUser
   {
     private readonly ILazyLoader m_lazyLoader;
 
@@ -25,17 +25,17 @@ namespace ParityService.Models
       private set { m_linkedAccounts = value; }
     }
 
-    private AppUser(ILazyLoader lazyLoader)
+    private User(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    public AppUser(string username, string email)
+    public User(string username, string email)
     {
       UserName = username;
       Email = email;
     }
 
-    private AppUser() { }
+    private User() { }
   }
 }

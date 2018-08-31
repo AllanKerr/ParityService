@@ -5,7 +5,7 @@ using ParityService.Models;
 
 namespace ParityService.Data
 {
-  public class AppDbContext : IdentityDbContext<AppUser>
+  public class AppDbContext : IdentityDbContext<User>
   {
     public DbSet<LinkedAccount> LinkedAccounts { get; set; }
 
@@ -21,15 +21,15 @@ namespace ParityService.Data
     {
       base.OnModelCreating(builder);
 
-      builder.Entity<LinkedAccount>().HasKey(link => new { link.Id, link.AppUserId });
+      builder.Entity<LinkedAccount>().HasKey(link => new { link.Id, link.UserId });
       builder.Entity<LinkedAccount>().Property(link => link.Id).ValueGeneratedOnAdd();
 
-      builder.Entity<Credentials>().HasKey(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
+      builder.Entity<Credentials>().HasKey(credentials => new { credentials.LinkedAccountId, credentials.UserId });
 
       builder.Entity<LinkedAccount>()
         .HasOne(link => link.Credentials)
         .WithOne(creds => creds.LinkedAccount)
-        .HasForeignKey<Credentials>(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
+        .HasForeignKey<Credentials>(credentials => new { credentials.LinkedAccountId, credentials.UserId });
     }
   }
 }
