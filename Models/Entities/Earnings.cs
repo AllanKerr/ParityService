@@ -1,26 +1,26 @@
-
-
 using System.ComponentModel.DataAnnotations;
 using ParityService.Models.Enums;
 
-namespace ParityUI.Models
+namespace ParityService.Models.Entities
 {
   public sealed class Earnings
   {
     [Key]
-    public string AppUserId { get; private set; }
+    public string UserId { get; private set; }
 
     public decimal AnnualIncome { get; private set; }
 
     public Region Region { get; private set; }
-    
-    public Earnings(string userId) {
-      AppUserId = userId;
+
+    public Earnings(string userId)
+    {
+      UserId = userId;
     }
 
     private Earnings() { }
 
-    public void Update(decimal annualIncome, Region region) {
+    public void Update(decimal annualIncome, Region region)
+    {
       AnnualIncome = annualIncome;
       Region = region;
     }

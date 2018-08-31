@@ -10,7 +10,8 @@ namespace ParityService.Models.View
 
     public AccountType AccountType { get; private set; }
 
-    public AccountViewModel(QuestradeAccount account) {
+    public AccountViewModel(QuestradeAccount account)
+    {
       AccountNumber = account.Number;
       AccountType = AccountTypeTransformer.Transform(account.Type);
     }

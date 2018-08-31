@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ParityUI.Data;
+using ParityService.Data;
 
 namespace ParityService.Migrations
 {
@@ -130,7 +130,60 @@ namespace ParityService.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ParityUI.Models.AppUser", b =>
+            modelBuilder.Entity("ParityService.Models.Entities.Credentials", b =>
+                {
+                    b.Property<int>("ServiceLinkId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("AccessToken");
+
+                    b.Property<DateTime>("AccessTokenExpiresAt");
+
+                    b.Property<string>("AccessTokenType");
+
+                    b.Property<string>("ApiServer");
+
+                    b.Property<string>("RefreshToken");
+
+                    b.HasKey("ServiceLinkId", "UserId");
+
+                    b.ToTable("Credentials");
+                });
+
+            modelBuilder.Entity("ParityService.Models.Entities.Earnings", b =>
+                {
+                    b.Property<string>("UserId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("AnnualIncome");
+
+                    b.Property<int>("Region");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Earnings");
+                });
+
+            modelBuilder.Entity("ParityService.Models.Entities.ServiceLink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("UserId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<bool>("IsPractice");
+
+                    b.HasKey("Id", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ServiceLinks");
+                });
+
+            modelBuilder.Entity("ParityService.Models.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -140,7 +193,7 @@ namespace ParityService.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("EarningsAppUserId");
+                    b.Property<string>("EarningsUserId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -172,7 +225,7 @@ namespace ParityService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EarningsAppUserId");
+                    b.HasIndex("EarningsUserId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -182,59 +235,6 @@ namespace ParityService.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("ParityUI.Models.Credentials", b =>
-                {
-                    b.Property<int>("LinkedAccountId");
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<string>("AccessToken");
-
-                    b.Property<DateTime>("AccessTokenExpiresAt");
-
-                    b.Property<string>("AccessTokenType");
-
-                    b.Property<string>("ApiServer");
-
-                    b.Property<string>("RefreshToken");
-
-                    b.HasKey("LinkedAccountId", "AppUserId");
-
-                    b.ToTable("Credentials");
-                });
-
-            modelBuilder.Entity("ParityUI.Models.Earnings", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("AnnualIncome");
-
-                    b.Property<int>("Region");
-
-                    b.HasKey("AppUserId");
-
-                    b.ToTable("Earnings");
-                });
-
-            modelBuilder.Entity("ParityUI.Models.LinkedAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<bool>("IsPractice");
-
-                    b.HasKey("Id", "AppUserId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("LinkedAccounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -247,7 +247,7 @@ namespace ParityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ParityUI.Models.AppUser")
+                    b.HasOne("ParityService.Models.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -255,7 +255,7 @@ namespace ParityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ParityUI.Models.AppUser")
+                    b.HasOne("ParityService.Models.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -268,7 +268,7 @@ namespace ParityService.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ParityUI.Models.AppUser")
+                    b.HasOne("ParityService.Models.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -276,33 +276,33 @@ namespace ParityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ParityUI.Models.AppUser")
+                    b.HasOne("ParityService.Models.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ParityUI.Models.AppUser", b =>
+            modelBuilder.Entity("ParityService.Models.Entities.Credentials", b =>
                 {
-                    b.HasOne("ParityUI.Models.Earnings", "Earnings")
-                        .WithMany()
-                        .HasForeignKey("EarningsAppUserId");
-                });
-
-            modelBuilder.Entity("ParityUI.Models.Credentials", b =>
-                {
-                    b.HasOne("ParityUI.Models.LinkedAccount", "LinkedAccount")
+                    b.HasOne("ParityService.Models.Entities.ServiceLink", "ServiceLink")
                         .WithOne("Credentials")
-                        .HasForeignKey("ParityUI.Models.Credentials", "LinkedAccountId", "AppUserId")
+                        .HasForeignKey("ParityService.Models.Entities.Credentials", "ServiceLinkId", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ParityUI.Models.LinkedAccount", b =>
+            modelBuilder.Entity("ParityService.Models.Entities.ServiceLink", b =>
                 {
-                    b.HasOne("ParityUI.Models.AppUser")
-                        .WithMany("LinkedAccounts")
-                        .HasForeignKey("AppUserId")
+                    b.HasOne("ParityService.Models.Entities.User")
+                        .WithMany("ServiceLinks")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ParityService.Models.Entities.User", b =>
+                {
+                    b.HasOne("ParityService.Models.Entities.Earnings", "Earnings")
+                        .WithMany()
+                        .HasForeignKey("EarningsUserId");
                 });
 #pragma warning restore 612, 618
         }

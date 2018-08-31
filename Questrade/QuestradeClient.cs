@@ -1,13 +1,10 @@
-
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ParityService.Managers;
-using ParityService.Questrade.Models.Entities;
 using ParityService.Questrade.Models.Responses;
-using ParityUI.Models;
+using ParityService.Models.Entities;
 
 namespace ParityService.Questrade
 {
@@ -18,21 +15,21 @@ namespace ParityService.Questrade
     private readonly CredentialsManager m_credentialsManager;
     private readonly IHttpClientFactory m_clientFactory;
     private readonly string m_userId;
-    private readonly int m_linkedAccountId;
+    private readonly int m_ServiceLinkId;
 
     private HttpClient m_client;
 
-    public QuestradeClient(CredentialsManager credentialsManager, IHttpClientFactory clientFactory, string userId, int linkedAccountId)
+    public QuestradeClient(CredentialsManager credentialsManager, IHttpClientFactory clientFactory, string userId, int ServiceLinkId)
     {
       m_credentialsManager = credentialsManager;
       m_userId = userId;
-      m_linkedAccountId = linkedAccountId;
+      m_ServiceLinkId = ServiceLinkId;
       m_clientFactory = clientFactory;
     }
 
     private async Task<ICredentials> GetCredentials()
     {
-      return await m_credentialsManager.GetCredentials(m_userId, m_linkedAccountId);
+      return await m_credentialsManager.GetCredentials(m_userId, m_ServiceLinkId);
     }
 
     private async Task<HttpClient> GetAuthorizedClient()

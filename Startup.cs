@@ -1,20 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ParityUI.Data;
+using ParityService.Data;
 using Microsoft.EntityFrameworkCore;
-using ParityUI.Models;
+using ParityService.Models.Entities;
 using Microsoft.AspNetCore.Antiforgery;
-using System;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
 using ParityService.Questrade;
 using ParityService.Managers;
 
-namespace ParityUI
+namespace ParityService
 {
   public class Startup
   {
@@ -31,7 +28,7 @@ namespace ParityUI
       string connectionString = Configuration.GetConnectionString("PostgresConnection");
       services.AddEntityFrameworkNpgsql()
               .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connectionString));
-      services.AddDefaultIdentity<AppUser>()
+      services.AddDefaultIdentity<User>()
               .AddEntityFrameworkStores<AppDbContext>();
 
       services.AddQuestrade();

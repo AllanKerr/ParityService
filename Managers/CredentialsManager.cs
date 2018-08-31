@@ -1,12 +1,11 @@
-
 using System;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using ParityService.Questrade;
-using ParityService.Questrade.Models;
-using ParityUI.Data;
-using ParityUI.Models;
+using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
+using ParityService.Data;
+using ParityService.Models.Entities;
+using ParityService.Questrade.Authentication;
 
 namespace ParityService.Managers
 {
@@ -27,29 +26,35 @@ namespace ParityService.Managers
       m_signInService = signInService;
     }
 
-    public async Task<ICredentials> GetCredentials(string userId, int linkedAccountId) {
+    public async Task<ICredentials> GetCredentials(string userId, int ServiceLinkId)
+    {
 
-      Credentials creds = m_context.Credentials.Find(linkedAccountId, userId);
-      if (creds == null) {
-        m_logger.LogWarning($"No credentials found for {{{userId}, {linkedAccountId}}}");
+      Credentials creds = m_context.Credentials.Find(ServiceLinkId, userId);
+      if (creds == null)
+      {
+        m_logger.LogWarning($"No credentials found for {{{userId}, {ServiceLinkId}}}");
         throw new InvalidCredentialException("No credentials found for linked account.");
       }
-      if (!creds.IsExpired(ExpirationBuffer)) {
-        m_logger.LogDebug($"Valid credentials found for {{{userId}, {linkedAccountId}}}");
+      if (!creds.IsExpired(ExpirationBuffer))
+      {
+        m_logger.LogDebug($"Valid credentials found for {{{userId}, {ServiceLinkId}}}");
         return creds;
       }
-      AuthToken token;
-      bool isPractice = creds.LinkedAccount.IsPractice;
-      try {
-        token = await m_signInService.SignIn(creds.RefreshToken, isPractice);
-      } catch (Exception ex) {
+      QuestradeCredentials questradeCredentials;
+      bool isPractice = creds.ServiceLink.IsPractice;
+      try
+      {
+        questradeCredentials = await m_signInService.SignIn(creds.RefreshToken, isPractice);
+      }
+      catch (Exception ex)
+      {
         m_logger.LogError($"Failed to refresh Questrade account: {ex}");
         throw new InvalidCredentialException("An error occurred while attempting to refresh the credentials.");
       }
-      creds.Update(token);
+      creds.Update(questradeCredentials);
       m_context.SaveChanges();
 
-      m_logger.LogDebug($"Expired credentials found for {{{userId}, {linkedAccountId}}}");
+      m_logger.LogDebug($"Expired credentials found for {{{userId}, {ServiceLinkId}}}");
 
       return creds;
     }

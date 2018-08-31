@@ -1,4 +1,3 @@
-
 using Newtonsoft.Json;
 using ParityService.Questrade.Models.Enums;
 

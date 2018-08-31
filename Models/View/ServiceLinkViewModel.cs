@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ParityService.Models.Entities;
 
-namespace ParityUI.Models.View
+namespace ParityService.Models.View
 {
-  public sealed class LinkedAccountViewModel
+  public sealed class ServiceLinkViewModel
   {
     [Required]
     public int Id { get; private set; }
@@ -18,7 +18,8 @@ namespace ParityUI.Models.View
     [Required]
     public bool IsAuthenticated { get; private set; }
 
-    public LinkedAccountViewModel( LinkedAccount link) {
+    public ServiceLinkViewModel(ServiceLink link)
+    {
       Id = link.Id;
       IsPractice = link.IsPractice;
       CreatedAt = link.CreatedAt;

@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Questrade = ParityService.Questrade.Models;
 
-namespace ParityUI.Models
+namespace ParityService.Models.Entities
 {
-  public sealed class LinkedAccount
+  public sealed class ServiceLink
   {
     private readonly ILazyLoader m_lazyLoader;
 
@@ -15,7 +11,7 @@ namespace ParityUI.Models
 
     public int Id { get; private set; }
 
-    public string AppUserId { get; private set; }
+    public string UserId { get; private set; }
 
     public bool IsPractice { get; private set; }
 
@@ -27,16 +23,16 @@ namespace ParityUI.Models
       private set { m_credentials = value; }
     }
 
-    private LinkedAccount() { }
+    private ServiceLink() { }
 
-    private LinkedAccount(ILazyLoader lazyLoader)
+    private ServiceLink(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    public LinkedAccount(string userId, bool isPractice)
+    public ServiceLink(string userId, bool isPractice)
     {
-      AppUserId = userId;
+      UserId = userId;
       IsPractice = isPractice;
       CreatedAt = DateTime.UtcNow;
     }

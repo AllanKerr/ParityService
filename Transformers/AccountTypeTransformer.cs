@@ -5,8 +5,10 @@ namespace ParityService.Transformers
 {
   public static class AccountTypeTransformer
   {
-    public static AccountType Transform(QuestradeAccountType accountType) {
-      switch (accountType) {
+    public static AccountType Transform(QuestradeAccountType accountType)
+    {
+      switch (accountType)
+      {
         case QuestradeAccountType.Cash:
           return AccountType.Cash;
         case QuestradeAccountType.Margin:

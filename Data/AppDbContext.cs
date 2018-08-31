@@ -1,14 +1,12 @@
-using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ParityUI.Models;
+using ParityService.Models.Entities;
 
-namespace ParityUI.Data
+namespace ParityService.Data
 {
-  public class AppDbContext : IdentityDbContext<AppUser>
+  public class AppDbContext : IdentityDbContext<User>
   {
-    public DbSet<LinkedAccount> LinkedAccounts { get; set; }
-
+    public DbSet<ServiceLink> ServiceLinks { get; set; }
     public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
 
@@ -21,15 +19,15 @@ namespace ParityUI.Data
     {
       base.OnModelCreating(builder);
 
-      builder.Entity<LinkedAccount>().HasKey(link => new { link.Id, link.AppUserId });
-      builder.Entity<LinkedAccount>().Property(link => link.Id).ValueGeneratedOnAdd();
+      builder.Entity<ServiceLink>().HasKey(link => new { link.Id, link.UserId });
+      builder.Entity<ServiceLink>().Property(link => link.Id).ValueGeneratedOnAdd();
 
-      builder.Entity<Credentials>().HasKey(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
+      builder.Entity<Credentials>().HasKey(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
-      builder.Entity<LinkedAccount>()
+      builder.Entity<ServiceLink>()
         .HasOne(link => link.Credentials)
-        .WithOne(creds => creds.LinkedAccount)
-        .HasForeignKey<Credentials>(credentials => new { credentials.LinkedAccountId, credentials.AppUserId });
+        .WithOne(creds => creds.ServiceLink)
+        .HasForeignKey<Credentials>(credentials => new { credentials.ServiceLinkId, credentials.UserId });
     }
   }
 }

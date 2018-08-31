@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace ParityUI.Models
+namespace ParityService.Models.Entities
 {
-  public sealed class AppUser : IdentityUser
+  public sealed class User : IdentityUser
   {
     private readonly ILazyLoader m_lazyLoader;
 
@@ -17,25 +16,25 @@ namespace ParityUI.Models
       private set { m_earnings = value; }
     }
 
-    private List<LinkedAccount> m_linkedAccounts;
+    private List<ServiceLink> m_serviceLinks;
 
-    public List<LinkedAccount> LinkedAccounts
+    public List<ServiceLink> ServiceLinks
     {
-      get => m_linkedAccounts != null ? m_linkedAccounts : m_lazyLoader?.Load(this, ref m_linkedAccounts);
-      private set { m_linkedAccounts = value; }
+      get => m_serviceLinks != null ? m_serviceLinks : m_lazyLoader?.Load(this, ref m_serviceLinks);
+      private set { m_serviceLinks = value; }
     }
 
-    private AppUser(ILazyLoader lazyLoader)
+    private User(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    public AppUser(string username, string email)
+    public User(string username, string email)
     {
       UserName = username;
       Email = email;
     }
 
-    private AppUser() { }
+    private User() { }
   }
 }
