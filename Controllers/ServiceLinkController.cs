@@ -66,7 +66,7 @@ namespace ParityService.Controllers
       return Ok(new ServiceLinkViewModel(link));
     }
 
-    [HttpGet("[controller]", Name = "ServiceLinks")]
+    [HttpGet("[controller]", Name = "GetServiceLinks")]
     public IActionResult GetServiceLinks()
     {
 

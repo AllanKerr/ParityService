@@ -71,10 +71,10 @@ namespace ParityService.Controllers
       await m_signInManager.SignInAsync(user, isPersistent: false);
       HttpContext.User = await m_principleFactory.CreateAsync(user);
 
-      return CreatedAtRoute("User", new UserViewModel(user));
+      return CreatedAtRoute("GetUser", new UserViewModel(user));
     }
 
-    [HttpGet(Name = "User")]
+    [HttpGet(Name = "GetUser")]
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> GetUser()
     {
