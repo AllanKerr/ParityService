@@ -15,19 +15,19 @@ using ParityService.Questrade.Authentication;
 namespace ParityService.Controllers
 {
   [Authorize]
-  public sealed class ServiceLinkController : Controller
+  public sealed class ServiceLinksController : Controller
   {
     private readonly UserManager<User> m_userManager;
-    private readonly ILogger<ServiceLinkController> m_logger;
-    private readonly ServiceLinkManager m_serviceLinkManager;
+    private readonly ILogger<ServiceLinksController> m_logger;
+    private readonly ServiceLinksManager m_serviceLinksManager;
     private readonly ISignInService m_signInService;
 
-    public ServiceLinkController(UserManager<User> userManager, ISignInService signInService, ServiceLinkManager serviceLinksManager, ILogger<ServiceLinkController> logger)
+    public ServiceLinksController(UserManager<User> userManager, ISignInService signInService, ServiceLinksManager serviceLinksManager, ILogger<ServiceLinksController> logger)
     {
       m_userManager = userManager;
       m_logger = logger;
       m_signInService = signInService;
-      m_serviceLinkManager = serviceLinksManager;
+      m_serviceLinksManager = serviceLinksManager;
     }
 
     //[ValidateAntiForgeryToken]
@@ -50,7 +50,7 @@ namespace ParityService.Controllers
         return BadRequest(ModelState);
       }
       string userId = m_userManager.GetUserId(HttpContext.User);
-      ServiceLink link = m_serviceLinkManager.CreateLink(userId, model.IsPractice, questradeCredentials);
+      ServiceLink link = m_serviceLinksManager.CreateLink(userId, model.IsPractice, questradeCredentials);
       return CreatedAtRoute("GetServiceLink", new { id = link.Id }, new ServiceLinkViewModel(link));
     }
 
@@ -58,7 +58,7 @@ namespace ParityService.Controllers
     public IActionResult GetServiceLink(int id)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      ServiceLink link = m_serviceLinkManager.GetLink(userId, id);
+      ServiceLink link = m_serviceLinksManager.GetLink(userId, id);
       if (link == null)
       {
         return NotFound();
@@ -71,7 +71,7 @@ namespace ParityService.Controllers
     {
 
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<ServiceLinkViewModel> ServiceLinks = m_serviceLinkManager.GetLinks(userId).Select(link => new ServiceLinkViewModel(link));
+      IEnumerable<ServiceLinkViewModel> ServiceLinks = m_serviceLinksManager.GetLinks(userId).Select(link => new ServiceLinkViewModel(link));
       return Ok(ServiceLinks);
     }
   }

@@ -14,10 +14,10 @@ namespace ParityService.Controllers
   public sealed class AccountsController : Controller
   {
     private readonly UserManager<User> m_userManager;
-    private readonly ILogger<ServiceLinkController> m_logger;
+    private readonly ILogger<ServiceLinksController> m_logger;
     private readonly AccountsManager m_accountsManager;
 
-    public AccountsController(UserManager<User> userManager, AccountsManager accountsManager, ILogger<ServiceLinkController> logger)
+    public AccountsController(UserManager<User> userManager, AccountsManager accountsManager, ILogger<ServiceLinksController> logger)
     {
       m_userManager = userManager;
       m_logger = logger;

@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace ParityService.Managers
 {
-  public sealed class ServiceLinkManager
+  public sealed class ServiceLinksManager
   {
     private readonly AppDbContext m_context;
     private readonly QuestradeClientFactory m_clientFactory;
 
-    public ServiceLinkManager(AppDbContext context, QuestradeClientFactory clientFactory)
+    public ServiceLinksManager(AppDbContext context, QuestradeClientFactory clientFactory)
     {
       m_context = context;
       m_clientFactory = clientFactory;
