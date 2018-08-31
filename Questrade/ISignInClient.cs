@@ -8,7 +8,7 @@ namespace ParityService.Questrade
 {
   internal interface ISignInClient
   {
-    Task<AuthToken> SignIn(string refreshToken);
+    Task<Credentials> SignIn(string refreshToken);
   }
 
   internal interface IPracticeSignInClient : ISignInClient

@@ -1,6 +1,6 @@
 using ParityService.Models.Entities;
 using ParityService.Data;
-using ParityService.Questrade.Models.Entities;
+using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using ParityService.Questrade;
@@ -19,7 +19,7 @@ namespace ParityService.Managers
       m_clientFactory = clientFactory;
     }
 
-    public ServiceLink CreateLink(string userId, bool isPractice, AuthToken token)
+    public ServiceLink CreateLink(string userId, bool isPractice, QuestradeCredentials questradeCredentials)
     {
       ServiceLink link = new ServiceLink(userId, isPractice);
 
@@ -28,7 +28,7 @@ namespace ParityService.Managers
         m_context.ServiceLinks.Add(link);
         m_context.SaveChanges();
 
-        Credentials credentials = new Credentials(link, token);
+        Credentials credentials = new Credentials(link, questradeCredentials);
         m_context.Credentials.Add(credentials);
         m_context.SaveChanges();
 

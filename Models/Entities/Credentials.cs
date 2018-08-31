@@ -1,6 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using QuestradeAuthToken = ParityService.Questrade.Models.Entities.AuthToken;
+using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 
 namespace ParityService.Models.Entities
 {
@@ -34,21 +34,21 @@ namespace ParityService.Models.Entities
       return AccessTokenExpiresAt.AddSeconds(-expirationBuffer) <= DateTime.UtcNow;
     }
 
-    public void Update(QuestradeAuthToken token)
+    public void Update(QuestradeCredentials credentials)
     {
-      RefreshToken = token.RefreshToken;
-      ApiServer = token.ApiServer;
-      AccessToken = token.AccessToken;
-      AccessTokenType = token.TokenType;
-      AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(token.ExpiresIn);
+      RefreshToken = credentials.RefreshToken;
+      ApiServer = credentials.ApiServer;
+      AccessToken = credentials.AccessToken;
+      AccessTokenType = credentials.TokenType;
+      AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(credentials.ExpiresIn);
     }
 
-    public Credentials(ServiceLink link, QuestradeAuthToken token)
+    public Credentials(ServiceLink link, QuestradeCredentials credentials)
     {
       ServiceLinkId = link.Id;
       UserId = link.UserId;
 
-      Update(token);
+      Update(credentials);
     }
 
     private Credentials(ILazyLoader lazyLoader)

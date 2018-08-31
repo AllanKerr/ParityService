@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
 using ParityService.Questrade;
-using ParityService.Questrade.Models.Entities;
+using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using ParityService.Managers;
 
 namespace ParityService.Controllers
@@ -38,10 +38,10 @@ namespace ParityService.Controllers
       {
         return BadRequest(ModelState);
       }
-      AuthToken token;
+      QuestradeCredentials questradeCredentials;
       try
       {
-        token = await m_signInService.SignIn(model.RefreshToken, model.IsPractice);
+        questradeCredentials = await m_signInService.SignIn(model.RefreshToken, model.IsPractice);
       }
       catch (Exception ex)
       {
@@ -50,7 +50,7 @@ namespace ParityService.Controllers
         return BadRequest(ModelState);
       }
       string userId = m_userManager.GetUserId(HttpContext.User);
-      ServiceLink link = m_serviceLinkManager.CreateLink(userId, model.IsPractice, token);
+      ServiceLink link = m_serviceLinkManager.CreateLink(userId, model.IsPractice, questradeCredentials);
       return CreatedAtRoute("GetServiceLink", new { id = link.Id }, new ServiceLinkViewModel(link));
     }
 

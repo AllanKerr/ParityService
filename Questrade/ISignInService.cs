@@ -6,6 +6,6 @@ namespace ParityService.Questrade
 {
   public interface ISignInService
   {
-    Task<AuthToken> SignIn(string refreshToken, bool isPractice);
+    Task<Credentials> SignIn(string refreshToken, bool isPractice);
   }
 }

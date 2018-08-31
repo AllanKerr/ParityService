@@ -34,7 +34,7 @@ namespace ParityService.Questrade
       return $"{TokenPath}?{parameters}";
     }
 
-    async Task<AuthToken> ISignInClient.SignIn(string refreshToken)
+    async Task<Credentials> ISignInClient.SignIn(string refreshToken)
     {
       if (string.IsNullOrEmpty(refreshToken))
       {
@@ -44,7 +44,7 @@ namespace ParityService.Questrade
 
       HttpResponseMessage response = await m_client.GetAsync(query);
       response.EnsureSuccessStatusCode();
-      return await response.Content.ReadAsAsync<AuthToken>();
+      return await response.Content.ReadAsAsync<Credentials>();
     }
   }
 }

@@ -14,7 +14,7 @@ namespace ParityService.Questrade
       m_practiceClient = practiceClient;
     }
 
-    async Task<AuthToken> ISignInService.SignIn(string refreshToken, bool isPractice)
+    async Task<Credentials> ISignInService.SignIn(string refreshToken, bool isPractice)
     {
       ISignInClient client;
       if (isPractice)

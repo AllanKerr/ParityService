@@ -3,7 +3,7 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ParityService.Questrade;
-using ParityService.Questrade.Models.Entities;
+using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using ParityService.Data;
 using ParityService.Models.Entities;
 
@@ -40,18 +40,18 @@ namespace ParityService.Managers
         m_logger.LogDebug($"Valid credentials found for {{{userId}, {ServiceLinkId}}}");
         return creds;
       }
-      AuthToken token;
+      QuestradeCredentials questradeCredentials;
       bool isPractice = creds.ServiceLink.IsPractice;
       try
       {
-        token = await m_signInService.SignIn(creds.RefreshToken, isPractice);
+        questradeCredentials = await m_signInService.SignIn(creds.RefreshToken, isPractice);
       }
       catch (Exception ex)
       {
         m_logger.LogError($"Failed to refresh Questrade account: {ex}");
         throw new InvalidCredentialException("An error occurred while attempting to refresh the credentials.");
       }
-      creds.Update(token);
+      creds.Update(questradeCredentials);
       m_context.SaveChanges();
 
       m_logger.LogDebug($"Expired credentials found for {{{userId}, {ServiceLinkId}}}");
