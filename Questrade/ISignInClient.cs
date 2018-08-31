@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ParityService.Questrade.Models;
+using ParityService.Questrade.Models.Entities;
 
 namespace ParityService.Questrade
 {

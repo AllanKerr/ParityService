@@ -3,7 +3,7 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ParityService.Questrade;
-using ParityService.Questrade.Models;
+using ParityService.Questrade.Models.Entities;
 using ParityService.Data;
 using ParityService.Models.Entities;
 

@@ -1,6 +1,6 @@
 using ParityService.Models.Entities;
 using ParityService.Data;
-using ParityService.Questrade.Models;
+using ParityService.Questrade.Models.Entities;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using ParityService.Questrade;

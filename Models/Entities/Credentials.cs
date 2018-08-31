@@ -1,6 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using QuestradeAuthToken = ParityService.Questrade.Models.AuthToken;
+using QuestradeAuthToken = ParityService.Questrade.Models.Entities.AuthToken;
 
 namespace ParityService.Models.Entities
 {

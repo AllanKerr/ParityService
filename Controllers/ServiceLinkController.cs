@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
 using ParityService.Questrade;
-using ParityService.Questrade.Models;
+using ParityService.Questrade.Models.Entities;
 using ParityService.Managers;
 
 namespace ParityService.Controllers

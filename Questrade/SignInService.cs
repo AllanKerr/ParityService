@@ -1,4 +1,4 @@
-﻿using ParityService.Questrade.Models;
+﻿using ParityService.Questrade.Models.Entities;
 using System.Threading.Tasks;
 
 namespace ParityService.Questrade

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using ParityService.Questrade.Models;
+using ParityService.Questrade.Models.Entities;
 using System;
 using System.Collections.Specialized;
 using System.Net.Http;

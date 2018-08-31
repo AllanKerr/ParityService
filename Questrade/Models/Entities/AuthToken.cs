@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace ParityService.Questrade.Models
+namespace ParityService.Questrade.Models.Entities
 {
   public sealed class AuthToken
   {
