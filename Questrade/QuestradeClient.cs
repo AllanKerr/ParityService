@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ParityService.Managers;
 using ParityService.Questrade.Models.Responses;
-using ParityService.Models;
+using ParityService.Models.Entities;
 
 namespace ParityService.Questrade
 {

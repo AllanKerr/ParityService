@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using ParityService.Models.Enums;
 
-namespace ParityService.Models
+namespace ParityService.Models.Entities
 {
   public sealed class Earnings
   {

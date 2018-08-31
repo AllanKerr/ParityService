@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using ParityService.Questrade;
 using ParityService.Questrade.Models;
 using ParityService.Data;
-using ParityService.Models;
+using ParityService.Models.Entities;
 
 namespace ParityService.Managers
 {

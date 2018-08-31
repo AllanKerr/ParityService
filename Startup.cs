@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ParityService.Data;
 using Microsoft.EntityFrameworkCore;
-using ParityService.Models;
+using ParityService.Models.Entities;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using ParityService.Questrade;

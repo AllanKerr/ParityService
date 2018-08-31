@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ParityService.Models;
+using ParityService.Models.Entities;
 
 namespace ParityService.Data
 {

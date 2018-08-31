@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using ParityService.Models;
+using ParityService.Models.Entities;
 using ParityService.Questrade;
 using ParityService.Questrade.Models;
 using ParityService.Managers;

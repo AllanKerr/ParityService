@@ -1,4 +1,4 @@
-using ParityService.Models;
+using ParityService.Models.Entities;
 using ParityService.Data;
 using ParityService.Questrade.Models;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -21,7 +21,6 @@ namespace ParityService.Managers
 
     public ServiceLink CreateLink(string userId, bool isPractice, AuthToken token)
     {
-
       ServiceLink link = new ServiceLink(userId, isPractice);
 
       using (IDbContextTransaction transaction = m_context.Database.BeginTransaction())

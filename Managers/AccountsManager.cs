@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using ParityService.Models.View;
-using ParityService.Models;
+using ParityService.Models.Entities;
 using System.Collections.Generic;
 using ParityService.Questrade;
 using ParityService.Questrade.Models.Responses;

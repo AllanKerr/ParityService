@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace ParityService.Models
+namespace ParityService.Models.Entities
 {
   public sealed class ServiceLink
   {

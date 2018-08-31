@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace ParityService.Models
+namespace ParityService.Models.Entities
 {
   public sealed class User : IdentityUser
   {

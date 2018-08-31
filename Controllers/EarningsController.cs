@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ParityService.Models.View;
 using Microsoft.Extensions.Logging;
-using ParityService.Models;
+using ParityService.Models.Entities;
 using ParityService.Questrade;
 using ParityService.Data;
 

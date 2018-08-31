@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using ParityService.Models.View;
-using ParityService.Models;
+using ParityService.Models.Entities;
 using ParityService.Extensions;
 
 namespace ParityService.Controllers

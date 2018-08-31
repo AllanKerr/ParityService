@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using ParityService.Models.Entities;
 using ParityService.Models.Enums;
 
 namespace ParityService.Models.View

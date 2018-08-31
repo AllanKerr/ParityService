@@ -1,4 +1,4 @@
-namespace ParityService.Models
+namespace ParityService.Models.Entities
 {
   public interface ICredentials
   {

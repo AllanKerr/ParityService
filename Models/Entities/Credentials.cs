@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using QuestradeAuthToken = ParityService.Questrade.Models.AuthToken;
 
-namespace ParityService.Models
+namespace ParityService.Models.Entities
 {
   public sealed class Credentials : ICredentials
   {
