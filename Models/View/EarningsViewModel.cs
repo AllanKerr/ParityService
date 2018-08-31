@@ -4,17 +4,20 @@ using ParityService.Models.Enums;
 
 namespace ParityUI.Models.View
 {
-    public sealed class EarningsViewModel
+  public sealed class EarningsViewModel
+  {
+    [Required]
+    public decimal AnnualIncome { get; set; }
+
+    [Required]
+    public Region Region { get; set; }
+
+    public EarningsViewModel(Earnings earnings)
     {
-        [Required]
-        public decimal AnnualIncome { get; } 
-
-        [Required]
-        public Region Region { get; }
-
-        public EarningsViewModel(Earnings earnings) {
-            AnnualIncome = earnings.AnnualIncome;
-            Region = earnings.Region;
-        }
+      AnnualIncome = earnings.AnnualIncome;
+      Region = earnings.Region;
     }
+
+    public EarningsViewModel() { }
+  }
 }

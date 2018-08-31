@@ -34,7 +34,7 @@ namespace ParityUI.Controllers
             m_context = context;
         }
 
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         [HttpPut("[controller]", Name = "SetEarnings")]
         public IActionResult Set([FromBody] EarningsViewModel model)
         {
@@ -43,18 +43,14 @@ namespace ParityUI.Controllers
             }
             string userId = m_userManager.GetUserId(HttpContext.User);
             Earnings earnings = m_context.Earnings.Find(userId);
-            bool isNew = earnings == null;
 
-            if (isNew) {
+            if (earnings == null) {
               earnings = new Earnings(userId);
               m_context.Earnings.Add(earnings);
-            } 
-            earnings.Update(model.AnnualIncome, earnings.Region);
+            }
+            earnings.Update(model.AnnualIncome, model.Region);
             m_context.SaveChanges();
 
-            if (isNew) {
-              return CreatedAtRoute("GetEarnings", new EarningsViewModel(earnings));
-            }
             return Ok();
         }
 
