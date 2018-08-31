@@ -12,14 +12,14 @@ namespace ParityService.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public sealed class AccountController : Controller
+    public sealed class UserController : Controller
     {
         private readonly UserManager<User> m_userManager;
         private readonly SignInManager<User> m_signInManager;
         private readonly IEmailSender m_emailSender;
         private readonly IUserClaimsPrincipalFactory<User> m_principleFactory;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IUserClaimsPrincipalFactory<User> principleFactory)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IUserClaimsPrincipalFactory<User> principleFactory)
         {
             m_userManager = userManager;
             m_signInManager = signInManager;
