@@ -1,19 +1,9 @@
-
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using ParityService.Models.View;
 using ParityService.Models;
-using ParityService.Extensions;
-using Microsoft.Extensions.Logging;
 using ParityService.Data;
 using ParityService.Questrade.Models;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using ParityService.Questrade;
-using ParityService.Questrade.Models.Responses;
 using System.Linq;
 
 namespace ParityService.Managers
@@ -48,12 +38,13 @@ namespace ParityService.Managers
       return link;
     }
 
-    public ServiceLink GetLink(string userId, int id) {
-
-        return m_context.ServiceLinks.Find(id, userId);
+    public ServiceLink GetLink(string userId, int id)
+    {
+      return m_context.ServiceLinks.Find(id, userId);
     }
 
-    public IEnumerable<ServiceLink> GetLinks(string userId) {
+    public IEnumerable<ServiceLink> GetLinks(string userId)
+    {
       return m_context.ServiceLinks.Where(ServiceLink => ServiceLink.UserId == userId);
     }
   }

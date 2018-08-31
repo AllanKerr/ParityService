@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using ParityService.Questrade.Models;
 using QuestradeAuthToken = ParityService.Questrade.Models.AuthToken;
 
 namespace ParityService.Models

@@ -6,18 +6,18 @@ using ParityService.Questrade.Models;
 
 namespace ParityService.Questrade
 {
-    internal interface ISignInClient
-    {
-        Task<AuthToken> SignIn(string refreshToken);
-    }
+  internal interface ISignInClient
+  {
+    Task<AuthToken> SignIn(string refreshToken);
+  }
 
-    internal interface IPracticeSignInClient : ISignInClient
-    {
+  internal interface IPracticeSignInClient : ISignInClient
+  {
 
-    }
+  }
 
-    internal interface ILiveSignInClient : ISignInClient
-    {
+  internal interface ILiveSignInClient : ISignInClient
+  {
 
-    }
+  }
 }

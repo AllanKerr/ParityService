@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParityService.Models.View
@@ -18,7 +17,8 @@ namespace ParityService.Models.View
     [Required]
     public bool IsAuthenticated { get; private set; }
 
-    public ServiceLinkViewModel(ServiceLink link) {
+    public ServiceLinkViewModel(ServiceLink link)
+    {
       Id = link.Id;
       IsPractice = link.IsPractice;
       CreatedAt = link.CreatedAt;

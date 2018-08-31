@@ -1,16 +1,6 @@
-
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
 using ParityService.Models.View;
 using ParityService.Models;
-using ParityService.Extensions;
-using Microsoft.Extensions.Logging;
-using ParityService.Data;
-using ParityService.Questrade.Models;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using ParityService.Questrade;
 using ParityService.Questrade.Models.Responses;
@@ -29,10 +19,11 @@ namespace ParityService.Managers
       m_clientFactory = clientFactory;
     }
 
-    public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int serviceLinkId) {
-
+    public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int serviceLinkId)
+    {
       ServiceLink ServiceLink = m_serviceLinkManager.GetLink(userId, serviceLinkId);
-      if (ServiceLink == null) {
+      if (ServiceLink == null)
+      {
         return null;
       }
       QuestradeClient client = m_clientFactory.CreateClient(userId, serviceLinkId);

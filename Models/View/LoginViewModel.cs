@@ -2,16 +2,16 @@
 
 namespace ParityService.Models.View
 {
-    public sealed class LoginViewModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+  public sealed class LoginViewModel
+  {
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+    [Required]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
 
-        public bool RememberMe { get; set; }
-    }
+    public bool RememberMe { get; set; }
+  }
 }

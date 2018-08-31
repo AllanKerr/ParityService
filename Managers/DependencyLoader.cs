@@ -3,13 +3,13 @@ using System;
 
 namespace ParityService.Managers
 {
-    public static class DependencyLoader
+  public static class DependencyLoader
+  {
+    public static void AddManagers(this IServiceCollection services)
     {
-        public static void AddManagers(this IServiceCollection services)
-        {
-            services.AddScoped<ServiceLinkManager>();
-            services.AddScoped<CredentialsManager>();
-            services.AddScoped<AccountsManager>();
-        }
+      services.AddScoped<ServiceLinkManager>();
+      services.AddScoped<CredentialsManager>();
+      services.AddScoped<AccountsManager>();
     }
+  }
 }

@@ -1,4 +1,3 @@
-
 using System;
 using System.Security.Authentication;
 using System.Threading.Tasks;
@@ -27,22 +26,28 @@ namespace ParityService.Managers
       m_signInService = signInService;
     }
 
-    public async Task<ICredentials> GetCredentials(string userId, int ServiceLinkId) {
+    public async Task<ICredentials> GetCredentials(string userId, int ServiceLinkId)
+    {
 
       Credentials creds = m_context.Credentials.Find(ServiceLinkId, userId);
-      if (creds == null) {
+      if (creds == null)
+      {
         m_logger.LogWarning($"No credentials found for {{{userId}, {ServiceLinkId}}}");
         throw new InvalidCredentialException("No credentials found for linked account.");
       }
-      if (!creds.IsExpired(ExpirationBuffer)) {
+      if (!creds.IsExpired(ExpirationBuffer))
+      {
         m_logger.LogDebug($"Valid credentials found for {{{userId}, {ServiceLinkId}}}");
         return creds;
       }
       AuthToken token;
       bool isPractice = creds.ServiceLink.IsPractice;
-      try {
+      try
+      {
         token = await m_signInService.SignIn(creds.RefreshToken, isPractice);
-      } catch (Exception ex) {
+      }
+      catch (Exception ex)
+      {
         m_logger.LogError($"Failed to refresh Questrade account: {ex}");
         throw new InvalidCredentialException("An error occurred while attempting to refresh the credentials.");
       }

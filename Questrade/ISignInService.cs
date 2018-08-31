@@ -4,8 +4,8 @@ using ParityService.Questrade.Models;
 
 namespace ParityService.Questrade
 {
-    public interface ISignInService
-    {
-        Task<AuthToken> SignIn(string refreshToken, bool isPractice);
-    }
+  public interface ISignInService
+  {
+    Task<AuthToken> SignIn(string refreshToken, bool isPractice);
+  }
 }
