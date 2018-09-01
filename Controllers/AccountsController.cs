@@ -48,7 +48,7 @@ namespace ParityService.Controllers
       return Ok(accountViews);
     }
 
-    [HttpGet("[controller]/{linkId}/{accountId}", Name = "GetManagedAccount")]
+    [HttpGet("[controller]/managed/{linkId}/{accountId}", Name = "GetManagedAccount")]
     public IActionResult GetManagedAccount(int linkId, int accountId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
@@ -59,7 +59,7 @@ namespace ParityService.Controllers
       return Ok(new AccountViewModel(account));
     }
 
-    [HttpGet("[controller]/{linkId}", Name = "GetManagedAccounts")]
+    [HttpGet("[controller]/managed/{linkId}", Name = "GetManagedAccounts")]
     public IActionResult GetManagedAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
