@@ -60,5 +60,24 @@ namespace ParityService.Controllers
       IEnumerable<AccountViewModel> accountViews = accounts.Select(account => new AccountViewModel(account));
       return Ok(accountViews);
     }
+
+    //[ValidateAntiForgeryToken]
+    [HttpPost("[controller]/local-accounts", Name = "AddLocalAccount")]
+    public IActionResult Add([FromBody] AccountViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      Account account = m_accountsManager.AddLocalAccount(userId, model.AccountName, model.AccountType);
+      return CreatedAtRoute("GetLocalAccount", new { accountId = account.Id }, new AccountViewModel(account));
+    }
+
+    [HttpGet("[controller]/local-accounts/{accountId}", Name = "GetLocalAccount")]
+    public IActionResult GetLocalAccount(int accountId)
+    {
+      return Ok();
+    }
   }
 }

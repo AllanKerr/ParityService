@@ -71,5 +71,13 @@ namespace ParityService.Managers
       }
       return link.ManagedAccounts;
     }
+
+    public Account AddLocalAccount(string userId, string accountName, AccountType accountType)
+    {
+      Account account = new Account(userId, accountName, accountType);
+      m_context.Accounts.Add(account);
+      m_context.SaveChanges();
+      return account;
+    }
   }
 }
