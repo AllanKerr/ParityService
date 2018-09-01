@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using ParityService.Models.Enums;
 using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
@@ -9,13 +10,24 @@ namespace ParityService.Models.Entities
   {
     private readonly ILazyLoader m_lazyLoader;
 
-    private ServiceLink m_serviceLink;
+    #region  User Foreign Key
 
-    public int ServiceLinkId { get; private set; }
-
+    private User m_user;
     public string UserId { get; private set; }
 
-    public string AccountId { get; private set; }
+    public User User
+    {
+      get => m_user != null ? m_user : m_lazyLoader?.Load(this, ref m_user);
+      private set { m_user = value; }
+    }
+
+    #endregion
+
+    #region SerivceLink Foreign Key
+
+    private ServiceLink m_serviceLink;
+    public int ServiceLinkId { get; private set; }
+    public string ServiceLinkUserId { get; private set; }
 
     public ServiceLink ServiceLink
     {
@@ -23,13 +35,28 @@ namespace ParityService.Models.Entities
       private set { m_serviceLink = value; }
     }
 
+    #endregion
+
+    [Key]
+    public int Id { get; private set; }
+
+    public string AccountId { get; private set; }
+
+    [Required]
     public AccountType AccountType { get; private set; }
 
     public ManagedAccount(ServiceLink link, string accountId, AccountType accountType)
     {
       ServiceLinkId = link.Id;
-      UserId = link.UserId;
+      ServiceLinkUserId = link.UserId;
       AccountId = accountId;
+      AccountType = accountType;
+    }
+
+    public ManagedAccount(string userId, string accountName, AccountType accountType)
+    {
+      UserId = userId;
+      AccountId = accountName;
       AccountType = accountType;
     }
 

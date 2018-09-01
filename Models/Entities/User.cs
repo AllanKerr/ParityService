@@ -24,6 +24,16 @@ namespace ParityService.Models.Entities
       private set { m_serviceLinks = value; }
     }
 
+    private List<ManagedAccount> m_localAccounts;
+
+    public List<ManagedAccount> LocalAccounts
+    {
+      get => m_localAccounts != null ? m_localAccounts : m_lazyLoader?.Load(this, ref m_localAccounts);
+      private set { m_localAccounts = value; }
+    }
+
+    private User() { }
+
     private User(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
@@ -34,7 +44,5 @@ namespace ParityService.Models.Entities
       UserName = username;
       Email = email;
     }
-
-    private User() { }
   }
 }

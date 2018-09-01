@@ -26,8 +26,6 @@ namespace ParityService.Data
 
       builder.Entity<Credentials>().HasKey(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
-      builder.Entity<ManagedAccount>().HasKey(account => new { account.AccountId, account.ServiceLinkId, account.UserId });
-
       builder.Entity<ServiceLink>()
         .HasOne(link => link.Credentials)
         .WithOne(creds => creds.ServiceLink)
@@ -36,7 +34,12 @@ namespace ParityService.Data
       builder.Entity<ServiceLink>()
         .HasMany(link => link.Accounts)
         .WithOne(account => account.ServiceLink)
-        .HasForeignKey(account => new { account.ServiceLinkId, account.UserId });
+        .HasForeignKey(account => new { account.ServiceLinkId, account.ServiceLinkUserId });
+
+      builder.Entity<User>()
+        .HasMany(user => user.LocalAccounts)
+        .WithOne(account => account.User)
+        .HasForeignKey(account => account.UserId);
     }
   }
 }
