@@ -8,29 +8,20 @@ using ParityService.Models.Entities;
 
 namespace ParityService.Questrade
 {
-  public sealed class QuestradeClient
+  public abstract class QuestradeClient
   {
     private const string ApiVersion = "v1";
 
     private readonly CredentialsManager m_credentialsManager;
     private readonly IHttpClientFactory m_clientFactory;
-    private readonly string m_userId;
-    private readonly int m_ServiceLinkId;
-
     private HttpClient m_client;
 
-    public QuestradeClient(CredentialsManager credentialsManager, IHttpClientFactory clientFactory, string userId, int ServiceLinkId)
+    public QuestradeClient(IHttpClientFactory clientFactory)
     {
-      m_credentialsManager = credentialsManager;
-      m_userId = userId;
-      m_ServiceLinkId = ServiceLinkId;
       m_clientFactory = clientFactory;
     }
 
-    private async Task<ICredentials> GetCredentials()
-    {
-      return await m_credentialsManager.GetCredentials(m_userId, m_ServiceLinkId);
-    }
+    protected abstract Task<ICredentials> GetCredentials();
 
     private async Task<HttpClient> GetAuthorizedClient()
     {

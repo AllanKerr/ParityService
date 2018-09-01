@@ -1,5 +1,6 @@
 using System.Net.Http;
 using ParityService.Managers;
+using ParityService.Models.Entities;
 
 namespace ParityService.Questrade
 {
@@ -16,7 +17,12 @@ namespace ParityService.Questrade
 
     public QuestradeClient CreateClient(string userId, int ServiceLinkId)
     {
-      return new QuestradeClient(m_credentialsManager, m_clientFactory, userId, ServiceLinkId);
+      return new RenewableQuestradeClient(m_clientFactory, m_credentialsManager, userId, ServiceLinkId);
+    }
+
+    public QuestradeClient CreateClient(ICredentials credentials)
+    {
+      return new ExpiringQuestradeClient(m_clientFactory, credentials);
     }
   }
 }
