@@ -68,7 +68,6 @@ namespace ParityService.Controllers
     [HttpGet("[controller]", Name = "GetServiceLinks")]
     public IActionResult GetServiceLinks()
     {
-
       string userId = m_userManager.GetUserId(HttpContext.User);
       IEnumerable<ServiceLinkViewModel> ServiceLinks = m_serviceLinksManager.GetLinks(userId).Select(link => new ServiceLinkViewModel(link));
       return Ok(ServiceLinks);
