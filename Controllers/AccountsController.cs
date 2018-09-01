@@ -48,8 +48,8 @@ namespace ParityService.Controllers
       return Ok(accountViews);
     }
 
-    [HttpGet("[controller]/{linkId}", Name = "GetAccounts")]
-    public IActionResult GetAccounts(int linkId)
+    [HttpGet("[controller]/{linkId}", Name = "GetManagedAccounts")]
+    public IActionResult GetManagedAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
       IEnumerable<Account> accounts = m_accountsManager.GetAccounts(userId, linkId);
@@ -62,8 +62,8 @@ namespace ParityService.Controllers
     }
 
     //[ValidateAntiForgeryToken]
-    [HttpPost("[controller]/local-accounts", Name = "AddLocalAccount")]
-    public IActionResult Add([FromBody] AccountViewModel model)
+    [HttpPost("[controller]/local", Name = "AddLocalAccount")]
+    public IActionResult AddLocalAccount([FromBody] AccountViewModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -74,7 +74,7 @@ namespace ParityService.Controllers
       return CreatedAtRoute("GetLocalAccount", new { accountId = account.Id }, new AccountViewModel(account));
     }
 
-    [HttpGet("[controller]/local-accounts/{accountId}", Name = "GetLocalAccount")]
+    [HttpGet("[controller]/local/{accountId}", Name = "GetLocalAccount")]
     public IActionResult GetLocalAccount(int accountId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
@@ -85,7 +85,7 @@ namespace ParityService.Controllers
       return Ok(new AccountViewModel(account));
     }
 
-    [HttpGet("[controller]/local-accounts", Name = "GetLocalAccounts")]
+    [HttpGet("[controller]/local", Name = "GetLocalAccounts")]
     public async Task<IActionResult> GetLocalAccounts()
     {
       User user = await m_userManager.GetUserAsync(HttpContext.User);
