@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ParityService.Models.Enums;
 
 namespace ParityService.Models.Entities
 {
@@ -15,6 +17,12 @@ namespace ParityService.Models.Entities
     public int Id { get; private set; }
 
     public string UserId { get; private set; }
+
+    [Required]
+    public ServiceType ServiceType { get; private set; }
+
+    [Required]
+    public string ServiceId { get; private set; }
 
     public bool IsPractice { get; private set; }
 
@@ -39,9 +47,11 @@ namespace ParityService.Models.Entities
       m_lazyLoader = lazyLoader;
     }
 
-    public ServiceLink(string userId, bool isPractice)
+    public ServiceLink(string userId, ServiceType serviceType, string serviceId, bool isPractice)
     {
       UserId = userId;
+      ServiceId = serviceId;
+      ServiceType = serviceType;
       IsPractice = isPractice;
       CreatedAt = DateTime.UtcNow;
     }

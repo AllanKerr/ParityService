@@ -10,6 +10,7 @@ using ParityService.Models.Entities;
 using ParityService.Managers;
 using System.Security.Authentication;
 using System.Net.Http;
+using ParityService.Extensions;
 
 namespace ParityService.Controllers
 {
@@ -48,6 +49,11 @@ namespace ParityService.Controllers
       {
         ModelState.AddModelError(string.Empty, "An error occurred while trying to communicate with Questrade.");
         return BadRequest(ModelState);
+      }
+      catch (ConflictException)
+      {
+        ModelState.AddModelError(string.Empty, "This service account has already been linked.");
+        return Conflict(ModelState);
       }
       return CreatedAtRoute("GetServiceLink", new { id = link.Id }, new ServiceLinkViewModel(link));
     }

@@ -14,6 +14,7 @@ using System.Security.Authentication;
 using System.Net.Http;
 using ParityService.Transformers;
 using ParityService.Models.Enums;
+using ParityService.Extensions;
 
 namespace ParityService.Managers
 {
@@ -40,7 +41,13 @@ namespace ParityService.Managers
       QuestradeClient client = m_clientFactory.CreateClient(questradeCredentials);
       AccountsResponse response = await client.FetchAccounts();
 
-      ServiceLink link = new ServiceLink(userId, questradeLink.IsPractice);
+      ServiceType serviceType = ServiceType.Questrade;
+      string serviceId = response.UserId.ToString();
+      if (LinkExists(userId, serviceType, serviceId))
+      {
+        throw new ConflictException();
+      }
+      ServiceLink link = new ServiceLink(userId, ServiceType.Questrade, serviceId, questradeLink.IsPractice);
       using (IDbContextTransaction transaction = m_context.Database.BeginTransaction())
       {
         m_context.ServiceLinks.Add(link);
@@ -78,6 +85,11 @@ namespace ParityService.Managers
     public IEnumerable<ServiceLink> GetLinks(string userId)
     {
       return m_context.ServiceLinks.Where(ServiceLink => ServiceLink.UserId == userId);
+    }
+
+    public bool LinkExists(string userId, ServiceType serviceType, string serviceId)
+    {
+      return m_context.ServiceLinks.Any(link => link.UserId == userId && link.ServiceType == serviceType && link.ServiceId == serviceId);
     }
   }
 }
