@@ -77,7 +77,12 @@ namespace ParityService.Controllers
     [HttpGet("[controller]/local-accounts/{accountId}", Name = "GetLocalAccount")]
     public IActionResult GetLocalAccount(int accountId)
     {
-      return Ok();
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      if (!m_accountsManager.TryGetLocalAccount(userId, accountId, out Account account))
+      {
+        return NotFound();
+      }
+      return Ok(new AccountViewModel(account));
     }
   }
 }

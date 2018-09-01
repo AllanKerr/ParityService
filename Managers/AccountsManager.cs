@@ -9,6 +9,7 @@ using ParityService.Data;
 using ParityService.Models.Enums;
 using ParityService.Transformers;
 using QuestradeAccount = ParityService.Questrade.Models.Entities.Account;
+using System;
 
 namespace ParityService.Managers
 {
@@ -78,6 +79,20 @@ namespace ParityService.Managers
       m_context.Accounts.Add(account);
       m_context.SaveChanges();
       return account;
+    }
+
+    public bool TryGetLocalAccount(string userId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => acc.UserId == userId && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
     }
   }
 }
