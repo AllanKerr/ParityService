@@ -63,7 +63,7 @@ namespace ParityService.Controllers
     public IActionResult GetManagedAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<Account> accounts = m_accountsManager.GetAccounts(userId, linkId);
+      IEnumerable<Account> accounts = m_accountsManager.GetManagedAccounts(userId, linkId);
       if (accounts == null)
       {
         return NotFound();
@@ -101,6 +101,14 @@ namespace ParityService.Controllers
     {
       User user = await m_userManager.GetUserAsync(HttpContext.User);
       IEnumerable<AccountViewModel> accountViews = user.LocalAccounts.Select(account => new AccountViewModel(account));
+      return Ok(accountViews);
+    }
+
+    [HttpGet("[controller]", Name = "GetAccounts")]
+    public IActionResult GetAccounts()
+    {
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      IEnumerable<AccountViewModel> accountViews = m_accountsManager.GetAccounts(userId).Select(account => new AccountViewModel(account));
       return Ok(accountViews);
     }
   }

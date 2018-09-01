@@ -63,7 +63,7 @@ namespace ParityService.Managers
       return allAccounts;
     }
 
-    public IEnumerable<Account> GetAccounts(string userId, int linkId)
+    public IEnumerable<Account> GetManagedAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
       if (link == null)
@@ -107,6 +107,11 @@ namespace ParityService.Managers
         account = null;
         return false;
       }
+    }
+
+    public IEnumerable<Account> GetAccounts(string userId)
+    {
+      return m_context.Accounts.Where(acc => acc.UserId == userId || acc.ServiceLinkUserId == userId);
     }
   }
 }
