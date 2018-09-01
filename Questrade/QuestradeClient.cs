@@ -13,7 +13,6 @@ namespace ParityService.Questrade
   {
     private const string ApiVersion = "v1";
 
-    private readonly CredentialsManager m_credentialsManager;
     private readonly IHttpClientFactory m_clientFactory;
     private HttpClient m_client;
 

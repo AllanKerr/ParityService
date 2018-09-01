@@ -17,7 +17,6 @@ namespace ParityService.Controllers
   public sealed class ServiceLinksController : Controller
   {
     private readonly UserManager<User> m_userManager;
-    private readonly ILogger<ServiceLinksController> m_logger;
     private readonly ServiceLinksManager m_serviceLinksManager;
 
     public ServiceLinksController(UserManager<User> userManager, ServiceLinksManager serviceLinksManager, ILogger<ServiceLinksController> logger)
