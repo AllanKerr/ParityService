@@ -61,5 +61,15 @@ namespace ParityService.Managers
       m_context.SaveChanges();
       return allAccounts;
     }
+
+    public IEnumerable<ManagedAccount> GetAccounts(string userId, int linkId)
+    {
+      ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
+      if (link == null)
+      {
+        return null;
+      }
+      return link.Accounts;
+    }
   }
 }

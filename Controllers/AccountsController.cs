@@ -47,5 +47,18 @@ namespace ParityService.Controllers
       IEnumerable<AccountViewModel> accountViews = accounts.Select(account => new AccountViewModel(account));
       return Ok(accountViews);
     }
+
+    [HttpGet("[controller]/{linkId}", Name = "GetAccounts")]
+    public IActionResult GetAccounts(int linkId)
+    {
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      IEnumerable<ManagedAccount> accounts = m_accountsManager.GetAccounts(userId, linkId);
+      if (accounts == null)
+      {
+        return NotFound();
+      }
+      IEnumerable<AccountViewModel> accountViews = accounts.Select(account => new AccountViewModel(account));
+      return Ok(accountViews);
+    }
   }
 }
