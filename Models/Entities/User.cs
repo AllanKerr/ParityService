@@ -24,9 +24,9 @@ namespace ParityService.Models.Entities
       private set { m_serviceLinks = value; }
     }
 
-    private List<ManagedAccount> m_localAccounts;
+    private List<Account> m_localAccounts;
 
-    public List<ManagedAccount> LocalAccounts
+    public List<Account> LocalAccounts
     {
       get => m_localAccounts != null ? m_localAccounts : m_lazyLoader?.Load(this, ref m_localAccounts);
       private set { m_localAccounts = value; }

@@ -23,7 +23,7 @@ namespace ParityService.Managers
       m_clientFactory = clientFactory;
     }
 
-    public async Task<IEnumerable<ManagedAccount>> SynchronizeAccounts(string userId, int linkId)
+    public async Task<IEnumerable<Account>> SynchronizeAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
       if (link == null)
@@ -35,22 +35,22 @@ namespace ParityService.Managers
       return SynchronizeAccounts(link, response.Accounts);
     }
 
-    public IEnumerable<ManagedAccount> SynchronizeAccounts(ServiceLink link, IEnumerable<QuestradeAccount> questradeAccounts)
+    public IEnumerable<Account> SynchronizeAccounts(ServiceLink link, IEnumerable<QuestradeAccount> questradeAccounts)
     {
-      IEnumerable<ManagedAccount> accounts = questradeAccounts.Select(account =>
+      IEnumerable<Account> accounts = questradeAccounts.Select(account =>
        {
          AccountType type = AccountTypeTransformer.Transform(account.Type);
-         return new ManagedAccount(link, account.Number, type);
+         return new Account(link, account.Number, type);
        });
       return SynchronizeAccounts(accounts);
     }
 
-    public IEnumerable<ManagedAccount> SynchronizeAccounts(IEnumerable<ManagedAccount> accounts)
+    public IEnumerable<Account> SynchronizeAccounts(IEnumerable<Account> accounts)
     {
-      var allAccounts = new List<ManagedAccount>();
-      foreach (ManagedAccount account in accounts)
+      var allAccounts = new List<Account>();
+      foreach (Account account in accounts)
       {
-        ManagedAccount existingAccount = m_context.ManagedAccounts.Find(account.AccountId, account.ServiceLinkId, account.UserId);
+        Account existingAccount = m_context.Accounts.Find(account.AccountId, account.ServiceLinkId, account.UserId);
         if (existingAccount == null)
         {
           existingAccount = account;
@@ -62,7 +62,7 @@ namespace ParityService.Managers
       return allAccounts;
     }
 
-    public IEnumerable<ManagedAccount> GetAccounts(string userId, int linkId)
+    public IEnumerable<Account> GetAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
       if (link == null)

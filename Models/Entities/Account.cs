@@ -6,7 +6,7 @@ using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials
 
 namespace ParityService.Models.Entities
 {
-  public sealed class ManagedAccount
+  public sealed class Account
   {
     private readonly ILazyLoader m_lazyLoader;
 
@@ -45,7 +45,7 @@ namespace ParityService.Models.Entities
     [Required]
     public AccountType AccountType { get; private set; }
 
-    public ManagedAccount(ServiceLink link, string accountId, AccountType accountType)
+    public Account(ServiceLink link, string accountId, AccountType accountType)
     {
       ServiceLinkId = link.Id;
       ServiceLinkUserId = link.UserId;
@@ -53,18 +53,18 @@ namespace ParityService.Models.Entities
       AccountType = accountType;
     }
 
-    public ManagedAccount(string userId, string accountName, AccountType accountType)
+    public Account(string userId, string accountName, AccountType accountType)
     {
       UserId = userId;
       AccountId = accountName;
       AccountType = accountType;
     }
 
-    private ManagedAccount(ILazyLoader lazyLoader)
+    private Account(ILazyLoader lazyLoader)
     {
       m_lazyLoader = lazyLoader;
     }
 
-    private ManagedAccount() { }
+    private Account() { }
   }
 }

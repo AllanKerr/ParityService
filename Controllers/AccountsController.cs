@@ -30,7 +30,7 @@ namespace ParityService.Controllers
     public async Task<IActionResult> SynchronizeAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<ManagedAccount> accounts;
+      IEnumerable<Account> accounts;
       try
       {
         accounts = await m_accountsManager.SynchronizeAccounts(userId, linkId);
@@ -52,7 +52,7 @@ namespace ParityService.Controllers
     public IActionResult GetAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<ManagedAccount> accounts = m_accountsManager.GetAccounts(userId, linkId);
+      IEnumerable<Account> accounts = m_accountsManager.GetAccounts(userId, linkId);
       if (accounts == null)
       {
         return NotFound();

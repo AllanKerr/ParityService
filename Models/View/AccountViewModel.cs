@@ -10,7 +10,7 @@ namespace ParityService.Models.View
 
     public AccountType AccountType { get; private set; }
 
-    public AccountViewModel(ManagedAccount account)
+    public AccountViewModel(Account account)
     {
       AccountId = account.AccountId;
       AccountType = account.AccountType;

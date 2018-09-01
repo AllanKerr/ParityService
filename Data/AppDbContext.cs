@@ -10,7 +10,7 @@ namespace ParityService.Data
     public DbSet<ServiceLink> ServiceLinks { get; set; }
     public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
-    public DbSet<ManagedAccount> ManagedAccounts { get; set; }
+    public DbSet<Account> Accounts { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
