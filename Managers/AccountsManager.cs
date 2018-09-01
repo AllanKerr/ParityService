@@ -23,18 +23,6 @@ namespace ParityService.Managers
       m_clientFactory = clientFactory;
     }
 
-    public async Task<IEnumerable<AccountViewModel>> GetAccounts(string userId, int serviceLinkId)
-    {
-      ServiceLink serviceLink = m_context.ServiceLinks.Find(serviceLinkId, userId);
-      if (serviceLink == null)
-      {
-        return null;
-      }
-      QuestradeClient client = m_clientFactory.CreateClient(userId, serviceLinkId);
-      AccountsResponse response = await client.FetchAccounts();
-      return response.Accounts.Select(account => new AccountViewModel(account));
-    }
-
     public async Task<IEnumerable<ManagedAccount>> SynchronizeAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);

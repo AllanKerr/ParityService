@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
 using ParityService.Managers;
+using System.Linq;
 
 namespace ParityService.Controllers
 {
@@ -24,16 +25,17 @@ namespace ParityService.Controllers
       m_accountsManager = accountsManager;
     }
 
-    [HttpGet("[controller]", Name = "GetAccounts")]
-    public async Task<IActionResult> GetAccounts(int id)
+    [HttpGet("[controller]/synchronize/{id}", Name = "SynchronizeAccounts")]
+    public async Task<IActionResult> SynchronizeAccounts(int id)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<AccountViewModel> accounts = await m_accountsManager.GetAccounts(userId, id);
+      IEnumerable<ManagedAccount> accounts = await m_accountsManager.SynchronizeAccounts(userId, id);
       if (accounts == null)
       {
         return NotFound();
       }
-      return Ok(accounts);
+      IEnumerable<AccountViewModel> accountViews = accounts.Select(account => new AccountViewModel(account));
+      return Ok(accountViews);
     }
   }
 }
