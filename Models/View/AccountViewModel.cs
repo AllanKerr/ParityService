@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ParityService.Models.Entities;
 using ParityService.Models.Enums;
 using ParityService.Transformers;
@@ -6,14 +7,24 @@ namespace ParityService.Models.View
 {
   public sealed class AccountViewModel
   {
-    public string AccountId { get; private set; }
+    public int Id { get; }
 
-    public AccountType AccountType { get; private set; }
+    [Required]
+    public string AccountName { get; set; }
 
-    public AccountViewModel(ManagedAccount account)
+    [Required]
+    public AccountType AccountType { get; set; }
+
+    public bool IsManaged { get; private set; }
+
+    public AccountViewModel(Account account)
     {
-      AccountId = account.AccountId;
+      Id = account.Id;
+      AccountName = account.AccountName;
       AccountType = account.AccountType;
+      IsManaged = account.ServiceLinkUserId != null;
     }
+
+    public AccountViewModel() { }
   }
 }

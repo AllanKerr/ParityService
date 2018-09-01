@@ -9,6 +9,7 @@ using ParityService.Data;
 using ParityService.Models.Enums;
 using ParityService.Transformers;
 using QuestradeAccount = ParityService.Questrade.Models.Entities.Account;
+using System;
 
 namespace ParityService.Managers
 {
@@ -23,7 +24,7 @@ namespace ParityService.Managers
       m_clientFactory = clientFactory;
     }
 
-    public async Task<IEnumerable<ManagedAccount>> SynchronizeAccounts(string userId, int linkId)
+    public async Task<IEnumerable<Account>> SynchronizeAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
       if (link == null)
@@ -35,22 +36,22 @@ namespace ParityService.Managers
       return SynchronizeAccounts(link, response.Accounts);
     }
 
-    public IEnumerable<ManagedAccount> SynchronizeAccounts(ServiceLink link, IEnumerable<QuestradeAccount> questradeAccounts)
+    public IEnumerable<Account> SynchronizeAccounts(ServiceLink link, IEnumerable<QuestradeAccount> questradeAccounts)
     {
-      IEnumerable<ManagedAccount> accounts = questradeAccounts.Select(account =>
+      IEnumerable<Account> accounts = questradeAccounts.Select(account =>
        {
          AccountType type = AccountTypeTransformer.Transform(account.Type);
-         return new ManagedAccount(link, account.Number, type);
+         return new Account(link, account.Number, type);
        });
       return SynchronizeAccounts(accounts);
     }
 
-    public IEnumerable<ManagedAccount> SynchronizeAccounts(IEnumerable<ManagedAccount> accounts)
+    public IEnumerable<Account> SynchronizeAccounts(IEnumerable<Account> accounts)
     {
-      var allAccounts = new List<ManagedAccount>();
-      foreach (ManagedAccount account in accounts)
+      var allAccounts = new List<Account>();
+      foreach (Account account in accounts)
       {
-        ManagedAccount existingAccount = m_context.ManagedAccounts.Find(account.AccountId, account.ServiceLinkId, account.UserId);
+        Account existingAccount = m_context.Accounts.Find(account.AccountName, account.ServiceLinkId, account.UserId);
         if (existingAccount == null)
         {
           existingAccount = account;
@@ -62,14 +63,69 @@ namespace ParityService.Managers
       return allAccounts;
     }
 
-    public IEnumerable<ManagedAccount> GetAccounts(string userId, int linkId)
+    public IEnumerable<Account> GetManagedAccounts(string userId, int linkId)
     {
       ServiceLink link = m_context.ServiceLinks.Find(linkId, userId);
       if (link == null)
       {
         return null;
       }
-      return link.Accounts;
+      return link.ManagedAccounts;
+    }
+
+    public Account AddLocalAccount(string userId, string accountName, AccountType accountType)
+    {
+      Account account = new Account(userId, accountName, accountType);
+      m_context.Accounts.Add(account);
+      m_context.SaveChanges();
+      return account;
+    }
+
+    public bool TryGetLocalAccount(string userId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => acc.UserId == userId && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
+    }
+
+    public bool TryGetManagedAccount(string userId, int serviceLinkId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => acc.ServiceLinkUserId == userId && acc.ServiceLinkId == serviceLinkId && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
+    }
+
+    public IEnumerable<Account> GetAccounts(string userId)
+    {
+      return m_context.Accounts.Where(acc => acc.UserId == userId || acc.ServiceLinkUserId == userId);
+    }
+
+    public bool TryGetAccount(string userId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => (acc.UserId == userId || acc.ServiceLinkUserId == userId) && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
     }
   }
 }
