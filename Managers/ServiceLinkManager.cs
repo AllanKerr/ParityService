@@ -49,12 +49,7 @@ namespace ParityService.Managers
         m_context.Credentials.Add(credentials);
         m_context.SaveChanges();
 
-        IEnumerable<ManagedAccount> accounts = response.Accounts.Select(account =>
-        {
-          AccountType type = AccountTypeTransformer.Transform(account.Type);
-          return new ManagedAccount(link, account.Number, type);
-        });
-        m_accountsManager.SynchronizeAccounts(accounts);
+        m_accountsManager.SynchronizeAccounts(link, response.Accounts);
 
         transaction.Commit();
       }
