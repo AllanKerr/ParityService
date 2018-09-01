@@ -82,6 +82,17 @@ namespace ParityService.Managers
       return account;
     }
 
+    public bool UpdateLocalAccount(string userId, int accountId, IAccountInfo info)
+    {
+      if (!TryGetAccount(userId, accountId, out Account account))
+      {
+        return false;
+      }
+      account.ContributionRoom = info.ContributionRoom;
+      m_context.SaveChanges();
+      return true;
+    }
+
     public bool TryGetLocalAccount(string userId, int accountId, out Account account)
     {
       try

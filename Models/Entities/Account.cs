@@ -66,7 +66,7 @@ namespace ParityService.Models.Entities
         {
           return;
         }
-        m_contributionRoom = value;
+        m_contributionRoom = value < 0 ? 0 : value;
       }
     }
 

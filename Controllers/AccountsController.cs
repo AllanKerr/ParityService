@@ -85,6 +85,22 @@ namespace ParityService.Controllers
       return CreatedAtRoute("GetLocalAccount", new { accountId = account.Id }, new AccountViewModel(account));
     }
 
+    //[ValidateAntiForgeryToken]
+    [HttpPut("[controller]/{accountId}", Name = "UpdateAccount")]
+    public IActionResult UpdateAccount(int accountId, [FromBody] AccountViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      if (!m_accountsManager.UpdateLocalAccount(userId, accountId, model))
+      {
+        return NotFound();
+      }
+      return Ok();
+    }
+
     [HttpGet("[controller]/local/{accountId}", Name = "GetLocalAccount")]
     public IActionResult GetLocalAccount(int accountId)
     {
