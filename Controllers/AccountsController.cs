@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using ParityService.Models.Entities;
 using ParityService.Managers;
 using System.Linq;
+using System.Net.Http;
 
 namespace ParityService.Controllers
 {
@@ -29,7 +30,16 @@ namespace ParityService.Controllers
     public async Task<IActionResult> SynchronizeAccounts(int id)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
-      IEnumerable<ManagedAccount> accounts = await m_accountsManager.SynchronizeAccounts(userId, id);
+      IEnumerable<ManagedAccount> accounts;
+      try
+      {
+        accounts = await m_accountsManager.SynchronizeAccounts(userId, id);
+      }
+      catch (HttpRequestException)
+      {
+        ModelState.AddModelError(string.Empty, "An error occurred while trying to communicate with Questrade.");
+        return BadRequest(ModelState);
+      }
       if (accounts == null)
       {
         return NotFound();
