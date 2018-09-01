@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ParityService.Extensions;
 using ParityService.Models.Enums;
 using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 
@@ -9,6 +11,8 @@ namespace ParityService.Models.Entities
   public sealed class Account
   {
     private readonly ILazyLoader m_lazyLoader;
+
+    private decimal? m_contributionRoom;
 
     #region  User Foreign Key
 
@@ -44,6 +48,27 @@ namespace ParityService.Models.Entities
 
     [Required]
     public AccountType AccountType { get; private set; }
+
+    [Column]
+    public decimal? ContributionRoom
+    {
+      get
+      {
+        if (!AccountType.HasContributionLimit())
+        {
+          return null;
+        }
+        return m_contributionRoom != null ? m_contributionRoom : 0;
+      }
+      set
+      {
+        if (!AccountType.HasContributionLimit())
+        {
+          return;
+        }
+        m_contributionRoom = value;
+      }
+    }
 
     public Account(ServiceLink link, string accountName, AccountType accountType)
     {

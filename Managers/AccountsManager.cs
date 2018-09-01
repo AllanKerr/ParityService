@@ -73,9 +73,10 @@ namespace ParityService.Managers
       return link.ManagedAccounts;
     }
 
-    public Account AddLocalAccount(string userId, string accountName, AccountType accountType)
+    public Account AddLocalAccount(string userId, IAccountInfo info)
     {
-      Account account = new Account(userId, accountName, accountType);
+      Account account = new Account(userId, info.AccountName, info.AccountType);
+      account.ContributionRoom = info.ContributionRoom;
       m_context.Accounts.Add(account);
       m_context.SaveChanges();
       return account;

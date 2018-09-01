@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using ParityService.Extensions;
 using ParityService.Models.Entities;
 using ParityService.Models.Enums;
 using ParityService.Transformers;
 
 namespace ParityService.Models.View
 {
-  public sealed class AccountViewModel
+  public sealed class AccountViewModel : IAccountInfo
   {
     public int Id { get; }
 
@@ -15,7 +16,11 @@ namespace ParityService.Models.View
     [Required]
     public AccountType AccountType { get; set; }
 
-    public bool IsManaged { get; private set; }
+    public decimal? ContributionRoom { get; set; }
+
+    public bool IsManaged { get; }
+
+    public bool HasContributionLimit => AccountType.HasContributionLimit();
 
     public AccountViewModel(Account account)
     {
@@ -23,6 +28,7 @@ namespace ParityService.Models.View
       AccountName = account.AccountName;
       AccountType = account.AccountType;
       IsManaged = account.ServiceLinkUserId != null;
+      ContributionRoom = account.ContributionRoom;
     }
 
     public AccountViewModel() { }

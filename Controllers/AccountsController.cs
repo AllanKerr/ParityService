@@ -81,7 +81,7 @@ namespace ParityService.Controllers
         return BadRequest(ModelState);
       }
       string userId = m_userManager.GetUserId(HttpContext.User);
-      Account account = m_accountsManager.AddLocalAccount(userId, model.AccountName, model.AccountType);
+      Account account = m_accountsManager.AddLocalAccount(userId, model);
       return CreatedAtRoute("GetLocalAccount", new { accountId = account.Id }, new AccountViewModel(account));
     }
 
