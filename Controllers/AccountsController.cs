@@ -26,14 +26,14 @@ namespace ParityService.Controllers
       m_accountsManager = accountsManager;
     }
 
-    [HttpGet("[controller]/synchronize/{id}", Name = "SynchronizeAccounts")]
-    public async Task<IActionResult> SynchronizeAccounts(int id)
+    [HttpGet("[controller]/synchronize/{linkId}", Name = "SynchronizeAccounts")]
+    public async Task<IActionResult> SynchronizeAccounts(int linkId)
     {
       string userId = m_userManager.GetUserId(HttpContext.User);
       IEnumerable<ManagedAccount> accounts;
       try
       {
-        accounts = await m_accountsManager.SynchronizeAccounts(userId, id);
+        accounts = await m_accountsManager.SynchronizeAccounts(userId, linkId);
       }
       catch (HttpRequestException)
       {
