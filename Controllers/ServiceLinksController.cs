@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using ParityService.Models.View;
 using Microsoft.Extensions.Logging;
 using System.Linq;
-using System;
 using System.Collections.Generic;
 using ParityService.Models.Entities;
-using QuestradeCredentials = ParityService.Questrade.Models.Entities.Credentials;
 using ParityService.Managers;
-using ParityService.Questrade.Authentication;
+using System.Security.Authentication;
+using System.Net.Http;
 
 namespace ParityService.Controllers
 {
@@ -20,13 +19,10 @@ namespace ParityService.Controllers
     private readonly UserManager<User> m_userManager;
     private readonly ILogger<ServiceLinksController> m_logger;
     private readonly ServiceLinksManager m_serviceLinksManager;
-    private readonly ISignInService m_signInService;
 
-    public ServiceLinksController(UserManager<User> userManager, ISignInService signInService, ServiceLinksManager serviceLinksManager, ILogger<ServiceLinksController> logger)
+    public ServiceLinksController(UserManager<User> userManager, ServiceLinksManager serviceLinksManager, ILogger<ServiceLinksController> logger)
     {
       m_userManager = userManager;
-      m_logger = logger;
-      m_signInService = signInService;
       m_serviceLinksManager = serviceLinksManager;
     }
 
@@ -38,19 +34,22 @@ namespace ParityService.Controllers
       {
         return BadRequest(ModelState);
       }
-      QuestradeCredentials questradeCredentials;
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      ServiceLink link;
       try
       {
-        questradeCredentials = await m_signInService.SignIn(model.RefreshToken, model.IsPractice);
+        link = await m_serviceLinksManager.CreateLink(userId, model);
       }
-      catch (Exception ex)
+      catch (InvalidCredentialException)
       {
-        m_logger.LogWarning($"Failed to link Questrade account: {ex}");
         ModelState.AddModelError(string.Empty, "Invalid refresh token.");
         return BadRequest(ModelState);
       }
-      string userId = m_userManager.GetUserId(HttpContext.User);
-      ServiceLink link = m_serviceLinksManager.CreateLink(userId, model.IsPractice, questradeCredentials);
+      catch (HttpRequestException)
+      {
+        ModelState.AddModelError(string.Empty, "An error occurred while trying to communicate with Questrade.");
+        return BadRequest(ModelState);
+      }
       return CreatedAtRoute("GetServiceLink", new { id = link.Id }, new ServiceLinkViewModel(link));
     }
 
