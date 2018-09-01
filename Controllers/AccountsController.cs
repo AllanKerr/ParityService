@@ -84,5 +84,13 @@ namespace ParityService.Controllers
       }
       return Ok(new AccountViewModel(account));
     }
+
+    [HttpGet("[controller]/local-accounts", Name = "GetLocalAccounts")]
+    public async Task<IActionResult> GetLocalAccounts()
+    {
+      User user = await m_userManager.GetUserAsync(HttpContext.User);
+      IEnumerable<AccountViewModel> accountViews = user.LocalAccounts.Select(account => new AccountViewModel(account));
+      return Ok(accountViews);
+    }
   }
 }
