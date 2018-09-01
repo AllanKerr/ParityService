@@ -8,7 +8,7 @@ namespace ParityService.Models.Entities
   {
     private readonly ILazyLoader m_lazyLoader;
 
-    private ServiceLink m_ServiceLink;
+    private ServiceLink m_serviceLink;
 
     public int ServiceLinkId { get; private set; }
 
@@ -16,8 +16,8 @@ namespace ParityService.Models.Entities
 
     public ServiceLink ServiceLink
     {
-      get => m_ServiceLink != null ? m_ServiceLink : m_lazyLoader?.Load(this, ref m_ServiceLink);
-      private set { m_ServiceLink = value; }
+      get => m_serviceLink != null ? m_serviceLink : m_lazyLoader?.Load(this, ref m_serviceLink);
+      private set { m_serviceLink = value; }
     }
     public string RefreshToken { get; private set; }
 
