@@ -50,7 +50,7 @@ namespace ParityService.Managers
       var allAccounts = new List<Account>();
       foreach (Account account in accounts)
       {
-        Account existingAccount = m_context.Accounts.Find(account.AccountId, account.ServiceLinkId, account.UserId);
+        Account existingAccount = m_context.Accounts.Find(account.AccountName, account.ServiceLinkId, account.UserId);
         if (existingAccount == null)
         {
           existingAccount = account;

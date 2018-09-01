@@ -40,23 +40,23 @@ namespace ParityService.Models.Entities
     [Key]
     public int Id { get; private set; }
 
-    public string AccountId { get; private set; }
+    public string AccountName { get; private set; }
 
     [Required]
     public AccountType AccountType { get; private set; }
 
-    public Account(ServiceLink link, string accountId, AccountType accountType)
+    public Account(ServiceLink link, string accountName, AccountType accountType)
     {
       ServiceLinkId = link.Id;
       ServiceLinkUserId = link.UserId;
-      AccountId = accountId;
+      AccountName = accountName;
       AccountType = accountType;
     }
 
     public Account(string userId, string accountName, AccountType accountType)
     {
       UserId = userId;
-      AccountId = accountName;
+      AccountName = accountName;
       AccountType = accountType;
     }
 

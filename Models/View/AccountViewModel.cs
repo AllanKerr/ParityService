@@ -6,13 +6,13 @@ namespace ParityService.Models.View
 {
   public sealed class AccountViewModel
   {
-    public string AccountId { get; private set; }
+    public string AccountName { get; private set; }
 
     public AccountType AccountType { get; private set; }
 
     public AccountViewModel(Account account)
     {
-      AccountId = account.AccountId;
+      AccountName = account.AccountName;
       AccountType = account.AccountType;
     }
   }
