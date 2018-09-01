@@ -94,5 +94,19 @@ namespace ParityService.Managers
         return false;
       }
     }
+
+    public bool TryGetManagedAccount(string userId, int serviceLinkId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => acc.ServiceLinkUserId == userId && acc.ServiceLinkId == serviceLinkId && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
+    }
   }
 }

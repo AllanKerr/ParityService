@@ -48,6 +48,17 @@ namespace ParityService.Controllers
       return Ok(accountViews);
     }
 
+    [HttpGet("[controller]/{linkId}/{accountId}", Name = "GetManagedAccount")]
+    public IActionResult GetManagedAccount(int linkId, int accountId)
+    {
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      if (!m_accountsManager.TryGetManagedAccount(userId, linkId, accountId, out Account account))
+      {
+        return NotFound();
+      }
+      return Ok(new AccountViewModel(account));
+    }
+
     [HttpGet("[controller]/{linkId}", Name = "GetManagedAccounts")]
     public IActionResult GetManagedAccounts(int linkId)
     {
