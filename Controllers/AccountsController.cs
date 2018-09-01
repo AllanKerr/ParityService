@@ -111,5 +111,16 @@ namespace ParityService.Controllers
       IEnumerable<AccountViewModel> accountViews = m_accountsManager.GetAccounts(userId).Select(account => new AccountViewModel(account));
       return Ok(accountViews);
     }
+
+    [HttpGet("[controller]/{accountId}", Name = "GetAccount")]
+    public IActionResult GetAccount(int accountId)
+    {
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      if (!m_accountsManager.TryGetAccount(userId, accountId, out Account account))
+      {
+        return NotFound();
+      }
+      return Ok(new AccountViewModel(account));
+    }
   }
 }

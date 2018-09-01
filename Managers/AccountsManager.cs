@@ -113,5 +113,19 @@ namespace ParityService.Managers
     {
       return m_context.Accounts.Where(acc => acc.UserId == userId || acc.ServiceLinkUserId == userId);
     }
+
+    public bool TryGetAccount(string userId, int accountId, out Account account)
+    {
+      try
+      {
+        account = m_context.Accounts.First(acc => (acc.UserId == userId || acc.ServiceLinkUserId == userId) && acc.Id == accountId);
+        return true;
+      }
+      catch (InvalidOperationException)
+      {
+        account = null;
+        return false;
+      }
+    }
   }
 }
