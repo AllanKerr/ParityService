@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ParityService.Models.Entities;
@@ -9,6 +10,7 @@ namespace ParityService.Data
     public DbSet<ServiceLink> ServiceLinks { get; set; }
     public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
+    public DbSet<ManagedAccount> ManagedAccounts { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
@@ -24,10 +26,17 @@ namespace ParityService.Data
 
       builder.Entity<Credentials>().HasKey(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
+      builder.Entity<ManagedAccount>().HasKey(account => new { account.AccountId, account.ServiceLinkId, account.UserId });
+
       builder.Entity<ServiceLink>()
         .HasOne(link => link.Credentials)
         .WithOne(creds => creds.ServiceLink)
         .HasForeignKey<Credentials>(credentials => new { credentials.ServiceLinkId, credentials.UserId });
+
+      builder.Entity<ServiceLink>()
+        .HasMany(link => link.Accounts)
+        .WithOne(account => account.ServiceLink)
+        .HasForeignKey(account => new { account.ServiceLinkId, account.UserId });
     }
   }
 }

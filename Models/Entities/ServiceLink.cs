@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ParityService.Models.Entities
@@ -8,6 +9,8 @@ namespace ParityService.Models.Entities
     private readonly ILazyLoader m_lazyLoader;
 
     private Credentials m_credentials;
+
+    private IList<ManagedAccount> m_accounts;
 
     public int Id { get; private set; }
 
@@ -21,6 +24,12 @@ namespace ParityService.Models.Entities
     {
       get => m_credentials != null ? m_credentials : m_lazyLoader?.Load(this, ref m_credentials);
       private set { m_credentials = value; }
+    }
+
+    public IList<ManagedAccount> Accounts
+    {
+      get => m_accounts != null ? m_accounts : m_lazyLoader?.Load(this, ref m_accounts);
+      private set { m_accounts = value; }
     }
 
     private ServiceLink() { }
