@@ -130,6 +130,30 @@ namespace ParityService.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ParityService.Models.Entities.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AccountId");
+
+                    b.Property<int>("AccountType");
+
+                    b.Property<int>("ServiceLinkId");
+
+                    b.Property<string>("ServiceLinkUserId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("ServiceLinkId", "ServiceLinkUserId");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("ParityService.Models.Entities.Credentials", b =>
                 {
                     b.Property<int>("ServiceLinkId");
@@ -153,8 +177,7 @@ namespace ParityService.Migrations
 
             modelBuilder.Entity("ParityService.Models.Entities.Earnings", b =>
                 {
-                    b.Property<string>("UserId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("UserId");
 
                     b.Property<decimal>("AnnualIncome");
 
@@ -163,23 +186,6 @@ namespace ParityService.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Earnings");
-                });
-
-            modelBuilder.Entity("ParityService.Models.Entities.ManagedAccount", b =>
-                {
-                    b.Property<string>("AccountId");
-
-                    b.Property<int>("ServiceLinkId");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<int>("AccountType");
-
-                    b.HasKey("AccountId", "ServiceLinkId", "UserId");
-
-                    b.HasIndex("ServiceLinkId", "UserId");
-
-                    b.ToTable("ManagedAccounts");
                 });
 
             modelBuilder.Entity("ParityService.Models.Entities.ServiceLink", b =>
@@ -215,8 +221,6 @@ namespace ParityService.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("EarningsUserId");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -246,8 +250,6 @@ namespace ParityService.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EarningsUserId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -304,6 +306,17 @@ namespace ParityService.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ParityService.Models.Entities.Account", b =>
+                {
+                    b.HasOne("ParityService.Models.Entities.User", "User")
+                        .WithMany("LocalAccounts")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("ParityService.Models.Entities.ServiceLink", "ServiceLink")
+                        .WithMany("ManagedAccounts")
+                        .HasForeignKey("ServiceLinkId", "ServiceLinkUserId");
+                });
+
             modelBuilder.Entity("ParityService.Models.Entities.Credentials", b =>
                 {
                     b.HasOne("ParityService.Models.Entities.ServiceLink", "ServiceLink")
@@ -312,11 +325,11 @@ namespace ParityService.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ParityService.Models.Entities.ManagedAccount", b =>
+            modelBuilder.Entity("ParityService.Models.Entities.Earnings", b =>
                 {
-                    b.HasOne("ParityService.Models.Entities.ServiceLink", "ServiceLink")
-                        .WithMany("Accounts")
-                        .HasForeignKey("ServiceLinkId", "UserId")
+                    b.HasOne("ParityService.Models.Entities.User")
+                        .WithOne("Earnings")
+                        .HasForeignKey("ParityService.Models.Entities.Earnings", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -326,13 +339,6 @@ namespace ParityService.Migrations
                         .WithMany("ServiceLinks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ParityService.Models.Entities.User", b =>
-                {
-                    b.HasOne("ParityService.Models.Entities.Earnings", "Earnings")
-                        .WithMany()
-                        .HasForeignKey("EarningsUserId");
                 });
 #pragma warning restore 612, 618
         }
