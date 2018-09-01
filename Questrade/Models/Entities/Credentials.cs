@@ -1,8 +1,9 @@
 using Newtonsoft.Json;
+using ParityService.Models.Entities;
 
 namespace ParityService.Questrade.Models.Entities
 {
-  public sealed class Credentials
+  public sealed class Credentials : ICredentials
   {
     [JsonProperty("access_token")]
     public string AccessToken { get; internal set; }
@@ -17,6 +18,6 @@ namespace ParityService.Questrade.Models.Entities
     public string RefreshToken { get; internal set; }
 
     [JsonProperty("token_type")]
-    public string TokenType { get; internal set; }
+    public string AccessTokenType { get; internal set; }
   }
 }

@@ -39,7 +39,7 @@ namespace ParityService.Models.Entities
       RefreshToken = credentials.RefreshToken;
       ApiServer = credentials.ApiServer;
       AccessToken = credentials.AccessToken;
-      AccessTokenType = credentials.TokenType;
+      AccessTokenType = credentials.AccessTokenType;
       AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(credentials.ExpiresIn);
     }
 
