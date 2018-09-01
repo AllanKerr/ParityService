@@ -32,7 +32,7 @@ namespace ParityService.Data
         .HasForeignKey<Credentials>(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
       builder.Entity<ServiceLink>()
-        .HasMany(link => link.Accounts)
+        .HasMany(link => link.ManagedAccounts)
         .WithOne(account => account.ServiceLink)
         .HasForeignKey(account => new { account.ServiceLinkId, account.ServiceLinkUserId });
 

@@ -69,7 +69,7 @@ namespace ParityService.Managers
       {
         return null;
       }
-      return link.Accounts;
+      return link.ManagedAccounts;
     }
   }
 }

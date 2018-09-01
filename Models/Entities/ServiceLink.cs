@@ -12,7 +12,7 @@ namespace ParityService.Models.Entities
 
     private Credentials m_credentials;
 
-    private IList<Account> m_accounts;
+    private IList<Account> m_managedAccounts;
 
     public int Id { get; private set; }
 
@@ -34,10 +34,10 @@ namespace ParityService.Models.Entities
       private set { m_credentials = value; }
     }
 
-    public IList<Account> Accounts
+    public IList<Account> ManagedAccounts
     {
-      get => m_accounts != null ? m_accounts : m_lazyLoader?.Load(this, ref m_accounts);
-      private set { m_accounts = value; }
+      get => m_managedAccounts != null ? m_managedAccounts : m_lazyLoader?.Load(this, ref m_managedAccounts);
+      private set { m_managedAccounts = value; }
     }
 
     private ServiceLink() { }
