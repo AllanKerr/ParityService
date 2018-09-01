@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using ParityService.Models.Entities;
 
 namespace ParityService.Questrade
@@ -8,7 +9,7 @@ namespace ParityService.Questrade
   {
     private readonly ICredentials m_credentials;
 
-    public ExpiringQuestradeClient(IHttpClientFactory clientFactory, ICredentials credentials) : base(clientFactory)
+    public ExpiringQuestradeClient(IHttpClientFactory clientFactory, ILogger<QuestradeClient> logger, ICredentials credentials) : base(clientFactory, logger)
     {
       m_credentials = credentials;
     }

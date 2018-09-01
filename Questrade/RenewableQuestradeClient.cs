@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using ParityService.Managers;
 using ParityService.Models.Entities;
 
@@ -11,7 +12,7 @@ namespace ParityService.Questrade
     private readonly string m_userId;
     private readonly int m_ServiceLinkId;
 
-    public RenewableQuestradeClient(IHttpClientFactory clientFactory, CredentialsManager credentialsManager, string userId, int ServiceLinkId) : base(clientFactory)
+    public RenewableQuestradeClient(IHttpClientFactory clientFactory, ILogger<QuestradeClient> logger, CredentialsManager credentialsManager, string userId, int ServiceLinkId) : base(clientFactory, logger)
     {
       m_credentialsManager = credentialsManager;
       m_userId = userId;

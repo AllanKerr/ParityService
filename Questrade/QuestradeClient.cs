@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ParityService.Managers;
 using ParityService.Questrade.Models.Responses;
 using ParityService.Models.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace ParityService.Questrade
 {
@@ -16,9 +17,12 @@ namespace ParityService.Questrade
     private readonly IHttpClientFactory m_clientFactory;
     private HttpClient m_client;
 
-    public QuestradeClient(IHttpClientFactory clientFactory)
+    protected readonly ILogger<QuestradeClient> m_logger;
+
+    public QuestradeClient(IHttpClientFactory clientFactory, ILogger<QuestradeClient> logger)
     {
       m_clientFactory = clientFactory;
+      m_logger = logger;
     }
 
     protected abstract Task<ICredentials> GetCredentials();
@@ -54,7 +58,15 @@ namespace ParityService.Questrade
 
     public async Task<AccountsResponse> FetchAccounts()
     {
-      return await Fetch<AccountsResponse>(ApiVersion, "accounts");
+      try
+      {
+        return await Fetch<AccountsResponse>(ApiVersion, "accounts");
+      }
+      catch (Exception ex)
+      {
+        m_logger.LogError($"Failed to fetch service accounts: {ex}");
+        throw new HttpRequestException("Failed to fetch service accounts.", ex);
+      }
     }
   }
 }

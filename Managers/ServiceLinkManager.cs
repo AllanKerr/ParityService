@@ -37,7 +37,8 @@ namespace ParityService.Managers
     public async Task<ServiceLink> CreateLink(string userId, IQuestradeLink questradeLink)
     {
       QuestradeCredentials questradeCredentials = await GetLinkCredentials(questradeLink);
-      AccountsResponse response = await GetAccounts(questradeCredentials);
+      QuestradeClient client = m_clientFactory.CreateClient(questradeCredentials);
+      AccountsResponse response = await client.FetchAccounts();
 
       ServiceLink link = new ServiceLink(userId, questradeLink.IsPractice);
       using (IDbContextTransaction transaction = m_context.Database.BeginTransaction())
@@ -56,16 +57,6 @@ namespace ParityService.Managers
       return link;
     }
 
-    public ServiceLink GetLink(string userId, int id)
-    {
-      return m_context.ServiceLinks.Find(id, userId);
-    }
-
-    public IEnumerable<ServiceLink> GetLinks(string userId)
-    {
-      return m_context.ServiceLinks.Where(ServiceLink => ServiceLink.UserId == userId);
-    }
-
     public async Task<QuestradeCredentials> GetLinkCredentials(IQuestradeLink link)
     {
       try
@@ -79,18 +70,14 @@ namespace ParityService.Managers
       }
     }
 
-    private async Task<AccountsResponse> GetAccounts(QuestradeCredentials credentials)
+    public ServiceLink GetLink(string userId, int id)
     {
-      QuestradeClient client = m_clientFactory.CreateClient(credentials);
-      try
-      {
-        return await client.FetchAccounts();
-      }
-      catch (Exception ex)
-      {
-        m_logger.LogWarning($"Failed to fetch service accounts: {ex}");
-        throw new HttpRequestException("Failed to fetch service accounts.", ex);
-      }
+      return m_context.ServiceLinks.Find(id, userId);
+    }
+
+    public IEnumerable<ServiceLink> GetLinks(string userId)
+    {
+      return m_context.ServiceLinks.Where(ServiceLink => ServiceLink.UserId == userId);
     }
   }
 }
