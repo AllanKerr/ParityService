@@ -13,30 +13,30 @@ namespace ParityService.Controllers
   public sealed class AllocationsController : Controller
   {
     private readonly UserManager<User> m_userManager;
-    private readonly ILogger<AllocationsController> m_logger;
+    private readonly AllocationsManager m_allocationsManager;
 
-    public AllocationsController(UserManager<User> userManager, ILogger<AllocationsController> logger)
+    public AllocationsController(UserManager<User> userManager, AllocationsManager allocationsManager)
     {
       m_userManager = userManager;
-      m_logger = logger;
+      m_allocationsManager = allocationsManager;
     }
 
     //[ValidateAntiForgeryToken]
-    [HttpPut("[controller]/target", Name = "SetTargetAllocation")]
-    public IActionResult SetTargetAllocation([FromBody] AllocationViewModel model)
+    [HttpPut("[controller]/target", Name = "SetTargetPortfolio")]
+    public IActionResult SetTargetPortfolio([FromBody] AllocationsViewModel model)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
-      if (model.Allocation.Count == 0)
+      if (model.Allocations.Count == 0)
       {
         ModelState.AddModelError(string.Empty, $"There must be at least one item in the allocation.");
         return BadRequest(ModelState);
       }
-      if (model.Allocation.Count > 0)
+      if (model.Allocations.Count > 0)
       {
-        decimal sum = Math.Round(model.Allocation.Values.Aggregate((a, b) => a + b));
+        decimal sum = Math.Round(model.Allocations.Values.Aggregate((a, b) => a + b));
         if (Math.Round(sum) != 100)
         {
           ModelState.AddModelError(string.Empty, $"The allocations must add up to 100%, received {sum}%.");

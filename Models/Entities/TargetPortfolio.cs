@@ -47,6 +47,7 @@ namespace ParityService.Models.Entities
     public TargetPortfolio(string userId)
     {
       UserId = userId;
+      m_allocations = new List<TargetAllocation>();
     }
   }
 }

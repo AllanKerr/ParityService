@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParityService.Models.View
 {
-  public sealed class AllocationViewModel
+  public sealed class AllocationsViewModel
   {
     [Required]
-    public IDictionary<string, decimal> Allocation { get; set; }
+    public IDictionary<string, decimal> Allocations { get; set; }
   }
 }
