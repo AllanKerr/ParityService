@@ -8,6 +8,8 @@ namespace ParityService.Models.Entities
   {
     private readonly ILazyLoader m_lazyLoader;
 
+    #region Earnings
+
     private Earnings m_earnings;
 
     public Earnings Earnings
@@ -15,6 +17,22 @@ namespace ParityService.Models.Entities
       get => m_earnings != null ? m_earnings : m_lazyLoader?.Load(this, ref m_earnings);
       private set { m_earnings = value; }
     }
+
+    #endregion
+
+    #region TargetPortfolio
+
+    private TargetPortfolio m_targetPortfolio;
+
+    public TargetPortfolio TargetPortfolio
+    {
+      get => m_targetPortfolio != null ? m_targetPortfolio : m_lazyLoader?.Load(this, ref m_targetPortfolio);
+      private set { m_targetPortfolio = value; }
+    }
+
+    #endregion
+
+    #region ServiceLinks
 
     private List<ServiceLink> m_serviceLinks;
 
@@ -24,6 +42,10 @@ namespace ParityService.Models.Entities
       private set { m_serviceLinks = value; }
     }
 
+    #endregion
+
+    #region LocalAccounts
+
     private List<Account> m_localAccounts;
 
     public List<Account> LocalAccounts
@@ -31,6 +53,8 @@ namespace ParityService.Models.Entities
       get => m_localAccounts != null ? m_localAccounts : m_lazyLoader?.Load(this, ref m_localAccounts);
       private set { m_localAccounts = value; }
     }
+
+    #endregion
 
     private User() { }
 

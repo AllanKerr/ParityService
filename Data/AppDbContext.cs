@@ -11,6 +11,8 @@ namespace ParityService.Data
     public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<TargetPortfolio> TargetPortfolios { get; set; }
+    public DbSet<TargetAllocation> TargetAllocations { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
@@ -26,6 +28,8 @@ namespace ParityService.Data
 
       builder.Entity<Credentials>().HasKey(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
+      builder.Entity<TargetAllocation>().HasKey(allocation => new { allocation.PortfolioUserId, allocation.Symbol });
+
       builder.Entity<ServiceLink>()
         .HasOne(link => link.Credentials)
         .WithOne(creds => creds.ServiceLink)
@@ -40,6 +44,16 @@ namespace ParityService.Data
         .HasMany(user => user.LocalAccounts)
         .WithOne(account => account.User)
         .HasForeignKey(account => account.UserId);
+
+      builder.Entity<User>()
+        .HasOne(user => user.TargetPortfolio)
+        .WithOne(portfolio => portfolio.User)
+        .HasForeignKey<TargetPortfolio>(portfolio => portfolio.UserId);
+
+      builder.Entity<TargetPortfolio>()
+        .HasMany(portfolio => portfolio.Allocations)
+        .WithOne(allocation => allocation.Portfolio)
+        .HasForeignKey(portfolio => portfolio.PortfolioUserId);
     }
   }
 }
