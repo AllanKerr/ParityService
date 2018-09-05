@@ -11,6 +11,8 @@ namespace ParityService.Data
     public DbSet<Earnings> Earnings { get; set; }
     public DbSet<Credentials> Credentials { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<TargetPortfolio> TargetPortfolios { get; set; }
+    public DbSet<TargetAllocation> TargetAllocations { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
