@@ -18,7 +18,7 @@ namespace ParityService.Managers
 
     private readonly ILogger<AllocationsManager> m_logger;
 
-    public AllocationsManager(AppDbContext context, ILogger<AllocationsManager> logger, ISignInService signInService)
+    public AllocationsManager(AppDbContext context, ILogger<AllocationsManager> logger)
     {
       m_context = context;
       m_logger = logger;
