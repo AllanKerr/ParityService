@@ -72,5 +72,10 @@ namespace ParityService.Managers
       }
       return success;
     }
+
+    public TargetPortfolio GetTargetPortfolio(string userId)
+    {
+      return m_context.TargetPortfolios.Find(userId);
+    }
   }
 }

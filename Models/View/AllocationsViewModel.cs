@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ParityService.Migrations;
 
 namespace ParityService.Models.View
 {
@@ -7,5 +8,10 @@ namespace ParityService.Models.View
   {
     [Required]
     public IDictionary<string, decimal> Allocations { get; set; }
+
+    public AllocationsViewModel(IDictionary<string, decimal> allocations)
+    {
+      Allocations = allocations;
+    }
   }
 }

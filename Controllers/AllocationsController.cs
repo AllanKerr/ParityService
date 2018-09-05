@@ -7,6 +7,7 @@ using ParityService.Managers;
 using ParityService.Models.Entities;
 using ParityService.Models.View;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ParityService.Controllers
@@ -52,6 +53,19 @@ namespace ParityService.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       return Ok();
+    }
+
+    [HttpGet("[controller]/target", Name = "GetTargetPortfolio")]
+    public IActionResult GetTargetPortfolio()
+    {
+      string userId = m_userManager.GetUserId(HttpContext.User);
+      TargetPortfolio portfolio = m_allocationsManager.GetTargetPortfolio(userId);
+      if (portfolio == null)
+      {
+        return NotFound();
+      }
+      IDictionary<string, decimal> allocations = portfolio.Allocations.ToDictionary(allocation => allocation.Symbol, allocation => allocation.Proportion);
+      return Ok(new AllocationsViewModel(allocations));
     }
   }
 }
