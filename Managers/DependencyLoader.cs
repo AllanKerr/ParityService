@@ -10,6 +10,7 @@ namespace ParityService.Managers
       services.AddScoped<ServiceLinksManager>();
       services.AddScoped<CredentialsManager>();
       services.AddScoped<AccountsManager>();
+      services.AddScoped<AllocationsManager>();
     }
   }
 }

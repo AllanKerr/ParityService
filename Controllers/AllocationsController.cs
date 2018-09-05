@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ParityService.Managers;
 using ParityService.Models.Entities;
 using ParityService.Models.View;
 using System;
@@ -44,9 +46,10 @@ namespace ParityService.Controllers
         }
       }
       string userId = m_userManager.GetUserId(HttpContext.User);
-      foreach (var t in model.Allocation)
+      bool success = m_allocationsManager.SetTargetPortfolio(userId, model.Allocations);
+      if (!success)
       {
-        m_logger.LogCritical($"{t.Key} : {t.Value}");
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
       return Ok();
     }
