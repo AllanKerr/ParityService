@@ -15,7 +15,6 @@ namespace ParityService.Models.Entities
 
     private TargetPortfolio m_portfolio;
 
-    [Key]
     public string PortfolioUserId { get; private set; }
 
     public TargetPortfolio Portfolio

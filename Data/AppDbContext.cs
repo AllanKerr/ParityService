@@ -28,6 +28,8 @@ namespace ParityService.Data
 
       builder.Entity<Credentials>().HasKey(credentials => new { credentials.ServiceLinkId, credentials.UserId });
 
+      builder.Entity<TargetAllocation>().HasKey(allocation => new { allocation.PortfolioUserId, allocation.Symbol });
+
       builder.Entity<ServiceLink>()
         .HasOne(link => link.Credentials)
         .WithOne(creds => creds.ServiceLink)
