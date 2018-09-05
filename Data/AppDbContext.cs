@@ -40,6 +40,16 @@ namespace ParityService.Data
         .HasMany(user => user.LocalAccounts)
         .WithOne(account => account.User)
         .HasForeignKey(account => account.UserId);
+
+      builder.Entity<User>()
+        .HasOne(user => user.TargetPortfolio)
+        .WithOne(portfolio => portfolio.User)
+        .HasForeignKey<TargetPortfolio>(portfolio => portfolio.UserId);
+
+      builder.Entity<TargetPortfolio>()
+        .HasMany(portfolio => portfolio.Allocations)
+        .WithOne(allocation => allocation.Portfolio)
+        .HasForeignKey(portfolio => portfolio.PortfolioUserId);
     }
   }
 }
