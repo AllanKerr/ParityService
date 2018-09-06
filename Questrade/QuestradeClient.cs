@@ -6,6 +6,10 @@ using ParityService.Managers;
 using ParityService.Questrade.Models.Responses;
 using ParityService.Models.Entities;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using ParityService.Questrade.Models.Entities;
+using System.Collections.Specialized;
+using System.Web;
 
 namespace ParityService.Questrade
 {
@@ -45,9 +49,12 @@ namespace ParityService.Questrade
       return string.Join('/', components);
     }
 
-    private async Task<T> Fetch<T>(params string[] pathComponents)
+    private async Task<T> Fetch<T>(string path, NameValueCollection parameters = null)
     {
-      string path = BuildPath(pathComponents);
+      if (parameters != null && parameters.Count > 0)
+      {
+        path = $"{path}?{parameters}";
+      }
       HttpClient client = await GetAuthorizedClient();
       HttpResponseMessage httpResponse = await client.GetAsync(path);
       httpResponse.EnsureSuccessStatusCode();
@@ -57,14 +64,39 @@ namespace ParityService.Questrade
 
     public async Task<AccountsResponse> FetchAccounts()
     {
+      string path = BuildPath(ApiVersion, "accounts");
       try
       {
-        return await Fetch<AccountsResponse>(ApiVersion, "accounts");
+        return await Fetch<AccountsResponse>(path);
       }
       catch (Exception ex)
       {
         m_logger.LogError($"Failed to fetch service accounts: {ex}");
         throw new HttpRequestException("Failed to fetch service accounts.", ex);
+      }
+    }
+
+    public async Task<IList<EquitySymbol>> FindSymbols(string query, int? offset = null)
+    {
+      string path = BuildPath(ApiVersion, "symbols", "search");
+
+      NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
+      parameters["prefix"] = HttpUtility.UrlEncode(query);
+
+      if (offset.HasValue)
+      {
+        parameters["offset"] = Math.Max(offset.Value, 0).ToString();
+      }
+
+      try
+      {
+        SymbolsSearchResponse response = await Fetch<SymbolsSearchResponse>(path, parameters);
+        return response.Symbols;
+      }
+      catch (Exception ex)
+      {
+        m_logger.LogError($"Failed to find symbols: {ex}");
+        throw new HttpRequestException("Failed to find symbols.", ex);
       }
     }
   }
