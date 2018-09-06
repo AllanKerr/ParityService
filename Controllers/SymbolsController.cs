@@ -43,6 +43,11 @@ namespace ParityService.Controllers
         ModelState.AddModelError(string.Empty, "An error occurred while trying to communicate with Questrade.");
         return BadRequest(ModelState);
       }
+      catch (Exception)
+      {
+        ModelState.AddModelError(string.Empty, "This account does not have a linked Questrade account.");
+        return BadRequest(ModelState);
+      }
       return Ok(symbols.Select(symbol => new QuestradeSymbolViewModel(symbol)));
     }
   }
