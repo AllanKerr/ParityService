@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using ParityService.Questrade.Models.Enums;
 
@@ -18,7 +19,20 @@ namespace ParityService.Questrade.Models.Entities
     public SecurityType SecurityType { get; set; }
 
     [JsonProperty("listingExchange")]
-    public Exchange ListingExchange { get; set; }
+    public string ListingExchangeValue { get; set; }
+
+    [JsonIgnore]
+    public Exchange ListingExchange
+    {
+      get
+      {
+        if (Enum.TryParse(ListingExchangeValue, true, out Exchange exchange))
+        {
+          return exchange;
+        }
+        return Exchange.Unknown;
+      }
+    }
 
     [JsonProperty("isQuotable")]
     public bool IsQuotable { get; set; }

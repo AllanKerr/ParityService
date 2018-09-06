@@ -2,6 +2,7 @@ namespace ParityService.Questrade.Models.Enums
 {
   public enum Exchange
   {
+    Unknown,
     TSX,
     TSXV,
     CNSX,
