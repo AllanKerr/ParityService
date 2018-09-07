@@ -10,6 +10,8 @@ namespace ParityService.Models.Entities
 
     decimal? ContributionRoom { get; }
 
+    decimal Cash { get; }
+
     bool HasContributionLimit { get; }
   }
 }

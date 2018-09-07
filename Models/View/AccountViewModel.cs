@@ -18,6 +18,8 @@ namespace ParityService.Models.View
 
     public decimal? ContributionRoom { get; set; }
 
+    public decimal Cash { get; set; }
+
     public bool IsManaged { get; }
 
     public bool HasContributionLimit => AccountType.HasContributionLimit();
@@ -29,6 +31,7 @@ namespace ParityService.Models.View
       AccountType = account.AccountType;
       IsManaged = account.ServiceLinkUserId != null;
       ContributionRoom = account.ContributionRoom;
+      Cash = account.Cash;
     }
 
     public AccountViewModel() { }

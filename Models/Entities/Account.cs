@@ -70,6 +70,8 @@ namespace ParityService.Models.Entities
       }
     }
 
+    public decimal Cash { get; set; }
+
     public Account(ServiceLink link, string accountName, AccountType accountType)
     {
       ServiceLinkId = link.Id;
