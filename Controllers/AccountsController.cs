@@ -94,6 +94,7 @@ namespace ParityService.Controllers
         return BadRequest(ModelState);
       }
       string userId = m_userManager.GetUserId(HttpContext.User);
+      m_logger.LogCritical($"cash: {model.Cash}");
       if (!m_accountsManager.UpdateLocalAccount(userId, accountId, model))
       {
         return NotFound();

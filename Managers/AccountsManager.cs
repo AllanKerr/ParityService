@@ -89,6 +89,7 @@ namespace ParityService.Managers
         return false;
       }
       account.ContributionRoom = info.ContributionRoom;
+      account.Cash = info.Cash;
       m_context.SaveChanges();
       return true;
     }
